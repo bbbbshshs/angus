@@ -468,13 +468,30 @@ function shareWhats(){
 }
 window.shareWhats = shareWhats;
 
-function copyLink(){
+  function copyLink(){
   if(!myRefLink) return;
-  if(navigator.clipboard){
+  var ok = false;
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = myRefLink;
+    ta.style.position = 'fixed';
+    ta.style.top = '-9999px';
+    ta.setAttribute('readonly', '');
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, myRefLink.length);
+    ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+  } catch(e){ ok = false; }
+  if(ok){
+    toast('✅ Link copiado!');
+  } else if(navigator.clipboard){
     navigator.clipboard.writeText(myRefLink).then(function(){
       toast('✅ Link copiado!');
     }).catch(function(){ toast('Link: ' + myRefLink); });
-  } else { toast('Link: ' + myRefLink); }
+  } else {
+    toast('Link: ' + myRefLink);
+  }
 }
 window.copyLink = copyLink;
 
