@@ -291,13 +291,9 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
 'use strict';
 
 var CONFIG = {
-  SUPABASE_URL: 'https://rvjkydyjicryinypmlkc.supabase.co',
+  SUPABASE_URL: 'https://rvjkydxjicryinypmlkc.supabase.co',
   SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2amt5ZHhqaWNyeWlueXBtbGtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwNTQ0ODMsImV4cCI6MjEwNjYzMDQ4M30.8CaUaSU1h7-8kquXlBwZc7gE_baaKVw6bfvCE38aZ10'
 };
-
-// correção do domínio do Supabase
-CONFIG.SUPABASE_URL = 'https://rvjkydyxjicryinypmlkc.supabase.co';
-CONFIG.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2amt5ZHhqaWNyeWlueXBtbGtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwNTQ0ODMsImV4cCI6MjEwNjYzMDQ4M30.8CaUaSU1h7-8kquXlBwZc7gE_baaKVw6bfvCE38aZ10';
 
 var ML_LEVELS = [
   {level:1,pct:'15%',desc:'Indicação direta'},
@@ -313,7 +309,7 @@ var ML_LEVELS = [
 ];
 
 var supabase = null;
-try { supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY); } catch(e){ console.error(e); }
+try { supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY); } catch(e){ console.error('Supabase init:', e); }
 
 var LS_VIP = 'ANGUS_VIP_CODE_v1';
 var pendingRef = null;
@@ -328,7 +324,7 @@ function onPhoneInput(el){ el.value = maskPhone(el.value); }
 window.onPhoneInput = onPhoneInput;
 function validPhone(tel){ var t=(tel||'').replace(/\D/g,''); if(t.length<10||t.length>11) return false; var ddd=parseInt(t.substr(0,2),10); if(ddd<11||ddd>99) return false; if(t.length===11&&t[2]!=='9') return false; return true; }
 
-/* ============ MEMÓRIA ============ */
+/* ============ MEMÓRIA DO CLIENTE ============ */
 function salvarMeuCodigo(code){
   try { localStorage.setItem(LS_VIP, code); } catch(e){}
 }
@@ -339,7 +335,7 @@ function limparMeuCodigo(){
   try { localStorage.removeItem(LS_VIP); } catch(e){}
 }
 
-/* ============ RENDER ============ */
+/* ============ RENDER DOS NÍVEIS ============ */
 function renderCommLadder(){
   var el = $('comm-list'); if(!el) return;
   el.innerHTML = ML_LEVELS.map(function(L){
@@ -371,6 +367,7 @@ async function loadMyNetwork(){
   } catch(e){ console.warn('loadMyNetwork:', e); }
 }
 
+/* ============ CONTADOR E RANKING ============ */
 async function updateCounter(){
   if(!supabase){ $('counter-num').textContent = '127'; return; }
   try {
@@ -581,6 +578,8 @@ window.copyLink = copyLink;
 
 /* ============ INIT ============ */
 function init(){
+  renderCommLadder();
+
   try {
     var params = new URLSearchParams(location.search);
     var ref = params.get('ref');
@@ -592,14 +591,15 @@ function init(){
       $('pre-ref').value = pendingRef;
     }
 
-    // Prioridade 1: ?meu=CODIGO na URL
+    // 1. URL tem ?meu=CODIGO → abre direto
     if(meu){
-      salvarMeuCodigo(meu.toUpperCase().trim());
-      setTimeout(function(){ carregarMinhaRede(meu.toUpperCase().trim(), false); }, 500);
+      var meuUpper = meu.toUpperCase().trim();
+      salvarMeuCodigo(meuUpper);
+      setTimeout(function(){ carregarMinhaRede(meuUpper, false); }, 500);
       return;
     }
 
-    // Prioridade 2: código salvo no localStorage
+    // 2. Tem código salvo → auto-login
     var salvo = lerMeuCodigo();
     if(salvo){
       setTimeout(function(){ carregarMinhaRede(salvo, false); }, 500);
@@ -607,13 +607,9 @@ function init(){
     }
   } catch(e){ console.warn(e); }
 
-  renderCommLadder();
   updateCounter();
   loadRanking();
 }
-
-// Se já renderizou o comm, não precisa de novo no init
-renderCommLadder();
 
 if(document.readyState === 'loading'){
   document.addEventListener('DOMContentLoaded', init);
@@ -625,4 +621,3 @@ if(document.readyState === 'loading'){
 </script>
 </body>
 </html>
-  
