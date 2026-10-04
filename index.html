@@ -1674,50 +1674,25 @@ async function openPix(planId){
 
     el = $('pix-code'); if(el) el.textContent = data.qrCode;
 
-    // ============ QR CODE CORRIGIDO ============
-    if(qrBox && window.QRCode && window.QRCode.toCanvas){
-      var size = Math.min(240, Math.floor(window.innerWidth * 0.6));
-      try {
-        var cv = document.createElement('canvas');
-        qrBox.innerHTML = '';
-        qrBox.appendChild(cv);
-        window.QRCode.toCanvas(cv, data.qrCode, {
-          width: size,
-          margin: 1,
-          color: { dark: '#2C1810', light: '#FFFFFF' }
-        }, function(err){
-          if(err){
-            console.warn('QR toCanvas erro:', err);
-            window.QRCode.toDataURL(data.qrCode, { width: size, margin: 1 }, function(err2, url){
-              if(err2){
-                console.warn('QR toDataURL erro:', err2);
-                qrBox.innerHTML = '<div style="padding:14px;font-size:11px;color:#78716C;text-align:center">Copie o código PIX abaixo</div>';
-                return;
-              }
-              qrBox.innerHTML = '<img src="'+url+'" style="width:100%;height:100%;object-fit:contain">';
-            });
-          }
-        });
-      } catch(e){
-        console.warn('QR erro:', e);
-        qrBox.innerHTML = '<div style="padding:14px;font-size:11px;color:#78716C;text-align:center">Copie o código PIX abaixo</div>';
-      }
-    } else {
-      console.warn('QRCode lib não disponível, tentando data URL');
-      try {
-        var size2 = Math.min(240, Math.floor(window.innerWidth * 0.6));
-        window.QRCode.toDataURL(data.qrCode, { width: size2, margin: 1 }, function(err3, url3){
-          if(!err3 && url3 && qrBox){
-            qrBox.innerHTML = '<img src="'+url3+'" style="width:100%;height:100%;object-fit:contain">';
-          } else if(qrBox){
-            qrBox.innerHTML = '<div style="padding:14px;font-size:11px;color:#78716C;text-align:center">Copie o código PIX abaixo</div>';
-          }
-        });
-      } catch(e){
-        if(qrBox) qrBox.innerHTML = '<div style="padding:14px;font-size:11px;color:#78716C;text-align:center">Copie o código PIX abaixo</div>';
-      }
-    }
-    // ============ FIM QR ============
+   // ============ QR CODE VIA API ============
+if(qrBox){
+  qrBox.innerHTML = '';
+  try {
+    var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=500x500&margin=10&color=2C1810&bgcolor=FFFFFF&data=' + encodeURIComponent(data.qrCode);
+    var img = document.createElement('img');
+    img.src = qrUrl;
+    img.alt = 'QR Code PIX';
+    img.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;border-radius:6px';
+    img.onerror = function(){
+      qrBox.innerHTML = '<div style="padding:14px;font-size:11px;color:#78716C;text-align:center">Copie o código PIX abaixo</div>';
+    };
+    qrBox.appendChild(img);
+  } catch(e){
+    console.warn('QR erro:', e);
+    qrBox.innerHTML = '<div style="padding:14px;font-size:11px;color:#78716C;text-align:center">Copie o código PIX abaixo</div>';
+  }
+}
+// ============ FIM QR ============
 
     startPixTimer(15 * 60);
     startPixPolling();
