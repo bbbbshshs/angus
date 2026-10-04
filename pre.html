@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#FEFCF6" />
+<title>ANGUS AGRO — Lista VIP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%2316A34A'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#FEFCF6;--card:#FFFFFF;--soft:#F5EFE0;--soft-2:#FAF6EB;--txt:#1A1410;--muted:#78716C;--green:#16A34A;--green-dark:#166534;--green-soft:rgba(22,163,74,.1);--green-border:rgba(22,163,74,.25);--gold:#F59E0B;--gold-2:#FBBF24;--gold-deep:#7C2D12;--gold-soft:rgba(245,158,11,.12);--gold-border:rgba(245,158,11,.3);--red:#DC2626;--purple:#7C3AED;--purple-soft:rgba(124,58,237,.08);--purple-border:rgba(124,58,237,.25);--border:rgba(44,24,16,.08);--border-2:rgba(44,24,16,.12);--grad-gold:linear-gradient(135deg,#F59E0B 0%,#B45309 100%);--grad-primary:linear-gradient(135deg,#16A34A 0%,#166534 100%);--grad-dark:linear-gradient(135deg,#2C1810 0%,#3D2317 100%);--shadow:0 2px 12px rgba(44,24,16,.06);--shadow-lg:0 12px 32px -8px rgba(44,24,16,.15);--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;overflow-x:hidden}
+body{background:var(--bg);color:var(--txt);font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;font-size:15px;line-height:1.55;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{max-width:100%;height:auto;display:block}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input{font-family:inherit;font-size:16px}
+h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:900}
+.bg{position:fixed;inset:0;background:radial-gradient(ellipse at top right,rgba(22,163,74,.06),transparent 50%),radial-gradient(ellipse at bottom left,rgba(245,158,11,.05),transparent 50%),linear-gradient(135deg,#FEFCF6 0%,#FEFBF0 100%);z-index:-1;pointer-events:none}
+.shell{max-width:520px;margin:0 auto;min-height:100vh;padding:14px 16px calc(30px + var(--safe-bottom));padding-top:calc(14px + var(--safe-top));position:relative}
+
+/* LOGO */
+.topbar{display:flex;align-items:center;justify-content:center;margin-bottom:20px;padding:6px 0}
+.logo-full{max-width:290px;width:82%;height:auto;margin:0 auto;display:block;filter:drop-shadow(0 10px 24px rgba(22,163,74,.15))}
+
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold-soft);color:var(--gold-deep);padding:6px 14px;border-radius:20px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;border:1px solid var(--gold-border);margin:0 auto 14px;width:fit-content}
+.hero-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
+.hero{text-align:center;margin-bottom:22px}
+.hero h1{font-size:clamp(27px,7.5vw,34px);line-height:1.1;letter-spacing:-1.2px;margin-bottom:12px}
+.hero h1 span{background:linear-gradient(135deg,#16A34A,#F59E0B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:14px;color:var(--muted);font-weight:500;max-width:420px;margin:0 auto;line-height:1.6}
+.hero p b{color:var(--txt);font-weight:800}
+.counter{background:var(--grad-dark);border-radius:20px;padding:18px;margin-bottom:18px;color:#fff;text-align:center;box-shadow:0 12px 32px -12px rgba(44,24,16,.4);position:relative;overflow:hidden}
+.counter::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(245,158,11,.3),transparent 70%)}
+.counter>*{position:relative;z-index:1}
+.counter .lbl{font-size:10.5px;font-weight:800;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.counter .num{font-family:'Outfit',sans-serif;font-size:44px;font-weight:900;color:#FEF3C7;letter-spacing:-2px;line-height:1}
+.counter .sub{font-size:11.5px;color:rgba(255,255,255,.75);font-weight:600;margin-top:4px}
+.card{background:#fff;border:1px solid var(--border);border-radius:22px;padding:22px;box-shadow:var(--shadow-lg);margin-bottom:18px}
+.card-title{font-size:16px;font-weight:900;margin-bottom:4px;text-align:center}
+.card-sub{font-size:12.5px;color:var(--muted);font-weight:600;text-align:center;margin-bottom:18px}
+.field{margin-bottom:14px}
+.field-label{display:block;font-size:10.5px;font-weight:800;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.field-label .req{color:var(--red)}
+.input{width:100%;padding:14px 15px;background:var(--soft-2);border:1.5px solid var(--border-2);border-radius:13px;color:var(--txt);font-size:15.5px;outline:none;transition:all .2s;min-height:50px}
+.input:focus{border-color:var(--green);background:#fff;box-shadow:0 0 0 4px rgba(22,163,74,.1)}
+.ref-input{background:#F0FDF4;border-color:var(--green-border)}
+.btn-submit{width:100%;padding:17px 20px;border-radius:14px;background:var(--grad-primary);color:#fff;font-family:'Outfit',sans-serif;font-weight:900;font-size:16px;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 24px -6px rgba(22,163,74,.5);border:none;cursor:pointer;min-height:56px;margin-top:6px;transition:transform .15s}
+.btn-submit:active{transform:scale(.98)}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.btn-submit svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.benefits{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.benefit{display:flex;align-items:flex-start;gap:12px;padding:12px;background:var(--soft-2);border:1px solid var(--border);border-radius:12px}
+.benefit-icon{width:36px;height:36px;border-radius:10px;background:var(--green-soft);color:var(--green-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.benefit-text{flex:1;min-width:0}
+.benefit-text b{display:block;font-size:13px;font-weight:800;margin-bottom:2px}
+.benefit-text small{font-size:11px;color:var(--muted);font-weight:600;line-height:1.4;display:block}
+.success{display:none}
+.success.show{display:block;animation:fadeIn .4s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.success-hero{text-align:center;margin-bottom:20px}
+.success-icon{width:76px;height:76px;margin:0 auto 16px;border-radius:50%;background:var(--green-soft);border:2px solid var(--green);color:var(--green);font-size:42px;font-weight:900;display:flex;align-items:center;justify-content:center;animation:bounce .6s}
+@keyframes bounce{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.success-hero h2{font-size:22px;font-weight:900;color:var(--green-dark);margin-bottom:8px}
+.success-hero p{font-size:13.5px;color:var(--muted);line-height:1.55;max-width:340px;margin:0 auto}
+.code-box{background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(139,92,246,.03));border:1.5px solid var(--purple-border);border-radius:14px;padding:16px;margin-bottom:14px;text-align:center}
+.code-box .lbl{font-size:10px;font-weight:900;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.code-box .code{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:900;color:var(--txt);letter-spacing:2px}
+.ref-box{background:#F0FDF4;border:1.5px solid var(--green-border);border-radius:14px;padding:16px;margin-bottom:14px}
+.ref-box .title{font-family:'Outfit',sans-serif;font-size:15px;font-weight:900;color:var(--green-dark);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.ref-box .title svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.5}
+.ref-box .sub{font-size:11.5px;color:var(--muted);font-weight:600;margin-bottom:12px;line-height:1.5}
+.ref-box .sub b{color:var(--green-dark);font-weight:800}
+.link-field{background:#fff;border:1px dashed var(--green-border);border-radius:10px;padding:10px 12px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.link-field .txt{flex:1;min-width:0;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.link-field .btn-mini{padding:7px 11px;border-radius:8px;background:var(--green-dark);color:#fff;font-family:'Outfit',sans-serif;font-size:10px;font-weight:900;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:4px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.stat-box{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:14px 12px;text-align:center}
+.stat-box .lbl{font-size:9.5px;color:var(--muted);font-weight:800;text-transform:uppercase;margin-bottom:6px;letter-spacing:.5px}
+.stat-box .val{font-family:'Outfit',sans-serif;font-size:26px;font-weight:900;line-height:1}
+.stat-box .val.green{color:var(--green-dark)}
+.stat-box .val.gold{color:var(--gold-deep)}
+.stat-box .hint{font-size:9.5px;color:var(--muted);font-weight:600;margin-top:4px}
+.comm-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:16px;margin-bottom:14px}
+.comm-card-title{font-family:'Outfit',sans-serif;font-size:13px;font-weight:900;color:var(--txt);margin-bottom:4px}
+.comm-card-sub{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:12px}
+.comm-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--border);font-size:12px}
+.comm-row:last-child{border-bottom:none}
+.comm-badge{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:900;background:var(--soft-2);border:1px solid var(--border);color:var(--txt);padding:3px 7px;border-radius:6px;min-width:32px;text-align:center}
+.comm-row.l1 .comm-badge{background:var(--grad-gold);border-color:transparent;color:#fff}
+.comm-desc{color:var(--txt);font-weight:700}
+.comm-pct{font-family:'Outfit',sans-serif;font-weight:900;color:var(--green-dark);white-space:nowrap;font-size:13px}
+.comm-row.l1 .comm-pct{color:var(--gold-deep)}
+.share-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.share-btn{padding:14px 12px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;color:#fff;min-height:48px;border:none;cursor:pointer}
+.share-wa{background:#25D366;color:#000}
+.share-copy{background:var(--soft-2);border:1.5px solid var(--border-2);color:var(--txt)}
+.share-btn svg{width:18px;height:18px;fill:currentColor;flex-shrink:0}
+.share-copy svg{fill:none;stroke:currentColor;stroke-width:2.4}
+.ranking{background:#fff;border:1px solid var(--border);border-radius:18px;padding:16px;margin-top:18px}
+.ranking-title{font-family:'Outfit',sans-serif;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:var(--txt);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.ranking-title svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:2.4}
+.rank-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--border);font-size:12.5px}
+.rank-row:last-child{border-bottom:none}
+.rank-pos{width:26px;height:26px;border-radius:50%;background:var(--soft-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:900;font-size:11px;color:var(--muted);flex-shrink:0}
+.rank-pos.gold{background:var(--grad-gold);color:#fff;border:none}
+.rank-pos.silver{background:linear-gradient(135deg,#E5E7EB,#9CA3AF);color:#fff;border:none}
+.rank-pos.bronze{background:linear-gradient(135deg,#D97706,#92400E);color:#fff;border:none}
+.rank-name{font-weight:800;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank-count{font-family:'JetBrains Mono',monospace;font-weight:800;color:var(--green-dark);white-space:nowrap;font-size:12px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(30px);background:#2C1810;color:#fff;padding:14px 22px;border-radius:30px;font-weight:800;font-size:13.5px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9999;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.footer{text-align:center;font-size:11px;color:var(--muted);font-weight:600;margin-top:24px;line-height:1.6}
+.footer b{color:var(--green-dark);font-weight:800}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div class="shell">
+
+  <!-- LOGO NOVA -->
+  <div class="topbar">
+    <img src="logo.png" alt="Angus Agro Invest" class="logo-full" onerror="this.style.display='none'">
+  </div>
+
+  <div id="form-state">
+
+    <div class="hero">
+      <div class="hero-badge">🚀 Pré-lançamento</div>
+      <h1>Garanta <span>acesso antecipado</span> às cotas de boi</h1>
+      <p>Entre na <b>lista VIP</b> e ganhe <b>até 15% de comissão</b> em cada indicado que comprar cotas no lançamento.</p>
+    </div>
+
+    <div class="counter">
+      <div class="lbl">Já estão na lista</div>
+      <div class="num" id="counter-num">—</div>
+      <div class="sub">pessoas aguardando o lançamento</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎯 Entrar na lista VIP</div>
+      <div class="card-sub">Leva 15 segundos. Sem custo, sem compromisso.</div>
+
+      <form id="pre-form" onsubmit="handlePreSubmit(event)">
+        <div class="field">
+          <label class="field-label">Nome Completo <span class="req">*</span></label>
+          <input type="text" class="input" id="pre-name" placeholder="João Silva" required maxlength="80" autocomplete="name">
+        </div>
+        <div class="field">
+          <label class="field-label">E-mail <span class="req">*</span></label>
+          <input type="email" class="input" id="pre-email" placeholder="voce@email.com" required maxlength="120" autocomplete="email">
+        </div>
+        <div class="field">
+          <label class="field-label">WhatsApp <span class="req">*</span></label>
+          <input type="text" class="input" id="pre-phone" placeholder="(11) 99999-9999" required maxlength="16" inputmode="tel" autocomplete="tel" oninput="onPhoneInput(this)">
+        </div>
+
+        <div class="field" id="ref-field" style="display:none">
+          <label class="field-label">Você foi indicado por 🎁</label>
+          <input type="text" class="input ref-input" id="pre-ref" readonly>
+        </div>
+
+        <button type="submit" class="btn-submit" id="pre-btn">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <span>Quero entrar na lista</span>
+        </button>
+      </form>
+
+      <div class="benefits">
+        <div class="benefit">
+          <div class="benefit-icon">💰</div>
+          <div class="benefit-text">
+            <b>15% de comissão N1</b>
+            <small>A cada compra da sua indicação direta</small>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">🌐</div>
+          <div class="benefit-text">
+            <b>+ 9 níveis de rede</b>
+            <small>15% · 5% · 3% · 2% · 1% · 1% · 1% · 1% · 0,5% · 0,5%</small>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">⚡</div>
+          <div class="benefit-text">
+            <b>Acesso 24h antes</b>
+            <small>Só a lista VIP entra no primeiro dia</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ranking" id="ranking-box" style="display:none">
+      <div class="ranking-title">
+        <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+        Top indicadores
+      </div>
+      <div id="ranking-list"></div>
+    </div>
+
+    <div class="footer">
+      Seus dados estão seguros. <b>Não enviamos spam.</b><br>
+      Você pode sair da lista quando quiser.
+    </div>
+  </div>
+
+  <div class="success" id="success-state">
+    <div class="success-hero">
+      <div class="success-icon">✓</div>
+      <h2>Você está na lista! 🎉</h2>
+      <p>Compartilhe seu link e comece a construir sua <b>rede de comissões</b>. Você ganha <b>15% na 1ª compra</b> de cada indicado direto.</p>
+    </div>
+
+    <div class="code-box">
+      <div class="lbl">Seu código VIP</div>
+      <div class="code" id="vip-code">—</div>
+    </div>
+
+    <div class="ref-box">
+      <div class="title">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Seu link de indicação
+      </div>
+      <div class="sub">Cada pessoa que entrar pelo seu link e comprar cotas gera <b>15% pra você</b>.</div>
+      <div class="link-field">
+        <div class="txt" id="ref-link">—</div>
+        <button class="btn-mini" onclick="copyLink()">📋 Copiar</button>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="lbl">Indicados</div>
+        <div class="val green" id="my-ref-count">0</div>
+        <div class="hint">pessoas pelo seu link</div>
+      </div>
+      <div class="stat-box">
+        <div class="lbl">Sua comissão N1</div>
+        <div class="val gold">15%</div>
+        <div class="hint">em cada compra</div>
+      </div>
+    </div>
+
+    <div class="comm-card">
+      <div class="comm-card-title">🌐 Sua rede de comissões</div>
+      <div class="comm-card-sub">Ganhe em até 10 níveis da sua rede</div>
+      <div id="comm-list"></div>
+    </div>
+
+    <div class="share-row">
+      <button class="share-btn share-wa" onclick="shareWhats()">
+        <svg viewBox="0 0 24 24"><path d="M20.52 3.449C18.24 1.245 15.24 0.045 12.045 0.045c-6.638 0-12.04 5.401-12.04 12.04 0 2.122.554 4.192 1.606 6.018L0 24l6.184-1.621c1.758.96 3.732 1.466 5.855 1.466h.005c6.638 0 12.041-5.401 12.041-12.04 0-3.217-1.252-6.243-3.526-8.518l-.039-.038z"/></svg>
+        WhatsApp
+      </button>
+      <button class="share-btn share-copy" onclick="copyLink()">
+        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copiar link
+      </button>
+    </div>
+
+    <div style="text-align:center;margin-top:22px;font-size:11.5px;color:var(--muted);font-weight:600;line-height:1.6">
+      A gente te chama no WhatsApp quando o site abrir.<br>
+      Fique de olho! 🐂
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+(function(){
+'use strict';
+
+var CONFIG = {
+  SUPABASE_URL: 'https://rvjkydxjicryinypmlkc.supabase.co',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2amt5ZHhqaWNyeWlueXBtbGtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwNTQ0ODMsImV4cCI6MjEwNjYzMDQ4M30.8CaUaSU1h7-8kquXlBwZc7gE_baaKVw6bfvCE38aZ10'
+};
+
+var ML_LEVELS = [
+  {level:1,pct:'15%',desc:'Indicação direta'},
+  {level:2,pct:'5%',desc:'2º nível'},
+  {level:3,pct:'3%',desc:'3º nível'},
+  {level:4,pct:'2%',desc:'4º nível'},
+  {level:5,pct:'1%',desc:'5º nível'},
+  {level:6,pct:'1%',desc:'6º nível'},
+  {level:7,pct:'1%',desc:'7º nível'},
+  {level:8,pct:'1%',desc:'8º nível'},
+  {level:9,pct:'0,5%',desc:'9º nível'},
+  {level:10,pct:'0,5%',desc:'10º nível'}
+];
+
+var supabase = null;
+try { supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY); } catch(e){}
+
+var pendingRef = null;
+var myRefCode = null;
+var myRefLink = null;
+var myRefCount = 0;
+
+function $(id){ return document.getElementById(id); }
+function toast(msg){ var el=$('toast'); if(!el) return; el.innerHTML=msg; el.classList.add('show'); clearTimeout(el._t); el._t=setTimeout(function(){ el.classList.remove('show'); }, 3500); }
+function maskPhone(v){ v=v.replace(/\D/g,'').slice(0,11); if(v.length<=10) return v.replace(/(\d{2})(\d)/,'($1) $2').replace(/(\d{4})(\d)/,'$1-$2'); return v.replace(/(\d{2})(\d)/,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2'); }
+function onPhoneInput(el){ el.value = maskPhone(el.value); }
+window.onPhoneInput = onPhoneInput;
+function validPhone(tel){ var t=(tel||'').replace(/\D/g,''); if(t.length<10||t.length>11) return false; var ddd=parseInt(t.substr(0,2),10); if(ddd<11||ddd>99) return false; if(t.length===11&&t[2]!=='9') return false; return true; }
+
+function renderCommLadder(){
+  var el = $('comm-list'); if(!el) return;
+  el.innerHTML = ML_LEVELS.map(function(L){
+    return '<div class="comm-row '+(L.level===1?'l1':'')+'">' +
+      '<div class="comm-badge">N'+L.level+'</div>' +
+      '<div class="comm-desc">'+L.desc+'</div>' +
+      '<div class="comm-pct">'+L.pct+'</div>' +
+    '</div>';
+  }).join('');
+}
+
+async function updateCounter(){
+  if(!supabase){ $('counter-num').textContent = '127'; return; }
+  try {
+    var r = await supabase.rpc('count_pre_registrations');
+    var n = (r.error || r.data == null) ? 127 : Number(r.data);
+    if(n < 100) n = 100 + n;
+    $('counter-num').textContent = n.toLocaleString('pt-BR');
+  } catch(e){ $('counter-num').textContent = '127'; }
+}
+
+async function loadRanking(){
+  if(!supabase) return;
+  try {
+    var r = await supabase.rpc('pre_top_referrers');
+    if(r.error || !r.data || !r.data.length) return;
+    var list = r.data.filter(function(x){ return Number(x.referral_count) > 0; });
+    if(!list.length) return;
+    var html = list.map(function(item, i){
+      var posClass = i === 0 ? 'gold' : (i === 1 ? 'silver' : (i === 2 ? 'bronze' : ''));
+      return '<div class="rank-row">' +
+        '<div class="rank-pos '+posClass+'">'+(i+1)+'</div>' +
+        '<div class="rank-name">'+item.name+'</div>' +
+        '<div class="rank-count">'+item.referral_count+'</div>' +
+      '</div>';
+    }).join('');
+    $('ranking-list').innerHTML = html;
+    $('ranking-box').style.display = 'block';
+  } catch(e){}
+}
+
+async function loadMyStats(){
+  if(!supabase || !myRefCode) return;
+  try {
+    var r = await supabase.rpc('get_pre_referrer', { p_ref_code: myRefCode });
+    if(r.error || !r.data || !r.data.length) return;
+    var data = r.data[0];
+    myRefCount = Number(data.referral_count) || 0;
+    $('my-ref-count').textContent = myRefCount;
+  } catch(e){}
+}
+
+async function handlePreSubmit(e){
+  e.preventDefault();
+  var name = ($('pre-name').value||'').trim();
+  var email = ($('pre-email').value||'').trim().toLowerCase();
+  var phone = ($('pre-phone').value||'').trim();
+  var btn = $('pre-btn');
+
+  if(!name || name.length < 3){ toast('Digite seu nome completo.'); return; }
+  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ toast('E-mail inválido.'); return; }
+  if(!validPhone(phone)){ toast('WhatsApp inválido.'); return; }
+
+  btn.disabled = true;
+  var original = btn.innerHTML;
+  btn.innerHTML = '<div class="spinner"></div><span>Entrando...</span>';
+
+  try {
+    if(!supabase) throw new Error('Sistema indisponível. Tente novamente.');
+
+    var check = await supabase.from('pre_registrations').select('ref_code, referral_count').eq('email', email).maybeSingle();
+
+    if(check.data){
+      myRefCode = check.data.ref_code;
+      myRefCount = Number(check.data.referral_count) || 0;
+      showSuccess();
+      return;
+    }
+
+    var vipCode = 'ANG-VIP-' + Math.random().toString(36).slice(2,8).toUpperCase();
+
+    var ins = await supabase.from('pre_registrations').insert({
+      name: name,
+      email: email,
+      phone: phone,
+      source: pendingRef || (document.referrer ? document.referrer.slice(0, 100) : 'direto'),
+      ref_code: vipCode,
+      referred_by: pendingRef || null,
+      user_agent: navigator.userAgent.slice(0, 200)
+    });
+
+    if(ins.error){
+      if(String(ins.error.message).indexOf('duplicate') !== -1){
+        var c2 = await supabase.from('pre_registrations').select('ref_code, referral_count').eq('email', email).maybeSingle();
+        if(c2.data){
+          myRefCode = c2.data.ref_code;
+          myRefCount = Number(c2.data.referral_count) || 0;
+          showSuccess();
+          return;
+        }
+      }
+      throw new Error(ins.error.message);
+    }
+
+    myRefCode = vipCode;
+    myRefCount = 0;
+
+    if(pendingRef){
+      try {
+        await supabase.rpc('register_pre_referral', {
+          p_ref_code: pendingRef,
+          p_new_email: email
+        });
+      } catch(e){ console.warn('ref:', e); }
+    }
+
+    showSuccess();
+    loadRanking();
+  } catch(err){
+    console.error(err);
+    toast(err.message || 'Erro. Tente novamente.');
+    btn.disabled = false;
+    btn.innerHTML = original;
+  }
+}
+window.handlePreSubmit = handlePreSubmit;
+
+function showSuccess(){
+  $('form-state').style.display = 'none';
+  $('success-state').classList.add('show');
+  $('vip-code').textContent = myRefCode;
+
+  var base = location.origin + location.pathname;
+  myRefLink = base + '?ref=' + myRefCode;
+  $('ref-link').textContent = myRefLink;
+
+  $('my-ref-count').textContent = myRefCount;
+
+  setTimeout(loadMyStats, 800);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function shareWhats(){
+  if(!myRefLink) return;
+  var counterTxt = $('counter-num').textContent;
+  var msg = '🐂 Entrei na lista VIP do Angus Agro!\n\n' +
+            'Já são ' + counterTxt + ' pessoas na fila.\n' +
+            'Garanta acesso antecipado às cotas:\n\n' +
+            myRefLink;
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+}
+window.shareWhats = shareWhats;
+
+function copyLink(){
+  if(!myRefLink) return;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(myRefLink).then(function(){
+      toast('✅ Link copiado!');
+    }).catch(function(){ toast('Link: ' + myRefLink); });
+  } else { toast('Link: ' + myRefLink); }
+}
+window.copyLink = copyLink;
+
+try {
+  var params = new URLSearchParams(location.search);
+  var ref = params.get('ref');
+  if(ref){
+    pendingRef = ref.toUpperCase().trim();
+    $('ref-field').style.display = 'block';
+    $('pre-ref').value = pendingRef;
+  }
+} catch(e){}
+
+renderCommLadder();
+updateCounter();
+loadRanking();
+
+})();
+</script>
+</body>
+</html>
