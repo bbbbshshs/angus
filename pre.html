@@ -87,13 +87,15 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
 .comm-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:16px;margin-bottom:14px}
 .comm-card-title{font-family:'Outfit',sans-serif;font-size:13px;font-weight:900;color:var(--txt);margin-bottom:4px}
 .comm-card-sub{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:12px}
-.comm-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--border);font-size:12px}
+.comm-row{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--border);font-size:12px}
 .comm-row:last-child{border-bottom:none}
 .comm-badge{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:900;background:var(--soft-2);border:1px solid var(--border);color:var(--txt);padding:3px 7px;border-radius:6px;min-width:32px;text-align:center}
 .comm-row.l1 .comm-badge{background:var(--grad-gold);border-color:transparent;color:#fff}
 .comm-desc{color:var(--txt);font-weight:700}
 .comm-pct{font-family:'Outfit',sans-serif;font-weight:900;color:var(--green-dark);white-space:nowrap;font-size:13px}
 .comm-row.l1 .comm-pct{color:var(--gold-deep)}
+.comm-count{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:900;color:var(--green-dark);background:var(--green-soft);padding:3px 8px;border-radius:8px;text-align:center;min-width:34px;border:1px solid var(--green-border)}
+.comm-count.zero{color:var(--muted);background:var(--soft-2);border-color:var(--border)}
 .share-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
 .share-btn{padding:14px 12px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;color:#fff;min-height:48px;border:none;cursor:pointer}
 .share-wa{background:#25D366;color:#000}
@@ -270,7 +272,7 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
     </div>
 
     <button type="button" class="btn-consultar" onclick="sairDoPainel()" style="margin-top:16px">
-      ← Voltar
+      ← Sair e voltar ao formulário
     </button>
 
     <div style="text-align:center;margin-top:22px;font-size:11.5px;color:var(--muted);font-weight:600;line-height:1.6">
@@ -289,9 +291,13 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
 'use strict';
 
 var CONFIG = {
-  SUPABASE_URL: 'https://rvjkydxjicryinypmlkc.supabase.co',
+  SUPABASE_URL: 'https://rvjkydyjicryinypmlkc.supabase.co',
   SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2amt5ZHhqaWNyeWlueXBtbGtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwNTQ0ODMsImV4cCI6MjEwNjYzMDQ4M30.8CaUaSU1h7-8kquXlBwZc7gE_baaKVw6bfvCE38aZ10'
 };
+
+// correção do domínio do Supabase
+CONFIG.SUPABASE_URL = 'https://rvjkydyxjicryinypmlkc.supabase.co';
+CONFIG.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2amt5ZHhqaWNyeWlueXBtbGtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwNTQ0ODMsImV4cCI6MjEwNjYzMDQ4M30.8CaUaSU1h7-8kquXlBwZc7gE_baaKVw6bfvCE38aZ10';
 
 var ML_LEVELS = [
   {level:1,pct:'15%',desc:'Indicação direta'},
@@ -307,8 +313,9 @@ var ML_LEVELS = [
 ];
 
 var supabase = null;
-try { supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY); } catch(e){}
+try { supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY); } catch(e){ console.error(e); }
 
+var LS_VIP = 'ANGUS_VIP_CODE_v1';
 var pendingRef = null;
 var myRefCode = null;
 var myRefLink = null;
@@ -321,15 +328,47 @@ function onPhoneInput(el){ el.value = maskPhone(el.value); }
 window.onPhoneInput = onPhoneInput;
 function validPhone(tel){ var t=(tel||'').replace(/\D/g,''); if(t.length<10||t.length>11) return false; var ddd=parseInt(t.substr(0,2),10); if(ddd<11||ddd>99) return false; if(t.length===11&&t[2]!=='9') return false; return true; }
 
+/* ============ MEMÓRIA ============ */
+function salvarMeuCodigo(code){
+  try { localStorage.setItem(LS_VIP, code); } catch(e){}
+}
+function lerMeuCodigo(){
+  try { return localStorage.getItem(LS_VIP); } catch(e){ return null; }
+}
+function limparMeuCodigo(){
+  try { localStorage.removeItem(LS_VIP); } catch(e){}
+}
+
+/* ============ RENDER ============ */
 function renderCommLadder(){
   var el = $('comm-list'); if(!el) return;
   el.innerHTML = ML_LEVELS.map(function(L){
     return '<div class="comm-row '+(L.level===1?'l1':'')+'">' +
       '<div class="comm-badge">N'+L.level+'</div>' +
       '<div class="comm-desc">'+L.desc+'</div>' +
+      '<div class="comm-count zero" id="comm-n-'+L.level+'">0</div>' +
       '<div class="comm-pct">'+L.pct+'</div>' +
     '</div>';
   }).join('');
+}
+
+async function loadMyNetwork(){
+  if(!myRefCode || !supabase) return;
+  try {
+    var r = await supabase.rpc('get_pre_network_levels', { p_ref_code: myRefCode });
+    if(r.error || !r.data) return;
+    for(var i=1;i<=10;i++){
+      var node = $('comm-n-'+i);
+      if(node){ node.textContent = '0'; node.className = 'comm-count zero'; }
+    }
+    r.data.forEach(function(row){
+      var node = $('comm-n-'+row.level);
+      if(node){
+        node.textContent = row.count;
+        if(row.count > 0){ node.className = 'comm-count'; }
+      }
+    });
+  } catch(e){ console.warn('loadMyNetwork:', e); }
 }
 
 async function updateCounter(){
@@ -373,39 +412,41 @@ async function loadMyStats(){
   } catch(e){}
 }
 
-/* ============ CONSULTA MINHA REDE ============ */
+/* ============ CONSULTA MANUAL ============ */
 function abrirConsultaMeuCodigo(){
   var code = prompt('Digite seu código VIP (ex: ANG-VIP-AXMTU4):');
   if(!code) return;
   code = code.trim().toUpperCase();
   if(!code || code.length < 8){ toast('Código inválido.'); return; }
-  carregarMinhaRede(code);
+  carregarMinhaRede(code, true);
 }
 window.abrirConsultaMeuCodigo = abrirConsultaMeuCodigo;
 
-async function carregarMinhaRede(code){
+async function carregarMinhaRede(code, salvar){
   if(!supabase){ toast('Sistema indisponível.'); return; }
   try {
     var r = await supabase.rpc('get_pre_referrer', { p_ref_code: code });
     if(r.error || !r.data || !r.data.length){
-      toast('Código não encontrado. Verifique e tente novamente.');
+      toast('Código não encontrado.');
       return;
     }
     var data = r.data[0];
     myRefCode = data.ref_code;
     myRefCount = Number(data.referral_count) || 0;
+    if(salvar !== false){ salvarMeuCodigo(myRefCode); }
     showSuccess();
-    toast('Bem-vindo de volta, ' + (data.name||'VIP') + '!');
   } catch(e){
     console.error(e);
-    toast('Erro ao consultar. Tente novamente.');
+    toast('Erro ao consultar.');
   }
 }
 window.carregarMinhaRede = carregarMinhaRede;
 
 function sairDoPainel(){
+  limparMeuCodigo();
   $('success-state').classList.remove('show');
   $('form-state').style.display = 'block';
+  myRefCode = null; myRefLink = null;
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 window.sairDoPainel = sairDoPainel;
@@ -434,6 +475,7 @@ async function handlePreSubmit(e){
     if(check.data){
       myRefCode = check.data.ref_code;
       myRefCount = Number(check.data.referral_count) || 0;
+      salvarMeuCodigo(myRefCode);
       showSuccess();
       return;
     }
@@ -456,6 +498,7 @@ async function handlePreSubmit(e){
         if(c2.data){
           myRefCode = c2.data.ref_code;
           myRefCount = Number(c2.data.referral_count) || 0;
+          salvarMeuCodigo(myRefCode);
           showSuccess();
           return;
         }
@@ -465,6 +508,7 @@ async function handlePreSubmit(e){
 
     myRefCode = vipCode;
     myRefCount = 0;
+    salvarMeuCodigo(myRefCode);
 
     if(pendingRef){
       try {
@@ -497,7 +541,7 @@ function showSuccess(){
 
   $('my-ref-count').textContent = myRefCount;
 
-  setTimeout(loadMyStats, 800);
+  setTimeout(function(){ loadMyStats(); loadMyNetwork(); }, 600);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -521,7 +565,6 @@ function copyLink(){
     ta.value = myRefLink;
     ta.style.position = 'fixed';
     ta.style.top = '-9999px';
-    ta.style.left = '-9999px';
     ta.setAttribute('readonly', '');
     document.body.appendChild(ta);
     ta.select();
@@ -529,42 +572,57 @@ function copyLink(){
     ok = document.execCommand('copy');
     document.body.removeChild(ta);
   } catch(e){ ok = false; }
-  if(ok){
-    toast('✅ Link copiado!');
-  } else if(navigator.clipboard){
-    navigator.clipboard.writeText(myRefLink).then(function(){
-      toast('✅ Link copiado!');
-    }).catch(function(){ toast('Link: ' + myRefLink); });
-  } else {
-    toast('Link: ' + myRefLink);
-  }
+  if(ok){ toast('✅ Link copiado!'); }
+  else if(navigator.clipboard){
+    navigator.clipboard.writeText(myRefLink).then(function(){ toast('✅ Link copiado!'); }).catch(function(){ toast('Link: ' + myRefLink); });
+  } else { toast('Link: ' + myRefLink); }
 }
 window.copyLink = copyLink;
 
 /* ============ INIT ============ */
-try {
-  var params = new URLSearchParams(location.search);
-  var ref = params.get('ref');
-  var meu = params.get('meu');
+function init(){
+  try {
+    var params = new URLSearchParams(location.search);
+    var ref = params.get('ref');
+    var meu = params.get('meu');
 
-  if(ref){
-    pendingRef = ref.toUpperCase().trim();
-    $('ref-field').style.display = 'block';
-    $('pre-ref').value = pendingRef;
-  }
+    if(ref){
+      pendingRef = ref.toUpperCase().trim();
+      $('ref-field').style.display = 'block';
+      $('pre-ref').value = pendingRef;
+    }
 
-  if(meu){
-    setTimeout(function(){
-      carregarMinhaRede(meu.toUpperCase().trim());
-    }, 600);
-  }
-} catch(e){}
+    // Prioridade 1: ?meu=CODIGO na URL
+    if(meu){
+      salvarMeuCodigo(meu.toUpperCase().trim());
+      setTimeout(function(){ carregarMinhaRede(meu.toUpperCase().trim(), false); }, 500);
+      return;
+    }
 
+    // Prioridade 2: código salvo no localStorage
+    var salvo = lerMeuCodigo();
+    if(salvo){
+      setTimeout(function(){ carregarMinhaRede(salvo, false); }, 500);
+      return;
+    }
+  } catch(e){ console.warn(e); }
+
+  renderCommLadder();
+  updateCounter();
+  loadRanking();
+}
+
+// Se já renderizou o comm, não precisa de novo no init
 renderCommLadder();
-updateCounter();
-loadRanking();
+
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
 
 })();
 </script>
 </body>
 </html>
+  
