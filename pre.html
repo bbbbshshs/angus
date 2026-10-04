@@ -21,11 +21,8 @@ input{font-family:inherit;font-size:16px}
 h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:900}
 .bg{position:fixed;inset:0;background:radial-gradient(ellipse at top right,rgba(22,163,74,.06),transparent 50%),radial-gradient(ellipse at bottom left,rgba(245,158,11,.05),transparent 50%),linear-gradient(135deg,#FEFCF6 0%,#FEFBF0 100%);z-index:-1;pointer-events:none}
 .shell{max-width:520px;margin:0 auto;min-height:100vh;padding:14px 16px calc(30px + var(--safe-bottom));padding-top:calc(14px + var(--safe-top));position:relative}
-
-/* LOGO */
 .topbar{display:flex;align-items:center;justify-content:center;margin-bottom:20px;padding:6px 0}
 .logo-full{max-width:290px;width:82%;height:auto;margin:0 auto;display:block;filter:drop-shadow(0 10px 24px rgba(22,163,74,.15))}
-
 .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold-soft);color:var(--gold-deep);padding:6px 14px;border-radius:20px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;border:1px solid var(--gold-border);margin:0 auto 14px;width:fit-content}
 .hero-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);animation:pulse 1.6s infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
@@ -53,6 +50,8 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
 .btn-submit:active{transform:scale(.98)}
 .btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .btn-submit svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.btn-consultar{display:block;width:100%;margin-top:14px;padding:13px 18px;border-radius:12px;background:var(--soft-2);border:1.5px dashed var(--border-2);color:var(--txt);font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:all .15s}
+.btn-consultar:active{transform:scale(.97);background:var(--soft)}
 .benefits{display:flex;flex-direction:column;gap:10px;margin-top:20px}
 .benefit{display:flex;align-items:flex-start;gap:12px;padding:12px;background:var(--soft-2);border:1px solid var(--border);border-radius:12px}
 .benefit-icon{width:36px;height:36px;border-radius:10px;background:var(--green-soft);color:var(--green-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
@@ -126,7 +125,6 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
 
 <div class="shell">
 
-  <!-- LOGO NOVA -->
   <div class="topbar">
     <img src="logo.png" alt="Angus Agro Invest" class="logo-full" onerror="this.style.display='none'">
   </div>
@@ -173,6 +171,10 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
           <span>Quero entrar na lista</span>
         </button>
       </form>
+
+      <button type="button" class="btn-consultar" onclick="abrirConsultaMeuCodigo()">
+        🔍 Já me cadastrei — ver minha rede
+      </button>
 
       <div class="benefits">
         <div class="benefit">
@@ -267,9 +269,13 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
       </button>
     </div>
 
+    <button type="button" class="btn-consultar" onclick="sairDoPainel()" style="margin-top:16px">
+      ← Voltar
+    </button>
+
     <div style="text-align:center;margin-top:22px;font-size:11.5px;color:var(--muted);font-weight:600;line-height:1.6">
-      A gente te chama no WhatsApp quando o site abrir.<br>
-      Fique de olho! 🐂
+      Guarde seu código VIP para consultar sua rede depois.<br>
+      A gente te chama no WhatsApp quando o site abrir. 🐂
     </div>
   </div>
 
@@ -277,7 +283,7 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
 
 <div class="toast" id="toast"></div>
 
-
+  
 <script>
 (function(){
 'use strict';
@@ -367,6 +373,44 @@ async function loadMyStats(){
   } catch(e){}
 }
 
+/* ============ CONSULTA MINHA REDE ============ */
+function abrirConsultaMeuCodigo(){
+  var code = prompt('Digite seu código VIP (ex: ANG-VIP-AXMTU4):');
+  if(!code) return;
+  code = code.trim().toUpperCase();
+  if(!code || code.length < 8){ toast('Código inválido.'); return; }
+  carregarMinhaRede(code);
+}
+window.abrirConsultaMeuCodigo = abrirConsultaMeuCodigo;
+
+async function carregarMinhaRede(code){
+  if(!supabase){ toast('Sistema indisponível.'); return; }
+  try {
+    var r = await supabase.rpc('get_pre_referrer', { p_ref_code: code });
+    if(r.error || !r.data || !r.data.length){
+      toast('Código não encontrado. Verifique e tente novamente.');
+      return;
+    }
+    var data = r.data[0];
+    myRefCode = data.ref_code;
+    myRefCount = Number(data.referral_count) || 0;
+    showSuccess();
+    toast('Bem-vindo de volta, ' + (data.name||'VIP') + '!');
+  } catch(e){
+    console.error(e);
+    toast('Erro ao consultar. Tente novamente.');
+  }
+}
+window.carregarMinhaRede = carregarMinhaRede;
+
+function sairDoPainel(){
+  $('success-state').classList.remove('show');
+  $('form-state').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+window.sairDoPainel = sairDoPainel;
+
+/* ============ CADASTRO ============ */
 async function handlePreSubmit(e){
   e.preventDefault();
   var name = ($('pre-name').value||'').trim();
@@ -457,6 +501,7 @@ function showSuccess(){
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+/* ============ COMPARTILHAR ============ */
 function shareWhats(){
   if(!myRefLink) return;
   var counterTxt = $('counter-num').textContent;
@@ -468,7 +513,7 @@ function shareWhats(){
 }
 window.shareWhats = shareWhats;
 
-  function copyLink(){
+function copyLink(){
   if(!myRefLink) return;
   var ok = false;
   try {
@@ -476,6 +521,7 @@ window.shareWhats = shareWhats;
     ta.value = myRefLink;
     ta.style.position = 'fixed';
     ta.style.top = '-9999px';
+    ta.style.left = '-9999px';
     ta.setAttribute('readonly', '');
     document.body.appendChild(ta);
     ta.select();
@@ -495,13 +541,22 @@ window.shareWhats = shareWhats;
 }
 window.copyLink = copyLink;
 
+/* ============ INIT ============ */
 try {
   var params = new URLSearchParams(location.search);
   var ref = params.get('ref');
+  var meu = params.get('meu');
+
   if(ref){
     pendingRef = ref.toUpperCase().trim();
     $('ref-field').style.display = 'block';
     $('pre-ref').value = pendingRef;
+  }
+
+  if(meu){
+    setTimeout(function(){
+      carregarMinhaRede(meu.toUpperCase().trim());
+    }, 600);
   }
 } catch(e){}
 
