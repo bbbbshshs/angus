@@ -83,7 +83,7 @@ a{text-decoration:none;color:inherit}
 .btn-block{width:100%}
 .btn-lg{padding:16px 24px;font-size:15px;min-height:52px;border-radius:14px}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-  .hero-banner{margin-bottom:14px;border-radius:18px;overflow:hidden;background:var(--grad-dark);position:relative;box-shadow:0 12px 32px -12px rgba(44,24,16,.3)}
+.hero-banner{margin-bottom:14px;border-radius:18px;overflow:hidden;background:var(--grad-dark);position:relative;box-shadow:0 12px 32px -12px rgba(44,24,16,.3)}
 .hero-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(22,163,74,.55) 100%);pointer-events:none}
 .hero-banner-badge{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.95);color:var(--green-dark);padding:5px 10px;border-radius:20px;font-size:10px;font-weight:900;text-transform:uppercase;z-index:2}
 .hero-banner img{width:100%;max-height:280px;object-fit:cover;opacity:0;transition:opacity .4s}
@@ -558,15 +558,6 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
 .share-row{grid-template-columns:1fr}
 .community-row.three{grid-template-columns:1fr}
 }
-.cow.bonus{border-color:#A78BFA;background:linear-gradient(180deg,#fff 0%,#F5F3FF 100%)}
-.cow.bonus .cow-head{background:linear-gradient(90deg,#EDE9FE,#DDD6FE)}
-.cow.bonus .cow-tier{background:#EDE9FE;color:#5B21B6}
-.cow.bonus .cow-dot{background:#7C3AED;box-shadow:0 0 8px #7C3AED}
-.cow.bonus .cow-icon{background:linear-gradient(135deg,#DDD6FE,#C4B5FD);color:#5B21B6;border-color:#A78BFA}
-.cow.bonus .cow-yield{background:#EDE9FE;color:#5B21B6}
-.cow.bonus .cow-track-badge{background:linear-gradient(135deg,#5B21B6,#7C3AED)}
-.cow.bonus .cow-cycle-fill{background:linear-gradient(90deg,#A78BFA,#7C3AED)}
-.bonus-tag{display:inline-block;background:#7C3AED;color:#fff;font-size:9px;font-weight:900;padding:2px 7px;border-radius:6px;text-transform:uppercase;margin-left:6px}
 </style>
 </head>
 
@@ -941,7 +932,6 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
   </nav>
 </div>
 
-
 <button type="button" class="apk-float" onclick="openApkModal()" aria-label="Baixar app">
   <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
 </button>
@@ -1105,9 +1095,9 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
     <div class="admin-tabs">
       <button type="button" class="admin-tab active" data-atab="dash" onclick="adminTab('dash')">📊 Dashboard</button>
       <button type="button" class="admin-tab" data-atab="wds" onclick="adminTab('wds')">💰 Saques</button>
-      <button type="button" class="admin-tab" data-atab="bonus" onclick="adminTab('bonus')">💎 Bônus</button>
+      <button type="button" class="admin-tab" data-atab="bonus" onclick="adminTab('bonus')">🎁 Cota Líder</button>
       <button type="button" class="admin-tab" data-atab="pre" onclick="adminTab('pre')">📋 Pré-cadastros</button>
-      <button type="button" class="admin-tab" data-atab="promos" onclick="adminTab('promos')">🎁 Promoções</button>
+      <button type="button" class="admin-tab" data-atab="promos" onclick="adminTab('promos')">📢 Promoções</button>
       <button type="button" class="admin-tab" data-atab="infl" onclick="adminTab('infl')">🌟 Influencers</button>
     </div>
     <div class="admin-body" id="admin-body"></div>
@@ -1696,7 +1686,6 @@ async function openPix(planId){
           color: { dark: '#2C1810', light: '#FFFFFF' }
         }, function(err){
           if(err){
-            console.warn('QR toCanvas erro:', err);
             window.QRCode.toDataURL(data.qrCode, { width: size, margin: 1 }, function(err2, url){
               if(err2){
                 qrBox.innerHTML = '<div style="padding:14px;font-size:11px;color:#78716C;text-align:center">Copie o código PIX abaixo</div>';
@@ -2198,7 +2187,7 @@ async function syncCotasFromDB(){
         uid: c.uid, trackId: c.track_id, planId: c.plan_id, cost: Number(c.cost),
         rate: Number(c.rate), daily: Number(c.daily), totalProfit: Number(c.total_profit),
         name: c.name, activatedAt: new Date(c.activated_at).getTime(),
-        daysCredited: c.days_credited, finished: c.finished
+        daysCredited: c.days_credited, finished: c.finished, isBonus: c.is_bonus
       };
     });
     renderRobots();
@@ -2224,23 +2213,23 @@ function renderRobots(){
     var earned = daysCredited * (r.daily||0);
     var ratePct = ((r.rate||0.052) * 100).toFixed(2).replace('.',',');
     var info = getTrackingInfo(r);
-    var isBonus = r.planId === 'bonus';
     var el = document.createElement('div');
-    el.className = 'cow ' + (finished ? 'finished' : 'ready') + (isBonus ? ' bonus' : '');
+    el.className = 'cow ' + (finished ? 'finished' : 'ready');
     el.setAttribute('data-uid', r.uid);
     el.innerHTML =
-      '<div class="cow-head"><div class="cow-dot"></div><div class="cow-lbl">'+(isBonus?'BÔNUS · NÃO SACÁVEL':(finished?'CICLO COMPLETO':'NO PASTO · RENDENDO'))+'</div><div class="cow-tier">DIA '+daysCredited+'/'+CYCLE_DAYS+'</div></div>' +
+      '<div class="cow-head"><div class="cow-dot"></div><div class="cow-lbl">'+(finished?'CICLO COMPLETO':'NO PASTO · RENDENDO')+'</div><div class="cow-tier">DIA '+daysCredited+'/'+CYCLE_DAYS+'</div></div>' +
       '<div class="cow-body">' +
         '<div class="cow-icon">🐂</div>' +
-        '<div class="cow-name">'+r.name+(isBonus?' <span class="bonus-tag">Bônus · não sacável</span>':'')+'</div>' +
+        '<div class="cow-name">'+r.name+'</div>' +
         '<div class="cow-yield">+ '+fmt(r.daily)+' / dia · '+ratePct+'%</div>' +
         (r.trackId ? '<div class="cow-track-badge">🔍 '+r.trackId+'</div>' : '') +
         '<div class="cow-cycle"><div class="cow-cycle-head"><span class="cow-cycle-day">'+(finished?'Ciclo finalizado':(info.currentStage.icon+' '+info.currentStage.title))+'</span><span class="cow-cycle-pct">'+pct+'%</span></div><div class="cow-cycle-bar"><div class="cow-cycle-fill" style="width:'+pct+'%"></div></div></div>' +
-    '<div class="cow-totals" style="grid-template-columns:1fr 1fr 1fr">' +
-  '<div class="cow-total-box"><div class="lbl">'+(isBonus?'Valor do bônus':'Aportado')+'</div><div class="val" style="color:#1A1410">'+fmt(r.cost)+'</div></div>' +
-  '<div class="cow-total-box earned"><div class="lbl">Já rendeu</div><div class="val">+'+fmt(earned)+'</div></div>' +
-  '<div class="cow-total-box pending"><div class="lbl">Total ciclo</div><div class="val">'+fmt(r.totalProfit||0)+'</div></div>' +
-'</div>' +    '<div class="cow-status">'+(finished?'Cota pronta':('Status: '+info.currentStage.title))+'</div>' +
+        '<div class="cow-totals" style="grid-template-columns:1fr 1fr 1fr">' +
+          '<div class="cow-total-box"><div class="lbl">Aportado</div><div class="val" style="color:#1A1410">'+fmt(r.cost)+'</div></div>' +
+          '<div class="cow-total-box earned"><div class="lbl">Já rendeu</div><div class="val">+'+fmt(earned)+'</div></div>' +
+          '<div class="cow-total-box pending"><div class="lbl">Total ciclo</div><div class="val">'+fmt(r.totalProfit||0)+'</div></div>' +
+        '</div>' +
+        '<div class="cow-status">'+(finished?'Cota pronta':('Status: '+info.currentStage.title))+'</div>' +
         '<button type="button" class="cow-btn track" data-action="track">🔍 Rastrear cota</button>' +
         '<button type="button" class="cow-btn" data-action="live">👁 Ver ao vivo</button>' +
       '</div>';
@@ -2474,7 +2463,7 @@ async function renderAdminDash(body){
   } catch(e){ body.innerHTML = '<div class="admin-empty">Erro: '+e.message+'</div>'; }
 }
 
-/* ==================== SAQUES ADMIN v2 ==================== */
+/* ==================== SAQUES ADMIN ==================== */
 var adminWdFilter = { status: 'pending', range: 'all' };
 
 function getRangeDates(range){
@@ -2592,7 +2581,7 @@ function openWdPayModal(id){
     '<div style="text-align:left">' +
       '<div style="background:#F0FDF4;border:1.5px solid #86EFAC;border-radius:12px;padding:14px;margin-bottom:14px">' +
         '<div style="font-size:11px;color:#166534;font-weight:800;text-transform:uppercase;margin-bottom:6px">Confirmar pagamento</div>' +
-        '<div style="font-size:11px;color:#166534;line-height:1.5">O saque será marcado como <b>PAGO</b>. O saldo já foi descontado no momento do pedido. Ação irreversível.</div>' +
+        '<div style="font-size:11px;color:#166534;line-height:1.5">O saque será marcado como <b>PAGO</b>. O saldo já foi descontado no momento do pedido.</div>' +
       '</div>' +
       '<label style="font-size:11px;font-weight:800;color:#78716C;text-transform:uppercase">ID/TXID do PIX (opcional)</label>' +
       '<input type="text" id="wd-pay-txid" placeholder="Ex: E123456789" style="width:100%;padding:11px;border:1.5px solid #E7E5E4;border-radius:10px;font-size:13px;margin:6px 0 14px;font-family:inherit">' +
@@ -2735,23 +2724,33 @@ async function exportWithdrawalsCSV(){
   } catch(e){ toast('Erro: '+e.message); }
 }
 
-/* ==================== BÔNUS ==================== */
+/* ==================== COTA LÍDER (antigo bônus) ==================== */
 async function renderAdminBonus(body){
   body.innerHTML =
-    '<div class="admin-section-title">💎 Adicionar saldo bônus</div>' +
-    '<p style="font-size:11px;color:#78716C;margin-bottom:12px;line-height:1.5">Saldo <b>NÃO sacável</b>. Apenas rende — o rendimento cai como saldo normal na carteira.</p>' +
+    '<div class="admin-section-title">🎁 Atribuir cota de líder</div>' +
+    '<p style="font-size:11px;color:#78716C;margin-bottom:12px;line-height:1.5">Escolha um plano e atribua ao indicador. Ele vê a cota <b>igual a uma compra normal</b>.</p>' +
     '<input type="text" class="admin-input" id="bonus-id" placeholder="ID, código ANG-XXXX ou public_id">' +
-    '<input type="number" class="admin-input" id="bonus-amount" placeholder="Valor do bônus" min="1" step="0.01">' +
-    '<input type="number" class="admin-input" id="bonus-rate" placeholder="Taxa diária % (padrão 3)" value="3" min="0.1" max="50" step="0.1">' +
-    '<input type="number" class="admin-input" id="bonus-days" placeholder="Duração dias (padrão 20)" value="20" min="1" max="365">' +
-    '<button type="button" class="btn btn-purple btn-block" onclick="createBonus()" style="margin-bottom:20px">💎 Adicionar bônus</button>' +
-    '<div class="admin-section-title">📋 Bônus recentes</div>' +
+    '<select class="admin-input" id="bonus-plan" style="font-weight:700">' +
+      '<option value="p1">🐂 Bezerro Nelore — R$ 25</option>' +
+      '<option value="p2">🐂 Novilha Angus — R$ 50</option>' +
+      '<option value="p3" selected>🐂 Boi Remo — R$ 100</option>' +
+      '<option value="p4">🐂 Boi Nagai — R$ 250</option>' +
+      '<option value="p5">🐂 Boi Chopin — R$ 500</option>' +
+      '<option value="p6">🐂 Boi Golias — R$ 1.000</option>' +
+      '<option value="p7">🐂 Boi Taj Mahal — R$ 2.500</option>' +
+      '<option value="p8">🐂 Boi Everest — R$ 5.000</option>' +
+      '<option value="p9">🐂 Boi Império — R$ 7.500</option>' +
+      '<option value="p10">🐂 Boi Midas — R$ 10.000</option>' +
+    '</select>' +
+    '<button type="button" class="btn btn-purple btn-block" onclick="createBonus()" style="margin-bottom:20px">🎁 Atribuir cota de líder</button>' +
+    '<div class="admin-section-title">📋 Histórico</div>' +
     '<div id="bonus-history">Carregando...</div>';
   try {
-    var r = await supabase.from('cotas').select('uid, track_id, cost, rate, daily, user_id, activated_at').eq('plan_id','bonus').order('activated_at', { ascending:false }).limit(50);
+    var r = await supabase.from('cotas').select('uid, track_id, plan_id, cost, rate, daily, user_id, activated_at, name, is_bonus').eq('is_bonus', true).order('activated_at', { ascending:false }).limit(50);
     var list = r.data || [];
     var h = $('bonus-history');
-    if(!list.length){ h.innerHTML = '<div class="admin-empty">Nenhum bônus ainda.</div>'; return; }
+    if(!h) return;
+    if(!list.length){ h.innerHTML = '<div class="admin-empty">Nenhuma cota atribuída ainda.</div>'; return; }
     var ids = [];
     for(var i=0;i<list.length;i++) if(ids.indexOf(list[i].user_id) === -1) ids.push(list[i].user_id);
     var usersMap = {};
@@ -2762,45 +2761,44 @@ async function renderAdminBonus(body){
     h.innerHTML = list.map(function(b){
       var u = usersMap[b.user_id] || {};
       return '<div class="admin-list-item">' +
-        '<h4>'+fmt(b.cost)+' <span class="bonus-tag">Bônus</span></h4>' +
+        '<h4>'+fmt(b.cost)+' — '+(b.name||'—')+'</h4>' +
         '<div class="meta">'+(u.name||'—')+' · '+(u.email||'—')+' · '+(u.ref_code||'—')+'</div>' +
         '<div class="row"><span class="l">Rende/dia</span><span class="v" style="color:#166534">+'+fmt(b.daily)+' ('+((b.rate*100).toFixed(2))+'%/dia)</span></div>' +
-        '<div class="row"><span class="l">Adicionado</span><span class="v">'+new Date(b.activated_at).toLocaleString('pt-BR')+'</span></div>' +
+        '<div class="row"><span class="l">Track ID</span><span class="v" style="font-size:10.5px">'+(b.track_id||'—')+'</span></div>' +
+        '<div class="row"><span class="l">Ativada</span><span class="v">'+new Date(b.activated_at).toLocaleString('pt-BR')+'</span></div>' +
         '<div class="admin-actions"><button type="button" class="btn btn-danger" onclick="removeBonus(\''+b.uid+'\')">🗑️ Remover</button></div>' +
       '</div>';
     }).join('');
-  } catch(e){ $('bonus-history').innerHTML = '<div class="admin-empty">Erro: '+e.message+'</div>'; }
+  } catch(e){ var h=$('bonus-history'); if(h) h.innerHTML = '<div class="admin-empty">Erro: '+e.message+'</div>'; }
 }
 async function createBonus(){
   var ident = ($('bonus-id').value||'').trim();
-  var amount = parseFloat($('bonus-amount').value);
-  var ratePct = parseFloat($('bonus-rate').value) || 3;
-  var days = parseInt($('bonus-days').value) || 20;
-  if(!ident){ toast('Informe o ID/código.'); return; }
-  if(isNaN(amount) || amount <= 0){ toast('Valor inválido.'); return; }
-  if(ratePct <= 0 || ratePct > 50){ toast('Taxa inválida.'); return; }
-  var r = await supabase.rpc('admin_add_bonus_balance', { p_identifier: ident, p_amount: amount, p_daily_rate: ratePct/100, p_cycle_days: days });
+  var planId = ($('bonus-plan').value||'').trim();
+  if(!ident){ toast('Informe o ID/código do indicador.'); return; }
+  if(!planId){ toast('Escolha um plano.'); return; }
+  var r = await supabase.rpc('admin_add_bonus_balance', { p_identifier: ident, p_plan_id: planId });
   if(r.error){ toast('Erro: '+r.error.message); return; }
   if(r.data && r.data.error){ toast(r.data.error); return; }
-  toast('✅ Bônus de '+fmt(amount)+' adicionado!');
-  $('bonus-id').value=''; $('bonus-amount').value='';
+  toast('✅ Cota atribuída com sucesso!');
+  $('bonus-id').value = '';
   renderAdminBonus($('admin-body'));
 }
 async function removeBonus(uid){
-  if(!confirm('Remover este bônus? O rendimento já creditado NÃO será afetado.')) return;
+  if(!confirm('Remover esta cota de líder? O rendimento já creditado NÃO será afetado.')) return;
   var r = await supabase.rpc('admin_remove_bonus', { p_uid: uid });
   if(r.error){ toast('Erro: '+r.error.message); return; }
   if(r.data && r.data.error){ toast(r.data.error); return; }
-  toast('✅ Bônus removido com sucesso.');
+  toast('✅ Cota removida com sucesso.');
   renderAdminBonus($('admin-body'));
 }
+
 /* ==================== PRE-CADASTROS ==================== */
 async function renderAdminPre(body){
   body.innerHTML = '<div style="padding:24px;text-align:center;color:#78716C">Carregando pré-cadastros...</div>';
   try {
     var r = await supabase.rpc('admin_list_pre_registrations');
     if(r.error){
-      body.innerHTML = '<div class="admin-empty">Recurso não configurado no Supabase.<br><small style="opacity:.7">Rode o SQL de pré-cadastros para ativar.</small></div>';
+      body.innerHTML = '<div class="admin-empty">Recurso não configurado no Supabase.</div>';
       return;
     }
     var list = r.data || [];
@@ -2854,7 +2852,7 @@ async function renderAdminInfluencers(body){
   try {
     var r = await supabase.rpc('admin_influencer_stats');
     if(r.error){
-      body.innerHTML = '<div class="admin-empty">Recurso não configurado no Supabase.<br><small style="opacity:.7">Rode o SQL de influencers para ativar.</small></div>';
+      body.innerHTML = '<div class="admin-empty">Recurso não configurado no Supabase.</div>';
       return;
     }
     var infls = r.data || [];
@@ -3018,7 +3016,8 @@ function deletePromo(id){
 }
 
 function depositClick(){ closeDrawer(); if(!user){ openAuth(); return; } showScreen('plans'); }
-async function init(){
+
+  async function init(){
   try { startClock(); } catch(e){}
   try { updateAuthText(); } catch(e){}
   try { var params = new URLSearchParams(location.search); var ref = params.get('ref'); if(ref) pendingRefFromUrl = ref.toUpperCase().trim(); } catch(e){}
