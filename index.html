@@ -711,7 +711,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
           </div>
           <div class="roulette-balls" id="roulette-ball-count">0 bolas</div>
         </div>
-        <div class="roulette-desc">A cada <b>R$ 50 em cotas</b> você ganha <b>1 bola</b> 🎰 Gire e ganhe <b>cota bônus que rende</b>!</div>
+        <div class="roulette-desc">A cada <b>R$ 50 em cotas</b> você ganha <b>1 bola</b> 🎰 Gire e ganhe <b>dinheiro real na carteira</b>!</div>
         <div class="roulette-mini-wrap">
           <svg id="roulette-mini-svg" viewBox="0 0 200 200" class="roulette-mini-svg"></svg>
           <button type="button" id="roulette-mini-btn" onclick="spinRoulette('home')" class="roulette-mini-center">Girar</button>
@@ -788,7 +788,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
       <div class="step-row"><div class="step-num-box">01</div><div class="step-content"><h4>Compre suas cotas de boi</h4><p>De <b>R$ 25 a R$ 10.000</b>. Cada cota rende <b>~2× o valor</b> em 20 dias.</p></div></div>
       <div class="step-row"><div class="step-num-box">02</div><div class="step-content"><h4>Pague via PIX</h4><p>QR Code abre na hora. <b>Sua cota começa a render</b> e ganha ID de rastreio.</p></div></div>
       <div class="step-row"><div class="step-num-box">03</div><div class="step-content"><h4>Rastreie em tempo real</h4><p>Cada cota tem <b>ID único</b>. Status atualiza a cada 2 dias.</p></div></div>
-      <div class="step-row"><div class="step-num-box">04</div><div class="step-content"><h4>Gire a Roleta da Sorte</h4><p>Cada <b>R$ 50 em cotas = 1 bola</b>. Prêmios viram <b>cotas que rendem</b>!</p></div></div>
+      <div class="step-row"><div class="step-num-box">04</div><div class="step-content"><h4>Gire a Roleta da Sorte</h4><p>Cada <b>R$ 50 em cotas = 1 bola</b>. Prêmios caem <b>direto na carteira</b>!</p></div></div>
 
       <div class="section-head"><h3 class="section-title">Cotas em destaque</h3><span class="section-link" onclick="showScreen('plans')">Ver todas ›</span></div>
       <div class="plans" id="home-plans"></div>
@@ -1068,7 +1068,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
         <svg id="roulette-svg" viewBox="0 0 200 200" class="roulette-svg"></svg>
         <button type="button" id="roulette-spin-btn" onclick="spinRoulette('modal')" class="roulette-center">Girar</button>
       </div>
-      <div class="roulette-info" id="roulette-info-txt">Prêmios viram cotas que rendem 20 dias!</div>
+      <div class="roulette-info" id="roulette-info-txt">Prêmios caem direto na carteira!</div>
       <div class="roulette-prizes-mini">
         <div class="roulette-prize-mini"><div class="v">R$ 0,50</div></div>
         <div class="roulette-prize-mini"><div class="v">R$ 1</div></div>
@@ -1084,7 +1084,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
       <div class="roulette-result-icon" id="roulette-result-icon">🎉</div>
       <div class="roulette-result-title" id="roulette-result-title">Parabéns!</div>
       <div class="roulette-result-prize" id="roulette-prize">R$ 0,00</div>
-      <div class="roulette-result-sub" id="roulette-result-sub">Virou cota que rende!</div>
+      <div class="roulette-result-sub" id="roulette-result-sub">Creditado na carteira!</div>
       <button type="button" class="btn btn-gold btn-lg" onclick="closeRoulette()" style="width:100%">Continuar</button>
     </div>
   </div>
@@ -1979,7 +1979,7 @@ function handlePrize(prize){
   var i1 = $('roulette-result-icon'); if(i1) i1.textContent = '🎉';
   var t1 = $('roulette-result-title'); if(t1) t1.textContent = 'Você ganhou!';
   var p1 = $('roulette-prize'); if(p1) p1.textContent = fmt(val);
-  var s1 = $('roulette-result-sub'); if(s1) s1.textContent = 'Virou cota que rende 20 dias!';
+  var s1 = $('roulette-result-sub'); if(s1) s1.textContent = 'Creditado na carteira!';
   if(main) main.style.display = 'none';
   if(res) res.classList.add('show');
   updateDash();
@@ -2490,16 +2490,30 @@ function showPayoutCelebration(amount){
   setTimeout(function(){ el.classList.remove('show'); }, 5500);
   el.onclick = function(){ el.classList.remove('show'); };
 }
-
-function reinvest(){
+async function reinvest(){
   if(!user){ openAuth(); return; }
   var bal = Number(user.balance) || 0;
   if(bal < REINVEST_MIN){
     toast('💰 Você tem ' + fmt(bal) + '. Mínimo para reinvestir: R$ 25,00');
     return;
   }
-  showScreen('plans');
-  setTimeout(function(){ toast('🔄 Reinvestindo ' + fmt(bal) + ' · escolha uma cota'); }, 250);
+  var btn = $('reinvest-btn');
+  if(btn) btn.disabled = true;
+  try {
+    var r = await supabase.rpc('reinvest_from_balance', { p_user_id: user.id });
+    if(r.error){ toast('Erro: ' + r.error.message); return; }
+    if(r.data && r.data.error){ toast(r.data.error); return; }
+    var data = r.data;
+    toast('✅ Reinvestido em ' + data.plan + ' por ' + fmt(data.cost));
+    await refreshUserData();
+    await syncCotasFromDB();
+    updateDash();
+    try { playWin(); launchConfetti(); } catch(e){}
+  } catch(e){
+    toast('Erro: ' + (e.message || 'desconhecido'));
+    } finally {
+    if(btn) btn.disabled = false;
+  }
 }
 window.reinvest = reinvest;
 
