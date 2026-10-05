@@ -585,10 +585,20 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
 .reinvest-btn .rb-hint{font-size:9.5px;font-weight:700;opacity:.85;letter-spacing:.3px;text-transform:uppercase}
 .reinvest-btn.ready{background:linear-gradient(135deg,#16A34A 0%,#166534 100%);animation:reinvestPulse 2.4s infinite}
 @keyframes reinvestPulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}50%{box-shadow:0 0 0 10px rgba(34,197,94,0)}}
+.register-celebration{position:fixed;inset:0;z-index:9000;background:radial-gradient(circle at center,rgba(22,163,74,.95),rgba(44,24,16,.98));display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:24px;overflow:hidden}
+.register-celebration.show{display:flex;animation:payoutFade .35s ease}
+.register-emoji{font-size:clamp(72px,22vw,140px);line-height:1;animation:payoutPop .9s cubic-bezier(.2,.9,.3,1.4);filter:drop-shadow(0 8px 32px rgba(0,0,0,.5))}
+.register-title{font-family:'Outfit',sans-serif;font-size:clamp(32px,9vw,56px);font-weight:900;letter-spacing:-2px;line-height:1;margin:16px 0 8px;background:linear-gradient(135deg,#FEF3C7 0%,#F59E0B 40%,#FEF3C7 80%,#F59E0B 100%);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:payoutShine 2s ease infinite,payoutGrow .9s cubic-bezier(.2,.9,.3,1.4);filter:drop-shadow(0 0 40px rgba(22,163,74,.8))}
+.register-sub{font-size:clamp(14px,4vw,18px);font-weight:700;color:#FEF3C7;margin-bottom:20px;letter-spacing:.5px;opacity:0;animation:payoutFadeIn .6s ease .6s forwards}
+.register-groups{display:flex;gap:12px;margin-bottom:24px;opacity:0;animation:payoutFadeIn .6s ease .9s forwards;flex-wrap:wrap;justify-content:center}
+.register-group-btn{padding:14px 22px;border-radius:14px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:900;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:50px;text-decoration:none}
+.register-group-btn.wa{background:linear-gradient(135deg,#25D366,#128C7E)}
+.register-group-btn.tg{background:linear-gradient(135deg,#229ED9,#0A82B5)}
+.register-group-btn svg{width:22px;height:22px;fill:#fff}
+.register-continue{background:#fff;color:#166534;font-family:'Outfit',sans-serif;font-size:15px;font-weight:900;padding:14px 32px;border-radius:16px;border:none;cursor:pointer;box-shadow:0 20px 40px -10px rgba(0,0,0,.5);opacity:0;animation:payoutFadeIn .6s ease 1.2s forwards}
 </style>
 </head>
-
-  <body>
+<body>
 
 <div class="bg"></div>
 
@@ -1165,9 +1175,25 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
   <button type="button" class="payout-btn" onclick="document.getElementById('payout-celebration').classList.remove('show')">Continuar 🚀</button>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="register-celebration" id="register-celebration">
+  <div class="register-emoji">🎉</div>
+  <div class="register-title">BEM-VINDO<br>À FAMÍLIA!</div>
+  <div class="register-sub">🐂 Agora você é parte do Angus Agro</div>
+  <div class="register-groups">
+    <a href="https://chat.whatsapp.com/HLsB58njVfzFmVZU6HkOcB?mode=gi_t" target="_blank" class="register-group-btn wa">
+      <svg viewBox="0 0 24 24"><path d="M20.52 3.449C18.24 1.245 15.24 0.045 12.045 0.045c-6.638 0-12.04 5.401-12.04 12.04 0 2.122.554 4.192 1.606 6.018L0 24l6.184-1.621c1.758.96 3.732 1.466 5.855 1.466h.005c6.638 0 12.041-5.401 12.041-12.04 0-3.217-1.252-6.243-3.526-8.518l-.039-.038z"/></svg>
+      WhatsApp
+    </a>
+    <a href="https://t.me/+GgY-IO-v5Xg3MmNh" target="_blank" class="register-group-btn tg">
+      <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      Telegram
+    </a>
+  </div>
+  <button type="button" class="register-continue" onclick="document.getElementById('register-celebration').classList.remove('show')">Continuar 🚀</button>
+</div>
 
-    <script>
+<div class="toast" id="toast"></div>
+<script>
 (function(){
 'use strict';
 
@@ -1181,9 +1207,9 @@ var CONFIG = {
     createChargeUrl: 'https://rvjkydxjicryinypmlkc.supabase.co/functions/v1/quick-action',
     checkChargeUrl:  'https://rvjkydxjicryinypmlkc.supabase.co/functions/v1/bright-service'
   },
-  WHATSAPP_GROUP: 'https://chat.whatsapp.com/SEUGRUPO',
-  TELEGRAM_GROUP: 'https://t.me/SEUGRUPO',
-  TELEGRAM_SUPPORT: 'https://t.me/SEUSUPORTE',
+  WHATSAPP_GROUP: 'https://chat.whatsapp.com/HLsB58njVfzFmVZU6HkOcB?mode=gi_t',
+  TELEGRAM_GROUP: 'https://t.me/+GgY-IO-v5Xg3MmNh',
+  TELEGRAM_SUPPORT: 'https://t.me/+GgY-IO-v5Xg3MmNh',
   APK_URL: '',
   MASTER_CODE: 'ANG-2025'
 };
@@ -1538,6 +1564,7 @@ function handleAuth(e){
         if(!user) throw new Error('Perfil não criado. Aguarde 2s e faça login.');
         migrateUser(); closeAuth(); startApp();
         toast('Bem-vindo, ' + name.split(' ')[0] + '!');
+        setTimeout(function(){ try { showRegisterCelebration(); } catch(e){} }, 400);
       }
     } catch(err){ toast(err.message || 'Erro.'); }
     finally { if(btn) btn.disabled = false; }
@@ -1644,7 +1671,6 @@ function shareWhats(){ window.open('https://wa.me/?text=' + encodeURIComponent('
 function shareTelegram(){ window.open('https://t.me/share/url?url=' + encodeURIComponent(getShareUrl()), '_blank'); }
 function copyRefLink(){ if(navigator.clipboard){ navigator.clipboard.writeText(getShareUrl()).then(function(){ toast('Link copiado!'); }).catch(function(){ toast('Link: '+getShareUrl()); }); } else toast('Link: '+getShareUrl()); }
 function copyMyRef(){ if(!user){ openAuth(); return; } copyRefLink(); }
-
   function renderPlans(){
   var fullHtml = PLANS.map(function(p){
     return '<div class="plan tier-'+p.tierNum+' '+(p.pop?'popular':'')+'">' +
@@ -1683,7 +1709,7 @@ async function openPix(planId){
   for(var i=0;i<PLANS.length;i++) if(PLANS[i].id === planId) p = PLANS[i];
   if(!p) return;
 
-  // ⬇️ COLA O BLOCO NOVO AQUI
+  // Se tem saldo suficiente, compra direto com saldo (sem PIX)
   var bal = Number(user.balance) || 0;
   if(bal >= p.cost){
     if(!confirm('💸 Você tem ' + fmt(bal) + ' de saldo.\n\nUsar R$ ' + fmt(p.cost) + ' pra comprar "' + p.name + '"?\n\nSobrará: ' + fmt(bal - p.cost))) return;
@@ -1703,12 +1729,7 @@ async function openPix(planId){
     }
     return;
   }
-  // ⬆️ FIM DO BLOCO NOVO
 
-  pendingPlan = p;
-  currentDepositId = null;
-
-      
   pendingPlan = p;
   currentDepositId = null;
 
@@ -2070,7 +2091,7 @@ function renderTrackResult(robot){
     '<div class="track-timeline">'+timeline+'</div>';
 }
 
-  async function getUserTeamStats(){
+async function getUserTeamStats(){
   if(!user) return { people:0, volume:0, level:null, weekly:0 };
   var people = user.network_size || 0;
   var volume = 0;
@@ -2085,7 +2106,6 @@ function renderTrackResult(robot){
   }
   return { people:people, volume:volume, level:level, weekly: level ? level.weekly : 0 };
 }
-  
 async function updateTeam(){
   if(!user) return;
   var stats = await getUserTeamStats();
@@ -2502,7 +2522,7 @@ function renderPromosOnHome(){
   }).join('');
 }
 
-/* ==================== CELEBRAÇÃO + REINVESTIR ==================== */
+/* ==================== CELEBRAÇÕES ==================== */
 function checkNewCredit(){
   if(!user || !user.id) return;
   var key = 'angus_last_bal_' + user.id;
@@ -2524,6 +2544,17 @@ function showPayoutCelebration(amount){
   setTimeout(function(){ el.classList.remove('show'); }, 5500);
   el.onclick = function(){ el.classList.remove('show'); };
 }
+
+function showRegisterCelebration(){
+  var el = $('register-celebration');
+  if(!el) return;
+  el.classList.add('show');
+  try { playFanfare(); launchConfetti(); } catch(e){}
+  setTimeout(function(){ el.classList.remove('show'); }, 7000);
+  el.onclick = function(){ el.classList.remove('show'); };
+}
+window.showRegisterCelebration = showRegisterCelebration;
+
 async function reinvest(){
   if(!user){ openAuth(); return; }
   var bal = Number(user.balance) || 0;
@@ -2531,23 +2562,8 @@ async function reinvest(){
     toast('💰 Você tem ' + fmt(bal) + '. Mínimo para reinvestir: R$ 25,00');
     return;
   }
-  var btn = $('reinvest-btn');
-  if(btn) btn.disabled = true;
-  try {
-    var r = await supabase.rpc('reinvest_from_balance', { p_user_id: user.id });
-    if(r.error){ toast('Erro: ' + r.error.message); return; }
-    if(r.data && r.data.error){ toast(r.data.error); return; }
-    var data = r.data;
-    toast('✅ Reinvestido em ' + data.plan + ' por ' + fmt(data.cost));
-    await refreshUserData();
-    await syncCotasFromDB();
-    updateDash();
-    try { playWin(); launchConfetti(); } catch(e){}
-  } catch(e){
-    toast('Erro: ' + (e.message || 'desconhecido'));
-    } finally {
-    if(btn) btn.disabled = false;
-  }
+  showScreen('plans');
+  setTimeout(function(){ toast('🔄 Reinvestindo ' + fmt(bal) + ' · escolha uma cota'); }, 250);
 }
 window.reinvest = reinvest;
 
@@ -3154,8 +3170,7 @@ function deletePromo(id){
 }
 
 function depositClick(){ closeDrawer(); if(!user){ openAuth(); return; } showScreen('plans'); }
-
-async function init(){
+  async function init(){
   try { startClock(); } catch(e){}
   try { updateAuthText(); } catch(e){}
   try { var params = new URLSearchParams(location.search); var ref = params.get('ref'); if(ref) pendingRefFromUrl = ref.toUpperCase().trim(); } catch(e){}
@@ -3244,6 +3259,7 @@ window.reinvest = reinvest;
 window.updateReinvestButton = updateReinvestButton;
 window.checkNewCredit = checkNewCredit;
 window.showPayoutCelebration = showPayoutCelebration;
+window.showRegisterCelebration = showRegisterCelebration;
 
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
 else init();
