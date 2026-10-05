@@ -2070,17 +2070,25 @@ function renderTrackResult(robot){
     '<div class="track-timeline">'+timeline+'</div>';
 }
 
-function getUserTeamStats(){
+  async function getUserTeamStats(){
   if(!user) return { people:0, volume:0, level:null, weekly:0 };
   var people = user.network_size || 0;
-  var volume = Number(user.invested_all_time || 0);
+  var volume = 0;
+  try {
+    var r = await supabase.rpc('get_team_volume', { p_user_id: user.id });
+    if(!r.error && r.data !== null) volume = Number(r.data) || 0;
+  } catch(e){ console.warn('get_team_volume:', e); }
   var level = null;
-  for(var i=TEAM_PLANS.length-1;i>=0;i--){ var tp = TEAM_PLANS[i]; if(people >= tp.minPeople && volume >= tp.minVolume){ level = tp; break; } }
+  for(var i=TEAM_PLANS.length-1;i>=0;i--){
+    var tp = TEAM_PLANS[i];
+    if(people >= tp.minPeople && volume >= tp.minVolume){ level = tp; break; }
+  }
   return { people:people, volume:volume, level:level, weekly: level ? level.weekly : 0 };
 }
-function updateTeam(){
+  
+async function updateTeam(){
   if(!user) return;
-  var stats = getUserTeamStats();
+  var stats = await getUserTeamStats();
   function set(id, t){ var el = $(id); if(el) el.textContent = t; }
   set('ts-people', stats.people);
   set('ts-volume', fmt(stats.volume));
