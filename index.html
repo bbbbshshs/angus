@@ -1683,6 +1683,32 @@ async function openPix(planId){
   for(var i=0;i<PLANS.length;i++) if(PLANS[i].id === planId) p = PLANS[i];
   if(!p) return;
 
+  // ⬇️ COLA O BLOCO NOVO AQUI
+  var bal = Number(user.balance) || 0;
+  if(bal >= p.cost){
+    if(!confirm('💸 Você tem ' + fmt(bal) + ' de saldo.\n\nUsar R$ ' + fmt(p.cost) + ' pra comprar "' + p.name + '"?\n\nSobrará: ' + fmt(bal - p.cost))) return;
+    try {
+      var r = await supabase.rpc('buy_cota_with_balance', { p_user_id: user.id, p_plan_id: p.id });
+      if(r.error){ toast('Erro: ' + r.error.message); return; }
+      if(r.data && r.data.error){ toast(r.data.error); return; }
+      var data = r.data;
+      toast('✅ ' + data.plan + ' comprado com saldo!');
+      await refreshUserData();
+      await syncCotasFromDB();
+      updateDash(); updateRouletteCount();
+      try { playWin(); launchConfetti(); } catch(e){}
+      showScreen('wallet');
+    } catch(e){
+      toast('Erro: ' + (e.message || 'desconhecido'));
+    }
+    return;
+  }
+  // ⬆️ FIM DO BLOCO NOVO
+
+  pendingPlan = p;
+  currentDepositId = null;
+
+      
   pendingPlan = p;
   currentDepositId = null;
 
