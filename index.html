@@ -558,6 +558,33 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
 .share-row{grid-template-columns:1fr}
 .community-row.three{grid-template-columns:1fr}
 }
+.cow.bonus{border-color:#A78BFA;background:linear-gradient(180deg,#fff 0%,#F5F3FF 100%)}
+.cow.bonus .cow-head{background:linear-gradient(90deg,#EDE9FE,#DDD6FE)}
+.cow.bonus .cow-tier{background:#EDE9FE;color:#5B21B6}
+.cow.bonus .cow-dot{background:#7C3AED;box-shadow:0 0 8px #7C3AED}
+.cow.bonus .cow-icon{background:linear-gradient(135deg,#DDD6FE,#C4B5FD);color:#5B21B6;border-color:#A78BFA}
+.cow.bonus .cow-yield{background:#EDE9FE;color:#5B21B6}
+.cow.bonus .cow-track-badge{background:linear-gradient(135deg,#5B21B6,#7C3AED)}
+.cow.bonus .cow-cycle-fill{background:linear-gradient(90deg,#A78BFA,#7C3AED)}
+.bonus-tag{display:inline-block;background:#7C3AED;color:#fff;font-size:9px;font-weight:900;padding:2px 7px;border-radius:6px;text-transform:uppercase;margin-left:6px}
+.payout-celebration{position:fixed;inset:0;z-index:9000;background:radial-gradient(circle at center,rgba(245,158,11,.95),rgba(44,24,16,.98));display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:24px;overflow:hidden}
+.payout-celebration.show{display:flex;animation:payoutFade .35s ease}
+@keyframes payoutFade{from{opacity:0}to{opacity:1}}
+.payout-emoji{font-size:clamp(72px,22vw,140px);line-height:1;animation:payoutPop .9s cubic-bezier(.2,.9,.3,1.4);filter:drop-shadow(0 8px 32px rgba(0,0,0,.5))}
+@keyframes payoutPop{0%{transform:scale(0) translateY(80px) rotate(-180deg);opacity:0}60%{transform:scale(1.25) translateY(-20px) rotate(15deg);opacity:1}100%{transform:scale(1) translateY(0) rotate(0)}}
+.payout-title{font-family:'Outfit',sans-serif;font-size:clamp(36px,10vw,64px);font-weight:900;letter-spacing:-2px;line-height:1;margin:16px 0 8px;background:linear-gradient(135deg,#FEF3C7 0%,#F59E0B 40%,#FEF3C7 80%,#F59E0B 100%);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:payoutShine 2s ease infinite,payoutGrow .9s cubic-bezier(.2,.9,.3,1.4);filter:drop-shadow(0 0 40px rgba(245,158,11,.8))}
+@keyframes payoutShine{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes payoutGrow{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+.payout-sub{font-size:clamp(14px,4vw,18px);font-weight:700;color:#FEF3C7;margin-bottom:20px;letter-spacing:.5px;opacity:0;animation:payoutFadeIn .6s ease .6s forwards}
+@keyframes payoutFadeIn{to{opacity:1}}
+.payout-value{font-family:'Outfit',sans-serif;font-size:clamp(28px,9vw,52px);font-weight:900;color:#fff;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);border-radius:20px;padding:12px 28px;backdrop-filter:blur(10px);margin-bottom:28px;opacity:0;animation:payoutFadeIn .6s ease .9s forwards}
+.payout-btn{background:#fff;color:#B45309;font-family:'Outfit',sans-serif;font-size:16px;font-weight:900;padding:16px 36px;border-radius:16px;border:none;cursor:pointer;box-shadow:0 20px 40px -10px rgba(0,0,0,.5);opacity:0;animation:payoutFadeIn .6s ease 1.2s forwards}
+.reinvest-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.reinvest-btn{background:linear-gradient(135deg,#7C2D12 0%,#B45309 100%);color:#fff;font-family:'Outfit',sans-serif;font-size:12.5px;font-weight:900;padding:12px 10px;min-height:48px;border-radius:12px;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;line-height:1.2;position:relative;overflow:hidden}
+.reinvest-btn .rb-main{display:flex;align-items:center;gap:6px;font-size:13px}
+.reinvest-btn .rb-hint{font-size:9.5px;font-weight:700;opacity:.85;letter-spacing:.3px;text-transform:uppercase}
+.reinvest-btn.ready{background:linear-gradient(135deg,#16A34A 0%,#166534 100%);animation:reinvestPulse 2.4s infinite}
+@keyframes reinvestPulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}50%{box-shadow:0 0 0 10px rgba(34,197,94,0)}}
 </style>
 </head>
 
@@ -684,7 +711,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
           </div>
           <div class="roulette-balls" id="roulette-ball-count">0 bolas</div>
         </div>
-        <div class="roulette-desc">A cada <b>R$ 50 em cotas</b> você ganha <b>1 bola</b> 🎰 Gire e ganhe <b>dinheiro real</b>!</div>
+        <div class="roulette-desc">A cada <b>R$ 50 em cotas</b> você ganha <b>1 bola</b> 🎰 Gire e ganhe <b>cota bônus que rende</b>!</div>
         <div class="roulette-mini-wrap">
           <svg id="roulette-mini-svg" viewBox="0 0 200 200" class="roulette-mini-svg"></svg>
           <button type="button" id="roulette-mini-btn" onclick="spinRoulette('home')" class="roulette-mini-center">Girar</button>
@@ -761,7 +788,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
       <div class="step-row"><div class="step-num-box">01</div><div class="step-content"><h4>Compre suas cotas de boi</h4><p>De <b>R$ 25 a R$ 10.000</b>. Cada cota rende <b>~2× o valor</b> em 20 dias.</p></div></div>
       <div class="step-row"><div class="step-num-box">02</div><div class="step-content"><h4>Pague via PIX</h4><p>QR Code abre na hora. <b>Sua cota começa a render</b> e ganha ID de rastreio.</p></div></div>
       <div class="step-row"><div class="step-num-box">03</div><div class="step-content"><h4>Rastreie em tempo real</h4><p>Cada cota tem <b>ID único</b>. Status atualiza a cada 2 dias.</p></div></div>
-      <div class="step-row"><div class="step-num-box">04</div><div class="step-content"><h4>Gire a Roleta da Sorte</h4><p>Cada <b>R$ 50 em cotas = 1 bola</b>. Prêmios entram <b>direto na carteira</b>!</p></div></div>
+      <div class="step-row"><div class="step-num-box">04</div><div class="step-content"><h4>Gire a Roleta da Sorte</h4><p>Cada <b>R$ 50 em cotas = 1 bola</b>. Prêmios viram <b>cotas que rendem</b>!</p></div></div>
 
       <div class="section-head"><h3 class="section-title">Cotas em destaque</h3><span class="section-link" onclick="showScreen('plans')">Ver todas ›</span></div>
       <div class="plans" id="home-plans"></div>
@@ -804,10 +831,14 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
         <div class="balance-lbl">Rendimento disponível</div>
         <div class="balance"><sup>R$</sup><span id="d-bal">0,00</span></div>
         <div class="balance-sub">1 saque a cada 48h</div>
-        <div class="balance-actions">
-          <button type="button" class="btn btn-gold" onclick="depositClick()">Comprar cotas</button>
-          <button type="button" class="btn btn-outline" style="background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)" onclick="tryWithdraw()"><span id="wd-text">Sacar PIX</span></button>
+        <div class="reinvest-row">
+          <button type="button" class="reinvest-btn" id="reinvest-btn" onclick="reinvest()">
+            <span class="rb-main">🔄 Reinvestir</span>
+            <span class="rb-hint" id="rb-hint">Mín. R$ 25</span>
+          </button>
+          <button type="button" class="reinvest-btn" style="background:linear-gradient(135deg,#16A34A 0%,#166534 100%)" onclick="tryWithdraw()"><span class="rb-main"><span id="wd-text">💸 Sacar PIX</span></span></button>
         </div>
+        <button type="button" class="btn btn-gold btn-block" onclick="depositClick()" style="font-size:13px;padding:14px;min-height:46px">➕ Comprar mais cotas</button>
       </div>
       <button type="button" class="btn btn-outline btn-block" style="margin-bottom:14px" onclick="openTrackModal()">🔍 Rastrear minhas cotas</button>
       <div class="aporte-grid">
@@ -1037,7 +1068,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
         <svg id="roulette-svg" viewBox="0 0 200 200" class="roulette-svg"></svg>
         <button type="button" id="roulette-spin-btn" onclick="spinRoulette('modal')" class="roulette-center">Girar</button>
       </div>
-      <div class="roulette-info" id="roulette-info-txt">Prêmios caem direto na carteira!</div>
+      <div class="roulette-info" id="roulette-info-txt">Prêmios viram cotas que rendem 20 dias!</div>
       <div class="roulette-prizes-mini">
         <div class="roulette-prize-mini"><div class="v">R$ 0,50</div></div>
         <div class="roulette-prize-mini"><div class="v">R$ 1</div></div>
@@ -1053,7 +1084,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
       <div class="roulette-result-icon" id="roulette-result-icon">🎉</div>
       <div class="roulette-result-title" id="roulette-result-title">Parabéns!</div>
       <div class="roulette-result-prize" id="roulette-prize">R$ 0,00</div>
-      <div class="roulette-result-sub" id="roulette-result-sub">Creditado!</div>
+      <div class="roulette-result-sub" id="roulette-result-sub">Virou cota que rende!</div>
       <button type="button" class="btn btn-gold btn-lg" onclick="closeRoulette()" style="width:100%">Continuar</button>
     </div>
   </div>
@@ -1126,6 +1157,14 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
   </div>
 </div>
 
+<div class="payout-celebration" id="payout-celebration">
+  <div class="payout-emoji">🎉</div>
+  <div class="payout-title">SAQUE<br>DISPONÍVEL!</div>
+  <div class="payout-sub">💰 Rendimento creditado na sua carteira</div>
+  <div class="payout-value" id="payout-value">+ R$ 0,00</div>
+  <button type="button" class="payout-btn" onclick="document.getElementById('payout-celebration').classList.remove('show')">Continuar 🚀</button>
+</div>
+
 <div class="toast" id="toast"></div>
 
     <script>
@@ -1157,6 +1196,7 @@ var CHECKIN_VALUE = 0.50;
 var WITHDRAW_COOLDOWN_HOURS = 48;
 var CAROUSEL_SLIDES = 4;
 var LS_ADMIN = 'ANGUS_ADMIN_V1';
+var REINVEST_MIN = 25;
 
 var ML_LEVELS = [
   {level:1,pct:0.15,desc:'Indicação direta'},
@@ -1354,6 +1394,14 @@ function playSpinStart(){ playNote(300, 0.15, 0.08, 'sawtooth'); setTimeout(func
 function playSpinTicks(d){ for(var i=0;i<42;i++){ (function(i){ var p = i/42; var time = d * Math.pow(p, 1.55); setTimeout(function(){ playTick(0.05 + p*0.03); }, time); })(i); } }
 function playWin(){ [523,659,784,1047,1319,1568].forEach(function(f,i){ setTimeout(function(){ playNote(f, 0.5, 0.18, 'triangle'); }, i*110); }); }
 function playLose(){ playNote(400, 0.25, 0.1, 'sine'); setTimeout(function(){ playNote(300, 0.25, 0.1, 'sine'); }, 150); setTimeout(function(){ playNote(200, 0.4, 0.1, 'sine'); }, 300); }
+function playFanfare(){
+  var notes = [523, 659, 784, 1047, 1319, 1568, 2093, 1568, 2093, 2637];
+  notes.forEach(function(f, i){
+    setTimeout(function(){ playNote(f, 0.45, 0.22, 'triangle'); }, i * 110);
+  });
+  setTimeout(function(){ playNote(392, 1.5, 0.15, 'sine'); }, 200);
+  setTimeout(function(){ playNote(523, 1.8, 0.12, 'sine'); }, 250);
+}
 
 function launchConfetti(){
   var colors = ['#FCD34D','#FBBF24','#F59E0B','#4ADE80','#22C55E','#3B82F6','#8B5CF6','#EC4899','#F97316','#EF4444','#06B6D4'];
@@ -1597,7 +1645,7 @@ function shareTelegram(){ window.open('https://t.me/share/url?url=' + encodeURIC
 function copyRefLink(){ if(navigator.clipboard){ navigator.clipboard.writeText(getShareUrl()).then(function(){ toast('Link copiado!'); }).catch(function(){ toast('Link: '+getShareUrl()); }); } else toast('Link: '+getShareUrl()); }
 function copyMyRef(){ if(!user){ openAuth(); return; } copyRefLink(); }
 
-      function renderPlans(){
+  function renderPlans(){
   var fullHtml = PLANS.map(function(p){
     return '<div class="plan tier-'+p.tierNum+' '+(p.pop?'popular':'')+'">' +
       (p.pop?'<div class="plan-badge">Mais Popular</div>':'') +
@@ -1681,16 +1729,11 @@ async function openPix(planId){
         qrBox.innerHTML = '';
         qrBox.appendChild(cv);
         window.QRCode.toCanvas(cv, data.qrCode, {
-          width: size,
-          margin: 1,
-          color: { dark: '#2C1810', light: '#FFFFFF' }
+          width: size, margin: 1, color: { dark: '#2C1810', light: '#FFFFFF' }
         }, function(err){
           if(err){
             window.QRCode.toDataURL(data.qrCode, { width: size, margin: 1 }, function(err2, url){
-              if(err2){
-                qrBox.innerHTML = '<div style="padding:14px;font-size:11px;color:#78716C;text-align:center">Copie o código PIX abaixo</div>';
-                return;
-              }
+              if(err2){ qrBox.innerHTML = '<div style="padding:14px;font-size:11px;color:#78716C;text-align:center">Copie o código PIX abaixo</div>'; return; }
               qrBox.innerHTML = '<img src="'+url+'" style="width:100%;height:100%;object-fit:contain">';
             });
           }
@@ -1936,7 +1979,7 @@ function handlePrize(prize){
   var i1 = $('roulette-result-icon'); if(i1) i1.textContent = '🎉';
   var t1 = $('roulette-result-title'); if(t1) t1.textContent = 'Você ganhou!';
   var p1 = $('roulette-prize'); if(p1) p1.textContent = fmt(val);
-  var s1 = $('roulette-result-sub'); if(s1) s1.textContent = 'Adicionado ao seu saldo!';
+  var s1 = $('roulette-result-sub'); if(s1) s1.textContent = 'Virou cota que rende 20 dias!';
   if(main) main.style.display = 'none';
   if(res) res.classList.add('show');
   updateDash();
@@ -2112,10 +2155,10 @@ function startLock(){
 
     var wdText = $('wd-text');
     if(wdText){
-      if(can.ok) wdText.textContent = 'Sacar PIX';
+      if(can.ok) wdText.textContent = '💸 Sacar PIX';
       else if(can.reason === 'waiting-cota') wdText.textContent = 'Libera em ' + can.hours + 'h';
       else if(can.reason === 'waiting-withdraw') wdText.textContent = 'Próx. em ' + can.hours + 'h';
-      else wdText.textContent = 'Sacar PIX';
+      else wdText.textContent = '💸 Sacar PIX';
     }
   }
   tick();
@@ -2158,6 +2201,8 @@ function updateDash(){
   loadLedger();
   renderUserChart();
   renderUserYield();
+  checkNewCredit();
+  updateReinvestButton();
 }
 
 async function loadLedger(){
@@ -2422,6 +2467,57 @@ function renderPromosOnHome(){
     return '<div style="background:linear-gradient(135deg,#7C2D12,#B45309,#F59E0B);border-radius:16px;padding:14px 16px;margin-bottom:14px;color:#fff;border:1.5px solid rgba(255,255,255,.2)"><div style="font-family:Outfit;font-weight:900;font-size:14px;margin-bottom:4px">🎁 '+p.title+'</div><div style="font-size:11.5px;font-weight:600;color:rgba(255,255,255,.92)">'+p.description+'</div></div>';
   }).join('');
 }
+
+/* ==================== CELEBRAÇÃO + REINVESTIR ==================== */
+function checkNewCredit(){
+  if(!user || !user.id) return;
+  var key = 'angus_last_bal_' + user.id;
+  var prev = parseFloat(localStorage.getItem(key) || '0');
+  var curr = Number(user.balance) || 0;
+  if(prev > 0 && curr > prev + 0.10){
+    showPayoutCelebration(curr - prev);
+  }
+  localStorage.setItem(key, String(curr));
+}
+
+function showPayoutCelebration(amount){
+  var el = $('payout-celebration');
+  if(!el) return;
+  var valEl = $('payout-value');
+  if(valEl) valEl.textContent = '+ ' + fmt(amount);
+  el.classList.add('show');
+  try { playFanfare(); launchConfetti(); } catch(e){}
+  setTimeout(function(){ el.classList.remove('show'); }, 5500);
+  el.onclick = function(){ el.classList.remove('show'); };
+}
+
+function reinvest(){
+  if(!user){ openAuth(); return; }
+  var bal = Number(user.balance) || 0;
+  if(bal < REINVEST_MIN){
+    toast('💰 Você tem ' + fmt(bal) + '. Mínimo para reinvestir: R$ 25,00');
+    return;
+  }
+  showScreen('plans');
+  setTimeout(function(){ toast('🔄 Reinvestindo ' + fmt(bal) + ' · escolha uma cota'); }, 250);
+}
+window.reinvest = reinvest;
+
+function updateReinvestButton(){
+  var btn = $('reinvest-btn');
+  var hint = $('rb-hint');
+  if(!btn || !hint) return;
+  var bal = user ? (Number(user.balance)||0) : 0;
+  if(bal >= REINVEST_MIN){
+    btn.classList.add('ready');
+    hint.textContent = 'Disponível ' + fmt(bal);
+  } else {
+    btn.classList.remove('ready');
+    var falta = REINVEST_MIN - bal;
+    hint.textContent = 'Faltam ' + fmt(falta);
+  }
+}
+window.updateReinvestButton = updateReinvestButton;
 
 /* ==================== ADMIN ==================== */
 function openAdmin(){ renderAdmin(); var m = $('modal-admin'); if(m) m.classList.add('active'); }
@@ -2724,7 +2820,7 @@ async function exportWithdrawalsCSV(){
   } catch(e){ toast('Erro: '+e.message); }
 }
 
-/* ==================== COTA LÍDER (antigo bônus) ==================== */
+/* ==================== COTA LÍDER ==================== */
 async function renderAdminBonus(body){
   body.innerHTML =
     '<div class="admin-section-title">🎁 Atribuir cota de líder</div>' +
@@ -2797,10 +2893,7 @@ async function renderAdminPre(body){
   body.innerHTML = '<div style="padding:24px;text-align:center;color:#78716C">Carregando pré-cadastros...</div>';
   try {
     var r = await supabase.rpc('admin_list_pre_registrations');
-    if(r.error){
-      body.innerHTML = '<div class="admin-empty">Recurso não configurado no Supabase.</div>';
-      return;
-    }
+    if(r.error){ body.innerHTML = '<div class="admin-empty">Recurso não configurado no Supabase.</div>'; return; }
     var list = r.data || [];
     var total = list.length;
     var totalIndicados = list.reduce(function(s,x){ return s + Number(x.referral_count||0); }, 0);
@@ -2851,10 +2944,7 @@ async function renderAdminInfluencers(body){
   body.innerHTML = '<div style="padding:24px;text-align:center;color:#78716C">Carregando...</div>';
   try {
     var r = await supabase.rpc('admin_influencer_stats');
-    if(r.error){
-      body.innerHTML = '<div class="admin-empty">Recurso não configurado no Supabase.</div>';
-      return;
-    }
+    if(r.error){ body.innerHTML = '<div class="admin-empty">Recurso não configurado no Supabase.</div>'; return; }
     var infls = r.data || [];
     var totalPendente = infls.reduce(function(s,i){ return s + Number(i.pending_payment||0); }, 0);
     var html =
@@ -3017,7 +3107,7 @@ function deletePromo(id){
 
 function depositClick(){ closeDrawer(); if(!user){ openAuth(); return; } showScreen('plans'); }
 
-  async function init(){
+async function init(){
   try { startClock(); } catch(e){}
   try { updateAuthText(); } catch(e){}
   try { var params = new URLSearchParams(location.search); var ref = params.get('ref'); if(ref) pendingRefFromUrl = ref.toUpperCase().trim(); } catch(e){}
@@ -3102,6 +3192,10 @@ window.togglePromo = togglePromo;
 window.deletePromo = deletePromo;
 window.carouselNext = carouselNext; window.carouselPrev = carouselPrev;
 window.closeTerm = closeTerm;
+window.reinvest = reinvest;
+window.updateReinvestButton = updateReinvestButton;
+window.checkNewCredit = checkNewCredit;
+window.showPayoutCelebration = showPayoutCelebration;
 
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
 else init();
