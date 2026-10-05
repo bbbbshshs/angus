@@ -50,8 +50,6 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
 .btn-submit:active{transform:scale(.98)}
 .btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .btn-submit svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.btn-consultar{display:block;width:100%;margin-top:14px;padding:13px 18px;border-radius:12px;background:var(--soft-2);border:1.5px dashed var(--border-2);color:var(--txt);font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:all .15s}
-.btn-consultar:active{transform:scale(.97);background:var(--soft)}
 .benefits{display:flex;flex-direction:column;gap:10px;margin-top:20px}
 .benefit{display:flex;align-items:flex-start;gap:12px;padding:12px;background:var(--soft-2);border:1px solid var(--border);border-radius:12px}
 .benefit-icon{width:36px;height:36px;border-radius:10px;background:var(--green-soft);color:var(--green-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
@@ -87,15 +85,13 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
 .comm-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:16px;margin-bottom:14px}
 .comm-card-title{font-family:'Outfit',sans-serif;font-size:13px;font-weight:900;color:var(--txt);margin-bottom:4px}
 .comm-card-sub{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:12px}
-.comm-row{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--border);font-size:12px}
+.comm-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--border);font-size:12px}
 .comm-row:last-child{border-bottom:none}
 .comm-badge{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:900;background:var(--soft-2);border:1px solid var(--border);color:var(--txt);padding:3px 7px;border-radius:6px;min-width:32px;text-align:center}
 .comm-row.l1 .comm-badge{background:var(--grad-gold);border-color:transparent;color:#fff}
 .comm-desc{color:var(--txt);font-weight:700}
 .comm-pct{font-family:'Outfit',sans-serif;font-weight:900;color:var(--green-dark);white-space:nowrap;font-size:13px}
 .comm-row.l1 .comm-pct{color:var(--gold-deep)}
-.comm-count{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:900;color:var(--green-dark);background:var(--green-soft);padding:3px 8px;border-radius:8px;text-align:center;min-width:34px;border:1px solid var(--green-border)}
-.comm-count.zero{color:var(--muted);background:var(--soft-2);border-color:var(--border)}
 .share-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
 .share-btn{padding:14px 12px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;color:#fff;min-height:48px;border:none;cursor:pointer}
 .share-wa{background:#25D366;color:#000}
@@ -119,6 +115,29 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
 @keyframes spin{to{transform:rotate(360deg)}}
 .footer{text-align:center;font-size:11px;color:var(--muted);font-weight:600;margin-top:24px;line-height:1.6}
 .footer b{color:var(--green-dark);font-weight:800}
+.community-inline{display:flex;gap:8px;justify-content:center;margin:16px 0 0;flex-wrap:wrap}
+.community-inline a{padding:12px 18px;border-radius:12px;display:flex;align-items:center;gap:8px;font-family:'Outfit',sans-serif;font-size:12.5px;font-weight:900;text-decoration:none;color:#fff;min-height:46px}
+.community-inline a.wa{background:linear-gradient(135deg,#25D366,#128C7E)}
+.community-inline a.tg{background:linear-gradient(135deg,#229ED9,#0A82B5)}
+.community-inline svg{width:18px;height:18px;fill:#fff}
+.register-celebration{position:fixed;inset:0;z-index:9000;background:radial-gradient(circle at center,rgba(22,163,74,.95),rgba(44,24,16,.98));display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:24px;overflow:hidden}
+.register-celebration.show{display:flex;animation:payoutFade .35s ease}
+@keyframes payoutFade{from{opacity:0}to{opacity:1}}
+.register-emoji{font-size:clamp(72px,22vw,140px);line-height:1;animation:payoutPop .9s cubic-bezier(.2,.9,.3,1.4);filter:drop-shadow(0 8px 32px rgba(0,0,0,.5))}
+@keyframes payoutPop{0%{transform:scale(0) translateY(80px) rotate(-180deg);opacity:0}60%{transform:scale(1.25) translateY(-20px) rotate(15deg);opacity:1}100%{transform:scale(1) translateY(0) rotate(0)}}
+.register-title{font-family:'Outfit',sans-serif;font-size:clamp(30px,9vw,52px);font-weight:900;letter-spacing:-2px;line-height:1;margin:16px 0 8px;background:linear-gradient(135deg,#FEF3C7 0%,#F59E0B 40%,#FEF3C7 80%,#F59E0B 100%);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:payoutShine 2s ease infinite,payoutGrow .9s cubic-bezier(.2,.9,.3,1.4);filter:drop-shadow(0 0 40px rgba(22,163,74,.8))}
+@keyframes payoutShine{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes payoutGrow{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+.register-sub{font-size:clamp(14px,4vw,18px);font-weight:700;color:#FEF3C7;margin-bottom:20px;letter-spacing:.5px;opacity:0;animation:payoutFadeIn .6s ease .6s forwards}
+@keyframes payoutFadeIn{to{opacity:1}}
+.register-groups{display:flex;gap:12px;margin-bottom:24px;opacity:0;animation:payoutFadeIn .6s ease .9s forwards;flex-wrap:wrap;justify-content:center}
+.register-group-btn{padding:14px 22px;border-radius:14px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:900;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:50px;text-decoration:none}
+.register-group-btn.wa{background:linear-gradient(135deg,#25D366,#128C7E)}
+.register-group-btn.tg{background:linear-gradient(135deg,#229ED9,#0A82B5)}
+.register-group-btn svg{width:22px;height:22px;fill:#fff}
+.register-continue{background:#fff;color:#166534;font-family:'Outfit',sans-serif;font-size:15px;font-weight:900;padding:14px 32px;border-radius:16px;border:none;cursor:pointer;box-shadow:0 20px 40px -10px rgba(0,0,0,.5);opacity:0;animation:payoutFadeIn .6s ease 1.2s forwards}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
 </style>
 </head>
 <body>
@@ -174,9 +193,16 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
         </button>
       </form>
 
-      <button type="button" class="btn-consultar" onclick="abrirConsultaMeuCodigo()">
-        🔍 Já me cadastrei — ver minha rede
-      </button>
+      <div class="community-inline">
+        <a href="https://chat.whatsapp.com/HLsB58njVfzFmVZU6HkOcB?mode=gi_t" target="_blank" class="wa">
+          <svg viewBox="0 0 24 24"><path d="M20.52 3.449C18.24 1.245 15.24 0.045 12.045 0.045c-6.638 0-12.04 5.401-12.04 12.04 0 2.122.554 4.192 1.606 6.018L0 24l6.184-1.621c1.758.96 3.732 1.466 5.855 1.466h.005c6.638 0 12.041-5.401 12.041-12.04 0-3.217-1.252-6.243-3.526-8.518l-.039-.038z"/></svg>
+          WhatsApp
+        </a>
+        <a href="https://t.me/+GgY-IO-v5Xg3MmNh" target="_blank" class="tg">
+          <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          Telegram
+        </a>
+      </div>
 
       <div class="benefits">
         <div class="benefit">
@@ -271,13 +297,20 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
       </button>
     </div>
 
-    <button type="button" class="btn-consultar" onclick="sairDoPainel()" style="margin-top:16px">
-      ← Sair e voltar ao formulário
-    </button>
+    <div class="community-inline" style="margin-top:20px">
+      <a href="https://chat.whatsapp.com/HLsB58njVfzFmVZU6HkOcB?mode=gi_t" target="_blank" class="wa">
+        <svg viewBox="0 0 24 24"><path d="M20.52 3.449C18.24 1.245 15.24 0.045 12.045 0.045c-6.638 0-12.04 5.401-12.04 12.04 0 2.122.554 4.192 1.606 6.018L0 24l6.184-1.621c1.758.96 3.732 1.466 5.855 1.466h.005c6.638 0 12.041-5.401 12.041-12.04 0-3.217-1.252-6.243-3.526-8.518l-.039-.038z"/></svg>
+        Entrar no WhatsApp
+      </a>
+      <a href="https://t.me/+GgY-IO-v5Xg3MmNh" target="_blank" class="tg">
+        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        Entrar no Telegram
+      </a>
+    </div>
 
     <div style="text-align:center;margin-top:22px;font-size:11.5px;color:var(--muted);font-weight:600;line-height:1.6">
-      Guarde seu código VIP para consultar sua rede depois.<br>
-      A gente te chama no WhatsApp quando o site abrir. 🐂
+      A gente te chama no WhatsApp quando o site abrir.<br>
+      Fique de olho! 🐂
     </div>
   </div>
 
@@ -285,14 +318,31 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
 
 <div class="toast" id="toast"></div>
 
-  
+<div class="register-celebration" id="register-celebration">
+  <div class="register-emoji">🎉</div>
+  <div class="register-title">VOCÊ ESTÁ<br>NA LISTA!</div>
+  <div class="register-sub">🐂 Bem-vindo ao Angus Agro VIP</div>
+  <div class="register-groups">
+    <a href="https://chat.whatsapp.com/HLsB58njVfzFmVZU6HkOcB?mode=gi_t" target="_blank" class="register-group-btn wa">
+      <svg viewBox="0 0 24 24"><path d="M20.52 3.449C18.24 1.245 15.24 0.045 12.045 0.045c-6.638 0-12.04 5.401-12.04 12.04 0 2.122.554 4.192 1.606 6.018L0 24l6.184-1.621c1.758.96 3.732 1.466 5.855 1.466h.005c6.638 0 12.041-5.401 12.041-12.04 0-3.217-1.252-6.243-3.526-8.518l-.039-.038z"/></svg>
+      WhatsApp
+    </a>
+    <a href="https://t.me/+GgY-IO-v5Xg3MmNh" target="_blank" class="register-group-btn tg">
+      <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      Telegram
+    </a>
+  </div>
+  <button type="button" class="register-continue" onclick="document.getElementById('register-celebration').classList.remove('show')">Continuar 🚀</button>
+</div>
 <script>
 (function(){
 'use strict';
 
 var CONFIG = {
   SUPABASE_URL: 'https://rvjkydxjicryinypmlkc.supabase.co',
-  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2amt5ZHhqaWNyeWlueXBtbGtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwNTQ0ODMsImV4cCI6MjEwNjYzMDQ4M30.8CaUaSU1h7-8kquXlBwZc7gE_baaKVw6bfvCE38aZ10'
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2amt5ZHhqaWNyeWlueXBtbGtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwNTQ0ODMsImV4cCI6MjEwNjYzMDQ4M30.8CaUaSU1h7-8kquXlBwZc7gE_baaKVw6bfvCE38aZ10',
+  WHATSAPP_GROUP: 'https://chat.whatsapp.com/HLsB58njVfzFmVZU6HkOcB?mode=gi_t',
+  TELEGRAM_GROUP: 'https://t.me/+GgY-IO-v5Xg3MmNh'
 };
 
 var ML_LEVELS = [
@@ -309,9 +359,8 @@ var ML_LEVELS = [
 ];
 
 var supabase = null;
-try { supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY); } catch(e){ console.error('Supabase init:', e); }
+try { supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY); } catch(e){}
 
-var LS_VIP = 'ANGUS_VIP_CODE_v1';
 var pendingRef = null;
 var myRefCode = null;
 var myRefLink = null;
@@ -324,50 +373,63 @@ function onPhoneInput(el){ el.value = maskPhone(el.value); }
 window.onPhoneInput = onPhoneInput;
 function validPhone(tel){ var t=(tel||'').replace(/\D/g,''); if(t.length<10||t.length>11) return false; var ddd=parseInt(t.substr(0,2),10); if(ddd<11||ddd>99) return false; if(t.length===11&&t[2]!=='9') return false; return true; }
 
-/* ============ MEMÓRIA DO CLIENTE ============ */
-function salvarMeuCodigo(code){
-  try { localStorage.setItem(LS_VIP, code); } catch(e){}
+function ensureAudio(){ try { var AC = window.AudioContext || window.webkitAudioContext; if(!AC) return null; return new AC(); } catch(e){ return null; } }
+function playNote(freq, dur, vol, type){
+  var ctx = ensureAudio(); if(!ctx) return;
+  try { if(ctx.state === 'suspended') ctx.resume();
+    var o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type || 'sine';
+    o.frequency.setValueAtTime(freq, ctx.currentTime);
+    g.gain.setValueAtTime(vol || 0.15, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + (dur || 0.3));
+    o.connect(g); g.connect(ctx.destination);
+    o.start(); o.stop(ctx.currentTime + (dur || 0.3) + 0.02);
+  } catch(e){}
 }
-function lerMeuCodigo(){
-  try { return localStorage.getItem(LS_VIP); } catch(e){ return null; }
+function playFanfare(){
+  var notes = [523, 659, 784, 1047, 1319, 1568, 2093, 1568, 2093, 2637];
+  notes.forEach(function(f, i){
+    setTimeout(function(){ playNote(f, 0.45, 0.22, 'triangle'); }, i * 110);
+  });
+  setTimeout(function(){ playNote(392, 1.5, 0.15, 'sine'); }, 200);
+  setTimeout(function(){ playNote(523, 1.8, 0.12, 'sine'); }, 250);
 }
-function limparMeuCodigo(){
-  try { localStorage.removeItem(LS_VIP); } catch(e){}
+function launchConfetti(){
+  var colors = ['#FCD34D','#FBBF24','#F59E0B','#4ADE80','#22C55E','#3B82F6','#8B5CF6','#EC4899','#F97316','#EF4444','#06B6D4'];
+  var c = document.createElement('div'); c.className = 'confetti-container'; document.body.appendChild(c);
+  for(var i=0;i<90;i++){
+    var p = document.createElement('div');
+    var size = 7 + Math.random()*10;
+    var left = Math.random()*100;
+    var delay = Math.random()*0.6;
+    var dur = 2 + Math.random()*1.8;
+    var color = colors[Math.floor(Math.random()*colors.length)];
+    var rotate = Math.random()*360;
+    p.style.cssText = 'position:absolute;top:-20px;left:'+left+'%;width:'+size+'px;height:'+(size*0.55)+'px;background:'+color+';transform:rotate('+rotate+'deg);opacity:1;border-radius:2px;animation:confettiFall '+dur+'s ease-in '+delay+'s forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){ try{ c.remove(); }catch(e){} }, 5000);
+}
+function showRegisterCelebration(){
+  var el = $('register-celebration');
+  if(!el) return;
+  el.classList.add('show');
+  try { playFanfare(); launchConfetti(); } catch(e){}
+  setTimeout(function(){ el.classList.remove('show'); }, 7000);
+  el.onclick = function(){ el.classList.remove('show'); };
 }
 
-/* ============ RENDER DOS NÍVEIS ============ */
 function renderCommLadder(){
   var el = $('comm-list'); if(!el) return;
   el.innerHTML = ML_LEVELS.map(function(L){
     return '<div class="comm-row '+(L.level===1?'l1':'')+'">' +
       '<div class="comm-badge">N'+L.level+'</div>' +
       '<div class="comm-desc">'+L.desc+'</div>' +
-      '<div class="comm-count zero" id="comm-n-'+L.level+'">0</div>' +
       '<div class="comm-pct">'+L.pct+'</div>' +
     '</div>';
   }).join('');
 }
 
-async function loadMyNetwork(){
-  if(!myRefCode || !supabase) return;
-  try {
-    var r = await supabase.rpc('get_pre_network_levels', { p_ref_code: myRefCode });
-    if(r.error || !r.data) return;
-    for(var i=1;i<=10;i++){
-      var node = $('comm-n-'+i);
-      if(node){ node.textContent = '0'; node.className = 'comm-count zero'; }
-    }
-    r.data.forEach(function(row){
-      var node = $('comm-n-'+row.level);
-      if(node){
-        node.textContent = row.count;
-        if(row.count > 0){ node.className = 'comm-count'; }
-      }
-    });
-  } catch(e){ console.warn('loadMyNetwork:', e); }
-}
-
-/* ============ CONTADOR E RANKING ============ */
 async function updateCounter(){
   if(!supabase){ $('counter-num').textContent = '127'; return; }
   try {
@@ -409,46 +471,6 @@ async function loadMyStats(){
   } catch(e){}
 }
 
-/* ============ CONSULTA MANUAL ============ */
-function abrirConsultaMeuCodigo(){
-  var code = prompt('Digite seu código VIP (ex: ANG-VIP-AXMTU4):');
-  if(!code) return;
-  code = code.trim().toUpperCase();
-  if(!code || code.length < 8){ toast('Código inválido.'); return; }
-  carregarMinhaRede(code, true);
-}
-window.abrirConsultaMeuCodigo = abrirConsultaMeuCodigo;
-
-async function carregarMinhaRede(code, salvar){
-  if(!supabase){ toast('Sistema indisponível.'); return; }
-  try {
-    var r = await supabase.rpc('get_pre_referrer', { p_ref_code: code });
-    if(r.error || !r.data || !r.data.length){
-      toast('Código não encontrado.');
-      return;
-    }
-    var data = r.data[0];
-    myRefCode = data.ref_code;
-    myRefCount = Number(data.referral_count) || 0;
-    if(salvar !== false){ salvarMeuCodigo(myRefCode); }
-    showSuccess();
-  } catch(e){
-    console.error(e);
-    toast('Erro ao consultar.');
-  }
-}
-window.carregarMinhaRede = carregarMinhaRede;
-
-function sairDoPainel(){
-  limparMeuCodigo();
-  $('success-state').classList.remove('show');
-  $('form-state').style.display = 'block';
-  myRefCode = null; myRefLink = null;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-window.sairDoPainel = sairDoPainel;
-
-/* ============ CADASTRO ============ */
 async function handlePreSubmit(e){
   e.preventDefault();
   var name = ($('pre-name').value||'').trim();
@@ -472,7 +494,6 @@ async function handlePreSubmit(e){
     if(check.data){
       myRefCode = check.data.ref_code;
       myRefCount = Number(check.data.referral_count) || 0;
-      salvarMeuCodigo(myRefCode);
       showSuccess();
       return;
     }
@@ -495,7 +516,6 @@ async function handlePreSubmit(e){
         if(c2.data){
           myRefCode = c2.data.ref_code;
           myRefCount = Number(c2.data.referral_count) || 0;
-          salvarMeuCodigo(myRefCode);
           showSuccess();
           return;
         }
@@ -505,7 +525,6 @@ async function handlePreSubmit(e){
 
     myRefCode = vipCode;
     myRefCount = 0;
-    salvarMeuCodigo(myRefCode);
 
     if(pendingRef){
       try {
@@ -517,6 +536,7 @@ async function handlePreSubmit(e){
     }
 
     showSuccess();
+    setTimeout(function(){ try { showRegisterCelebration(); } catch(e){} }, 500);
     loadRanking();
   } catch(err){
     console.error(err);
@@ -538,11 +558,10 @@ function showSuccess(){
 
   $('my-ref-count').textContent = myRefCount;
 
-  setTimeout(function(){ loadMyStats(); loadMyNetwork(); }, 600);
+  setTimeout(loadMyStats, 800);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ============ COMPARTILHAR ============ */
 function shareWhats(){
   if(!myRefLink) return;
   var counterTxt = $('counter-num').textContent;
@@ -556,66 +575,27 @@ window.shareWhats = shareWhats;
 
 function copyLink(){
   if(!myRefLink) return;
-  var ok = false;
-  try {
-    var ta = document.createElement('textarea');
-    ta.value = myRefLink;
-    ta.style.position = 'fixed';
-    ta.style.top = '-9999px';
-    ta.setAttribute('readonly', '');
-    document.body.appendChild(ta);
-    ta.select();
-    ta.setSelectionRange(0, myRefLink.length);
-    ok = document.execCommand('copy');
-    document.body.removeChild(ta);
-  } catch(e){ ok = false; }
-  if(ok){ toast('✅ Link copiado!'); }
-  else if(navigator.clipboard){
-    navigator.clipboard.writeText(myRefLink).then(function(){ toast('✅ Link copiado!'); }).catch(function(){ toast('Link: ' + myRefLink); });
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(myRefLink).then(function(){
+      toast('✅ Link copiado!');
+    }).catch(function(){ toast('Link: ' + myRefLink); });
   } else { toast('Link: ' + myRefLink); }
 }
 window.copyLink = copyLink;
 
-/* ============ INIT ============ */
-function init(){
-  renderCommLadder();
+try {
+  var params = new URLSearchParams(location.search);
+  var ref = params.get('ref');
+  if(ref){
+    pendingRef = ref.toUpperCase().trim();
+    $('ref-field').style.display = 'block';
+    $('pre-ref').value = pendingRef;
+  }
+} catch(e){}
 
-  try {
-    var params = new URLSearchParams(location.search);
-    var ref = params.get('ref');
-    var meu = params.get('meu');
-
-    if(ref){
-      pendingRef = ref.toUpperCase().trim();
-      $('ref-field').style.display = 'block';
-      $('pre-ref').value = pendingRef;
-    }
-
-    // 1. URL tem ?meu=CODIGO → abre direto
-    if(meu){
-      var meuUpper = meu.toUpperCase().trim();
-      salvarMeuCodigo(meuUpper);
-      setTimeout(function(){ carregarMinhaRede(meuUpper, false); }, 500);
-      return;
-    }
-
-    // 2. Tem código salvo → auto-login
-    var salvo = lerMeuCodigo();
-    if(salvo){
-      setTimeout(function(){ carregarMinhaRede(salvo, false); }, 500);
-      return;
-    }
-  } catch(e){ console.warn(e); }
-
-  updateCounter();
-  loadRanking();
-}
-
-if(document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
-}
+renderCommLadder();
+updateCounter();
+loadRanking();
 
 })();
 </script>
