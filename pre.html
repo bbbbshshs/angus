@@ -489,11 +489,11 @@ async function handlePreSubmit(e){
   try {
     if(!supabase) throw new Error('Sistema indisponível. Tente novamente.');
 
-    var check = await supabase.from('pre_registrations').select('ref_code, referral_count').eq('email', email).maybeSingle();
+    var check = await supabase.from('pre_registrations').select('ref_code, referral_count').eq('email', email).limit(1);
 
-    if(check.data){
-      myRefCode = check.data.ref_code;
-      myRefCount = Number(check.data.referral_count) || 0;
+    if(check.data && check.data.length > 0){
+      myRefCode = check.data[0].ref_code;
+      myRefCount = Number(check.data[0].referral_count) || 0;
       showSuccess();
       return;
     }
@@ -512,10 +512,10 @@ async function handlePreSubmit(e){
 
     if(ins.error){
       if(String(ins.error.message).indexOf('duplicate') !== -1){
-        var c2 = await supabase.from('pre_registrations').select('ref_code, referral_count').eq('email', email).maybeSingle();
-        if(c2.data){
-          myRefCode = c2.data.ref_code;
-          myRefCount = Number(c2.data.referral_count) || 0;
+        var c2 = await supabase.from('pre_registrations').select('ref_code, referral_count').eq('email', email).limit(1);
+        if(c2.data && c2.data.length > 0){
+          myRefCode = c2.data[0].ref_code;
+          myRefCount = Number(c2.data[0].referral_count) || 0;
           showSuccess();
           return;
         }
