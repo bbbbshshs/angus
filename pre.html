@@ -82,6 +82,23 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
 .stat-box .val.green{color:var(--green-dark)}
 .stat-box .val.gold{color:var(--gold-deep)}
 .stat-box .hint{font-size:9.5px;color:var(--muted);font-weight:600;margin-top:4px}
+.network-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:16px;margin-bottom:14px}
+.network-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.network-title{font-family:'Outfit',sans-serif;font-size:13px;font-weight:900;color:var(--txt)}
+.network-count{background:var(--green-soft);color:var(--green-dark);font-size:10px;font-weight:900;padding:3px 9px;border-radius:10px;font-family:'JetBrains Mono',monospace}
+.network-sub{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:12px}
+.network-level{margin-bottom:12px}
+.network-level:last-child{margin-bottom:0}
+.network-level-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;padding-left:2px}
+.network-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 11px;background:var(--soft-2);border:1px solid var(--border);border-radius:10px;margin-bottom:6px}
+.network-row:last-child{margin-bottom:0}
+.network-row .info{flex:1;min-width:0}
+.network-row .info .nm{font-family:'Outfit',sans-serif;font-size:12.5px;font-weight:900;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:2px}
+.network-row .info .em{font-size:10px;color:var(--muted);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.network-row .st{font-size:9px;font-weight:900;padding:3px 7px;border-radius:6px;text-transform:uppercase;flex-shrink:0}
+.network-row .st.ok{background:var(--green-soft);color:var(--green-dark)}
+.network-row .st.pend{background:var(--gold-soft);color:var(--gold-deep)}
+.network-empty{text-align:center;padding:24px 16px;font-size:12px;color:var(--muted);font-weight:600;font-style:italic;background:var(--soft-2);border-radius:10px}
 .comm-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:16px;margin-bottom:14px}
 .comm-card-title{font-family:'Outfit',sans-serif;font-size:13px;font-weight:900;color:var(--txt);margin-bottom:4px}
 .comm-card-sub{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:12px}
@@ -120,22 +137,32 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
 .community-inline a.wa{background:linear-gradient(135deg,#25D366,#128C7E)}
 .community-inline a.tg{background:linear-gradient(135deg,#229ED9,#0A82B5)}
 .community-inline svg{width:18px;height:18px;fill:#fff}
+.back-link{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;padding:14px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;color:var(--green-dark);cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.back-link:active{opacity:.7}
+.lookup-modal{position:fixed;inset:0;background:rgba(44,24,16,.78);z-index:9000;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}
+.lookup-modal.show{display:flex}
+.lookup-box{background:#fff;border-radius:22px;padding:24px 20px;width:100%;max-width:400px;text-align:center;border:1px solid var(--border);box-shadow:var(--shadow-lg)}
+.lookup-box h3{font-family:'Outfit',sans-serif;font-size:18px;font-weight:900;margin-bottom:6px}
+.lookup-box p{font-size:12.5px;color:var(--muted);font-weight:600;margin-bottom:18px;line-height:1.55}
+.lookup-input{width:100%;padding:14px 15px;background:var(--soft-2);border:1.5px solid var(--border-2);border-radius:13px;font-size:15px;text-align:center;outline:none;margin-bottom:12px;min-height:50px;font-family:'JetBrains Mono',monospace;font-weight:700}
+.lookup-input:focus{border-color:var(--green);background:#fff;box-shadow:0 0 0 4px rgba(22,163,74,.1)}
+.lookup-btn{width:100%;padding:16px;border-radius:14px;background:var(--grad-primary);color:#fff;font-family:'Outfit',sans-serif;font-weight:900;font-size:15px;border:none;cursor:pointer;min-height:50px;margin-bottom:8px}
+.lookup-btn:disabled{opacity:.6;cursor:not-allowed}
+.lookup-cancel{width:100%;padding:14px;border-radius:14px;background:transparent;color:var(--muted);font-family:'Outfit',sans-serif;font-weight:800;font-size:13px;border:none;cursor:pointer}
+.lookup-error{background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.25);color:var(--red);border-radius:11px;padding:11px;font-size:12px;font-weight:700;margin-bottom:12px;display:none}
+.lookup-error.show{display:block}
 .register-celebration{position:fixed;inset:0;z-index:9000;background:radial-gradient(circle at center,rgba(22,163,74,.95),rgba(44,24,16,.98));display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:24px;overflow:hidden}
-.register-celebration.show{display:flex;animation:payoutFade .35s ease}
-@keyframes payoutFade{from{opacity:0}to{opacity:1}}
+.register-celebration.show{display:flex}
 .register-emoji{font-size:clamp(72px,22vw,140px);line-height:1;animation:payoutPop .9s cubic-bezier(.2,.9,.3,1.4);filter:drop-shadow(0 8px 32px rgba(0,0,0,.5))}
 @keyframes payoutPop{0%{transform:scale(0) translateY(80px) rotate(-180deg);opacity:0}60%{transform:scale(1.25) translateY(-20px) rotate(15deg);opacity:1}100%{transform:scale(1) translateY(0) rotate(0)}}
-.register-title{font-family:'Outfit',sans-serif;font-size:clamp(30px,9vw,52px);font-weight:900;letter-spacing:-2px;line-height:1;margin:16px 0 8px;background:linear-gradient(135deg,#FEF3C7 0%,#F59E0B 40%,#FEF3C7 80%,#F59E0B 100%);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:payoutShine 2s ease infinite,payoutGrow .9s cubic-bezier(.2,.9,.3,1.4);filter:drop-shadow(0 0 40px rgba(22,163,74,.8))}
-@keyframes payoutShine{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-@keyframes payoutGrow{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
-.register-sub{font-size:clamp(14px,4vw,18px);font-weight:700;color:#FEF3C7;margin-bottom:20px;letter-spacing:.5px;opacity:0;animation:payoutFadeIn .6s ease .6s forwards}
-@keyframes payoutFadeIn{to{opacity:1}}
-.register-groups{display:flex;gap:12px;margin-bottom:24px;opacity:0;animation:payoutFadeIn .6s ease .9s forwards;flex-wrap:wrap;justify-content:center}
+.register-title{font-family:'Outfit',sans-serif;font-size:clamp(30px,9vw,52px);font-weight:900;letter-spacing:-2px;line-height:1;margin:16px 0 8px;background:linear-gradient(135deg,#FEF3C7 0%,#F59E0B 40%,#FEF3C7 80%,#F59E0B 100%);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 40px rgba(22,163,74,.8))}
+.register-sub{font-size:clamp(14px,4vw,18px);font-weight:700;color:#FEF3C7;margin-bottom:20px}
+.register-groups{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;justify-content:center}
 .register-group-btn{padding:14px 22px;border-radius:14px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:900;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:50px;text-decoration:none}
 .register-group-btn.wa{background:linear-gradient(135deg,#25D366,#128C7E)}
 .register-group-btn.tg{background:linear-gradient(135deg,#229ED9,#0A82B5)}
 .register-group-btn svg{width:22px;height:22px;fill:#fff}
-.register-continue{background:#fff;color:#166534;font-family:'Outfit',sans-serif;font-size:15px;font-weight:900;padding:14px 32px;border-radius:16px;border:none;cursor:pointer;box-shadow:0 20px 40px -10px rgba(0,0,0,.5);opacity:0;animation:payoutFadeIn .6s ease 1.2s forwards}
+.register-continue{background:#fff;color:#166534;font-family:'Outfit',sans-serif;font-size:15px;font-weight:900;padding:14px 32px;border-radius:16px;border:none;cursor:pointer;box-shadow:0 20px 40px -10px rgba(0,0,0,.5)}
 @keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
 .confetti-container{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
 </style>
@@ -181,17 +208,17 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
           <label class="field-label">WhatsApp <span class="req">*</span></label>
           <input type="text" class="input" id="pre-phone" placeholder="(11) 99999-9999" required maxlength="16" inputmode="tel" autocomplete="tel" oninput="onPhoneInput(this)">
         </div>
-
         <div class="field" id="ref-field" style="display:none">
           <label class="field-label">Você foi indicado por 🎁</label>
           <input type="text" class="input ref-input" id="pre-ref" readonly>
         </div>
-
         <button type="submit" class="btn-submit" id="pre-btn">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           <span>Quero entrar na lista</span>
         </button>
       </form>
+
+      <div class="back-link" onclick="openLookup()">👤 Já me cadastrei · Ver minha rede</div>
 
       <div class="community-inline">
         <a href="https://chat.whatsapp.com/HLsB58njVfzFmVZU6HkOcB?mode=gi_t" target="_blank" class="wa">
@@ -207,24 +234,15 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
       <div class="benefits">
         <div class="benefit">
           <div class="benefit-icon">💰</div>
-          <div class="benefit-text">
-            <b>15% de comissão N1</b>
-            <small>A cada compra da sua indicação direta</small>
-          </div>
+          <div class="benefit-text"><b>15% de comissão N1</b><small>A cada compra da sua indicação direta</small></div>
         </div>
         <div class="benefit">
           <div class="benefit-icon">🌐</div>
-          <div class="benefit-text">
-            <b>+ 9 níveis de rede</b>
-            <small>15% · 5% · 3% · 2% · 1% · 1% · 1% · 1% · 0,5% · 0,5%</small>
-          </div>
+          <div class="benefit-text"><b>+ 9 níveis de rede</b><small>15% · 5% · 3% · 2% · 1% · 1% · 1% · 1% · 0,5% · 0,5%</small></div>
         </div>
         <div class="benefit">
           <div class="benefit-icon">⚡</div>
-          <div class="benefit-text">
-            <b>Acesso 24h antes</b>
-            <small>Só a lista VIP entra no primeiro dia</small>
-          </div>
+          <div class="benefit-text"><b>Acesso 24h antes</b><small>Só a lista VIP entra no primeiro dia</small></div>
         </div>
       </div>
     </div>
@@ -237,10 +255,7 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
       <div id="ranking-list"></div>
     </div>
 
-    <div class="footer">
-      Seus dados estão seguros. <b>Não enviamos spam.</b><br>
-      Você pode sair da lista quando quiser.
-    </div>
+    <div class="footer">Seus dados estão seguros. <b>Não enviamos spam.</b><br>Você pode sair da lista quando quiser.</div>
   </div>
 
   <div class="success" id="success-state">
@@ -280,6 +295,15 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
       </div>
     </div>
 
+    <div class="network-card" id="network-card" style="display:none">
+      <div class="network-head">
+        <div class="network-title">👥 Toda sua rede</div>
+        <span class="network-count" id="network-count">0</span>
+      </div>
+      <div class="network-sub">Todos os indicados (até 10 níveis)</div>
+      <div id="network-list"></div>
+    </div>
+
     <div class="comm-card">
       <div class="comm-card-title">🌐 Sua rede de comissões</div>
       <div class="comm-card-sub">Ganhe em até 10 níveis da sua rede</div>
@@ -308,15 +332,23 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
       </a>
     </div>
 
-    <div style="text-align:center;margin-top:22px;font-size:11.5px;color:var(--muted);font-weight:600;line-height:1.6">
-      A gente te chama no WhatsApp quando o site abrir.<br>
-      Fique de olho! 🐂
-    </div>
+    <div style="text-align:center;margin-top:22px;font-size:11.5px;color:var(--muted);font-weight:600;line-height:1.6">A gente te chama no WhatsApp quando o site abrir.<br>Fique de olho! 🐂</div>
   </div>
 
 </div>
 
 <div class="toast" id="toast"></div>
+
+<div class="lookup-modal" id="lookup-modal">
+  <div class="lookup-box">
+    <h3>🔍 Ver minha rede</h3>
+    <p>Digite o <b>e-mail</b> ou <b>código VIP</b> que você usou pra se cadastrar</p>
+    <div class="lookup-error" id="lookup-error">Código não encontrado</div>
+    <input type="text" class="lookup-input" id="lookup-input" placeholder="E-MAIL OU ANG-VIP-XXXXXX" autocomplete="off">
+    <button class="lookup-btn" id="lookup-btn" onclick="doLookup()">Consultar</button>
+    <button class="lookup-cancel" onclick="closeLookup()">Cancelar</button>
+  </div>
+</div>
 
 <div class="register-celebration" id="register-celebration">
   <div class="register-emoji">🎉</div>
@@ -334,6 +366,7 @@ h1,h2,h3{font-family:'Outfit',sans-serif;overflow-wrap:break-word;font-weight:90
   </div>
   <button type="button" class="register-continue" onclick="document.getElementById('register-celebration').classList.remove('show')">Continuar 🚀</button>
 </div>
+
 <script>
 (function(){
 'use strict';
@@ -373,6 +406,13 @@ function onPhoneInput(el){ el.value = maskPhone(el.value); }
 window.onPhoneInput = onPhoneInput;
 function validPhone(tel){ var t=(tel||'').replace(/\D/g,''); if(t.length<10||t.length>11) return false; var ddd=parseInt(t.substr(0,2),10); if(ddd<11||ddd>99) return false; if(t.length===11&&t[2]!=='9') return false; return true; }
 
+document.addEventListener('input', function(e){
+  if(e.target && e.target.id === 'lookup-input'){
+    var v = e.target.value;
+    if(v.indexOf('@') === -1) e.target.value = v.toUpperCase();
+  }
+});
+
 function ensureAudio(){ try { var AC = window.AudioContext || window.webkitAudioContext; if(!AC) return null; return new AC(); } catch(e){ return null; } }
 function playNote(freq, dur, vol, type){
   var ctx = ensureAudio(); if(!ctx) return;
@@ -388,9 +428,7 @@ function playNote(freq, dur, vol, type){
 }
 function playFanfare(){
   var notes = [523, 659, 784, 1047, 1319, 1568, 2093, 1568, 2093, 2637];
-  notes.forEach(function(f, i){
-    setTimeout(function(){ playNote(f, 0.45, 0.22, 'triangle'); }, i * 110);
-  });
+  notes.forEach(function(f, i){ setTimeout(function(){ playNote(f, 0.45, 0.22, 'triangle'); }, i * 110); });
   setTimeout(function(){ playNote(392, 1.5, 0.15, 'sine'); }, 200);
   setTimeout(function(){ playNote(523, 1.8, 0.12, 'sine'); }, 250);
 }
@@ -399,10 +437,7 @@ function launchConfetti(){
   var c = document.createElement('div'); c.className = 'confetti-container'; document.body.appendChild(c);
   for(var i=0;i<90;i++){
     var p = document.createElement('div');
-    var size = 7 + Math.random()*10;
-    var left = Math.random()*100;
-    var delay = Math.random()*0.6;
-    var dur = 2 + Math.random()*1.8;
+    var size = 7 + Math.random()*10, left = Math.random()*100, delay = Math.random()*0.6, dur = 2 + Math.random()*1.8;
     var color = colors[Math.floor(Math.random()*colors.length)];
     var rotate = Math.random()*360;
     p.style.cssText = 'position:absolute;top:-20px;left:'+left+'%;width:'+size+'px;height:'+(size*0.55)+'px;background:'+color+';transform:rotate('+rotate+'deg);opacity:1;border-radius:2px;animation:confettiFall '+dur+'s ease-in '+delay+'s forwards';
@@ -411,8 +446,7 @@ function launchConfetti(){
   setTimeout(function(){ try{ c.remove(); }catch(e){} }, 5000);
 }
 function showRegisterCelebration(){
-  var el = $('register-celebration');
-  if(!el) return;
+  var el = $('register-celebration'); if(!el) return;
   el.classList.add('show');
   try { playFanfare(); launchConfetti(); } catch(e){}
   setTimeout(function(){ el.classList.remove('show'); }, 7000);
@@ -422,11 +456,7 @@ function showRegisterCelebration(){
 function renderCommLadder(){
   var el = $('comm-list'); if(!el) return;
   el.innerHTML = ML_LEVELS.map(function(L){
-    return '<div class="comm-row '+(L.level===1?'l1':'')+'">' +
-      '<div class="comm-badge">N'+L.level+'</div>' +
-      '<div class="comm-desc">'+L.desc+'</div>' +
-      '<div class="comm-pct">'+L.pct+'</div>' +
-    '</div>';
+    return '<div class="comm-row '+(L.level===1?'l1':'')+'"><div class="comm-badge">N'+L.level+'</div><div class="comm-desc">'+L.desc+'</div><div class="comm-pct">'+L.pct+'</div></div>';
   }).join('');
 }
 
@@ -449,11 +479,7 @@ async function loadRanking(){
     if(!list.length) return;
     var html = list.map(function(item, i){
       var posClass = i === 0 ? 'gold' : (i === 1 ? 'silver' : (i === 2 ? 'bronze' : ''));
-      return '<div class="rank-row">' +
-        '<div class="rank-pos '+posClass+'">'+(i+1)+'</div>' +
-        '<div class="rank-name">'+item.name+'</div>' +
-        '<div class="rank-count">'+item.referral_count+'</div>' +
-      '</div>';
+      return '<div class="rank-row"><div class="rank-pos '+posClass+'">'+(i+1)+'</div><div class="rank-name">'+item.name+'</div><div class="rank-count">'+item.referral_count+'</div></div>';
     }).join('');
     $('ranking-list').innerHTML = html;
     $('ranking-box').style.display = 'block';
@@ -465,11 +491,86 @@ async function loadMyStats(){
   try {
     var r = await supabase.rpc('get_pre_referrer', { p_ref_code: myRefCode });
     if(r.error || !r.data || !r.data.length) return;
-    var data = r.data[0];
-    myRefCount = Number(data.referral_count) || 0;
+    myRefCount = Number(r.data[0].referral_count) || 0;
     $('my-ref-count').textContent = myRefCount;
   } catch(e){}
 }
+
+async function loadMyNetwork(){
+  if(!supabase || !myRefCode) return;
+  try {
+    var r = await supabase.rpc('list_my_prereg_network', { p_ref_code: myRefCode });
+    if(r.error || !r.data) return;
+    var card = $('network-card'), list = $('network-list'), count = $('network-count');
+    if(!card || !list || !count) return;
+    var data = r.data;
+    count.textContent = data.length;
+    if(!data.length){
+      list.innerHTML = '<div class="network-empty">Ninguém entrou na sua rede ainda.<br>Compartilhe seu link pra crescer! 🚀</div>';
+    } else {
+      var byLevel = {};
+      data.forEach(function(item){
+        if(!byLevel[item.level]) byLevel[item.level] = [];
+        byLevel[item.level].push(item);
+      });
+      var html = '';
+      Object.keys(byLevel).sort(function(a,b){ return a-b; }).forEach(function(lvl){
+        var items = byLevel[lvl];
+        html += '<div class="network-level"><div class="network-level-title">Nível '+lvl+' · '+items.length+' '+(items.length===1?'pessoa':'pessoas')+'</div>';
+        items.forEach(function(p){
+          var badge = p.converted ? '<span class="st ok">✓ Convertido</span>' : '<span class="st pend">⏳ Aguardando</span>';
+          html += '<div class="network-row"><div class="info"><div class="nm">'+p.name+'</div><div class="em">'+p.email+'</div></div>'+badge+'</div>';
+        });
+        html += '</div>';
+      });
+      list.innerHTML = html;
+    }
+    card.style.display = 'block';
+  } catch(e){ console.warn('loadMyNetwork:', e); }
+}
+
+function openLookup(){
+  var m = $('lookup-modal'); if(!m) return;
+  m.classList.add('show');
+  var err = $('lookup-error'); if(err) err.classList.remove('show');
+  var inp = $('lookup-input'); if(inp) inp.value = '';
+  setTimeout(function(){ if(inp) inp.focus(); }, 200);
+}
+window.openLookup = openLookup;
+
+function closeLookup(){ var m = $('lookup-modal'); if(m) m.classList.remove('show'); }
+window.closeLookup = closeLookup;
+
+async function doLookup(){
+  var input = $('lookup-input'), btn = $('lookup-btn'), err = $('lookup-error');
+  if(!input || !btn) return;
+  var term = (input.value || '').trim();
+  if(!term){ if(err){ err.textContent = 'Digite seu e-mail ou código.'; err.classList.add('show'); } return; }
+  btn.disabled = true; btn.textContent = 'Consultando...';
+  if(err) err.classList.remove('show');
+  try {
+    if(!supabase) throw new Error('Sistema indisponível');
+    var isEmail = term.indexOf('@') !== -1;
+    var q = supabase.from('pre_registrations').select('ref_code, name, referral_count');
+    if(isEmail) q = q.eq('email', term.toLowerCase()).limit(1);
+    else q = q.eq('ref_code', term.toUpperCase()).limit(1);
+    var r = await q;
+    if(r.error || !r.data || !r.data.length){
+      if(err){ err.textContent = 'Não encontramos esse cadastro. Confira o e-mail ou código.'; err.classList.add('show'); }
+      btn.disabled = false; btn.textContent = 'Consultar'; return;
+    }
+    myRefCode = r.data[0].ref_code;
+    myRefCount = Number(r.data[0].referral_count) || 0;
+    closeLookup();
+    showSuccess();
+    setTimeout(function(){ try { loadMyStats(); loadMyNetwork(); } catch(e){} }, 800);
+  } catch(e){
+    console.warn('doLookup:', e);
+    if(err){ err.textContent = 'Erro ao consultar. Tente novamente.'; err.classList.add('show'); }
+    btn.disabled = false; btn.textContent = 'Consultar';
+  }
+}
+window.doLookup = doLookup;
 
 async function handlePreSubmit(e){
   e.preventDefault();
@@ -488,53 +589,34 @@ async function handlePreSubmit(e){
 
   try {
     if(!supabase) throw new Error('Sistema indisponível. Tente novamente.');
-
     var check = await supabase.from('pre_registrations').select('ref_code, referral_count').eq('email', email).limit(1);
-
     if(check.data && check.data.length > 0){
       myRefCode = check.data[0].ref_code;
       myRefCount = Number(check.data[0].referral_count) || 0;
-      showSuccess();
-      return;
+      showSuccess(); return;
     }
-
     var vipCode = 'ANG-VIP-' + Math.random().toString(36).slice(2,8).toUpperCase();
-
     var ins = await supabase.from('pre_registrations').insert({
-      name: name,
-      email: email,
-      phone: phone,
+      name: name, email: email, phone: phone,
       source: pendingRef || (document.referrer ? document.referrer.slice(0, 100) : 'direto'),
-      ref_code: vipCode,
-      referred_by: pendingRef || null,
+      ref_code: vipCode, referred_by: pendingRef || null,
       user_agent: navigator.userAgent.slice(0, 200)
     });
-
     if(ins.error){
       if(String(ins.error.message).indexOf('duplicate') !== -1){
         var c2 = await supabase.from('pre_registrations').select('ref_code, referral_count').eq('email', email).limit(1);
         if(c2.data && c2.data.length > 0){
           myRefCode = c2.data[0].ref_code;
           myRefCount = Number(c2.data[0].referral_count) || 0;
-          showSuccess();
-          return;
+          showSuccess(); return;
         }
       }
       throw new Error(ins.error.message);
     }
-
-    myRefCode = vipCode;
-    myRefCount = 0;
-
+    myRefCode = vipCode; myRefCount = 0;
     if(pendingRef){
-      try {
-        await supabase.rpc('register_pre_referral', {
-          p_ref_code: pendingRef,
-          p_new_email: email
-        });
-      } catch(e){ console.warn('ref:', e); }
+      try { await supabase.rpc('register_pre_referral', { p_ref_code: pendingRef, p_new_email: email }); } catch(e){ console.warn('ref:', e); }
     }
-
     showSuccess();
     setTimeout(function(){ try { showRegisterCelebration(); } catch(e){} }, 500);
     loadRanking();
@@ -551,24 +633,19 @@ function showSuccess(){
   $('form-state').style.display = 'none';
   $('success-state').classList.add('show');
   $('vip-code').textContent = myRefCode;
-
   var base = location.origin + location.pathname;
   myRefLink = base + '?v=2&ref=' + myRefCode;
   $('ref-link').textContent = myRefLink;
-
   $('my-ref-count').textContent = myRefCount;
-
   setTimeout(loadMyStats, 800);
+  setTimeout(loadMyNetwork, 900);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function shareWhats(){
   if(!myRefLink) return;
   var counterTxt = $('counter-num').textContent;
-  var msg = '🐂 Entrei na lista VIP do Angus Agro!\n\n' +
-            'Já são ' + counterTxt + ' pessoas na fila.\n' +
-            'Garanta acesso antecipado às cotas:\n\n' +
-            myRefLink;
+  var msg = '🐂 Entrei na lista VIP do Angus Agro!\n\nJá são ' + counterTxt + ' pessoas na fila.\nGaranta acesso antecipado às cotas:\n\n' + myRefLink;
   window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
 }
 window.shareWhats = shareWhats;
@@ -576,9 +653,7 @@ window.shareWhats = shareWhats;
 function copyLink(){
   if(!myRefLink) return;
   if(navigator.clipboard){
-    navigator.clipboard.writeText(myRefLink).then(function(){
-      toast('✅ Link copiado!');
-    }).catch(function(){ toast('Link: ' + myRefLink); });
+    navigator.clipboard.writeText(myRefLink).then(function(){ toast('✅ Link copiado!'); }).catch(function(){ toast('Link: ' + myRefLink); });
   } else { toast('Link: ' + myRefLink); }
 }
 window.copyLink = copyLink;
