@@ -2236,8 +2236,11 @@ function renderRobots(){
         '<div class="cow-yield">+ '+fmt(r.daily)+' / dia · '+ratePct+'%</div>' +
         (r.trackId ? '<div class="cow-track-badge">🔍 '+r.trackId+'</div>' : '') +
         '<div class="cow-cycle"><div class="cow-cycle-head"><span class="cow-cycle-day">'+(finished?'Ciclo finalizado':(info.currentStage.icon+' '+info.currentStage.title))+'</span><span class="cow-cycle-pct">'+pct+'%</span></div><div class="cow-cycle-bar"><div class="cow-cycle-fill" style="width:'+pct+'%"></div></div></div>' +
-        '<div class="cow-totals"><div class="cow-total-box earned"><div class="lbl">Já rendeu</div><div class="val">+'+fmt(earned)+'</div></div><div class="cow-total-box pending"><div class="lbl">Total ciclo</div><div class="val">'+fmt(r.totalProfit||0)+'</div></div></div>' +
-        '<div class="cow-status">'+(finished?'Cota pronta':('Status: '+info.currentStage.title))+'</div>' +
+    '<div class="cow-totals" style="grid-template-columns:1fr 1fr 1fr">' +
+  '<div class="cow-total-box"><div class="lbl">'+(isBonus?'Valor do bônus':'Aportado')+'</div><div class="val" style="color:#1A1410">'+fmt(r.cost)+'</div></div>' +
+  '<div class="cow-total-box earned"><div class="lbl">Já rendeu</div><div class="val">+'+fmt(earned)+'</div></div>' +
+  '<div class="cow-total-box pending"><div class="lbl">Total ciclo</div><div class="val">'+fmt(r.totalProfit||0)+'</div></div>' +
+'</div>' +    '<div class="cow-status">'+(finished?'Cota pronta':('Status: '+info.currentStage.title))+'</div>' +
         '<button type="button" class="cow-btn track" data-action="track">🔍 Rastrear cota</button>' +
         '<button type="button" class="cow-btn" data-action="live">👁 Ver ao vivo</button>' +
       '</div>';
@@ -2785,12 +2788,12 @@ async function createBonus(){
 }
 async function removeBonus(uid){
   if(!confirm('Remover este bônus? O rendimento já creditado NÃO será afetado.')) return;
-  var r = await supabase.from('cotas').delete().eq('uid', uid);
+  var r = await supabase.rpc('admin_remove_bonus', { p_uid: uid });
   if(r.error){ toast('Erro: '+r.error.message); return; }
-  toast('Bônus removido.');
+  if(r.data && r.data.error){ toast(r.data.error); return; }
+  toast('✅ Bônus removido com sucesso.');
   renderAdminBonus($('admin-body'));
 }
-
 /* ==================== PRE-CADASTROS ==================== */
 async function renderAdminPre(body){
   body.innerHTML = '<div style="padding:24px;text-align:center;color:#78716C">Carregando pré-cadastros...</div>';
