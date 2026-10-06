@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+"<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
@@ -2348,14 +2348,27 @@ function renderRobots(){
   });
 }
 
-function updateRede(){
+async function updateRede(){
   if(!user) return;
   function set(id, t){ var el = $(id); if(el) el.textContent = t; }
   set('rede-code', user.ref_code || '—');
-  set('rede-direct', user.direct_referrals || 0);
-  set('rede-total', user.network_size || 0);
   set('rede-earned', fmt(user.commission_earned || 0));
   set('rede-maxlevel', user.max_network_level || 0);
+
+  var directCount = user.direct_referrals || 0;
+  var totalCount = user.network_size || 0;
+
+  try {
+    var r = await supabase.rpc('get_full_network_stats', { p_user_id: user.id });
+    if(!r.error && r.data){
+      if(r.data.direct !== undefined) directCount = r.data.direct;
+      if(r.data.total !== undefined) totalCount = r.data.total;
+    }
+  } catch(e){ console.warn('get_full_network_stats:', e); }
+
+  set('rede-direct', directCount);
+  set('rede-total', totalCount);
+
   var rowsEl = $('rede-rows'); if(!rowsEl) return;
   rowsEl.innerHTML = ML_LEVELS.map(function(L){
     var pctDisplay = (L.pct*100).toFixed(L.pct < 0.01 ? 1 : 0).replace('.',',');
