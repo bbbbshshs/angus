@@ -15,7 +15,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%2316A34A'/%3E%3C/svg%3E">
 <style>
-  balance-sub { display: none !important; }
+.balance-sub{display:none!important}
 :root{--bg:#FEFCF6;--card:#FFFFFF;--soft:#F5EFE0;--soft-2:#FAF6EB;--txt:#1A1410;--muted:#78716C;--muted-2:#A8A29E;--green:#16A34A;--green-dark:#166534;--green-soft:rgba(22,163,74,.1);--green-border:rgba(22,163,74,.25);--gold:#F59E0B;--gold-2:#FBBF24;--gold-deep:#7C2D12;--purple:#7C3AED;--purple-soft:rgba(124,58,237,.08);--purple-border:rgba(124,58,237,.25);--grad-gold:linear-gradient(135deg,#F59E0B 0%,#B45309 100%);--grad-primary:linear-gradient(135deg,#16A34A 0%,#166534 100%);--grad-dark:linear-gradient(135deg,#2C1810 0%,#3D2317 100%);--grad-purple:linear-gradient(135deg,#7C3AED 0%,#8B5CF6 50%,#A855F7 100%);--gold-soft:rgba(245,158,11,.12);--gold-border:rgba(245,158,11,.3);--red:#DC2626;--border:rgba(44,24,16,.08);--border-2:rgba(44,24,16,.12);--shadow:0 2px 12px rgba(44,24,16,.06);--shadow-lg:0 12px 32px -8px rgba(44,24,16,.15);--shadow-gold:0 8px 24px -8px rgba(245,158,11,.4);--topbar-h:58px;--bottom-h:70px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%;overflow-x:hidden}
@@ -841,7 +841,6 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
       <div class="balance-hero">
         <div class="balance-lbl">Rendimento disponível</div>
         <div class="balance"><sup>R$</sup><span id="d-bal">0,00</span></div>
-        
         <div class="reinvest-row">
           <button type="button" class="reinvest-btn" id="reinvest-btn" onclick="reinvest()">
             <span class="rb-main">🔄 Reinvestir</span>
@@ -860,7 +859,6 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
         <div><div class="today-lbl">Creditado hoje</div><div class="today-val" id="d-today">R$ 0,00</div></div>
         <div class="today-icon">🐂</div>
       </div>
-      
       <div class="stat-grid">
         <div class="stat-box"><div class="lbl">Total investido</div><div class="val" id="d-inv">R$ 0,00</div></div>
         <div class="stat-box"><div class="lbl">Rendimento/dia</div><div class="val green" id="d-cyc">R$ 0,00</div></div>
@@ -982,7 +980,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
     <h2 class="auth-title" id="auth-title">Criar Conta</h2>
     <p class="auth-sub" id="auth-sub">Você é pecuarista em 60 segundos.</p>
     <div class="verified-strip" id="verify-strip">✓ Cadastro verificado · CPF + Celular</div>
-    <form onsubmit="handleAuth(event)">
+    <form id="auth-form">
       <div id="name-field"><label class="field-label">Nome Completo <span class="req">*</span></label><input type="text" class="input" id="auth-name" placeholder="João Silva"></div>
       <div id="cpf-field"><label class="field-label">CPF <span class="req">*</span></label><input type="text" class="input" id="auth-cpf" placeholder="000.000.000-00" inputmode="numeric" maxlength="14" oninput="onCpfInput(this)"><div class="field-hint" id="cpf-hint">Validaremos seu CPF</div></div>
       <div id="phone-field"><label class="field-label">Celular <span class="req">*</span></label><input type="text" class="input" id="auth-phone" placeholder="(11) 99999-9999" inputmode="tel" maxlength="16" oninput="onPhoneInput(this)"><div class="field-hint" id="phone-hint">Formato: (DDD) 9XXXX-XXXX</div></div>
@@ -995,7 +993,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
       </div>
       <label class="field-label">Senha <span class="req">*</span></label>
       <input type="password" class="input" id="auth-pass" placeholder="Mínimo 6 caracteres" required minlength="6">
-      <button type="submit" class="btn btn-primary btn-block btn-lg" id="auth-btn" style="margin-top:4px">Criar Conta</button>
+      <button type="button" class="btn btn-primary btn-block btn-lg" id="auth-btn" style="margin-top:4px" onclick="handleAuth()">Criar Conta</button>
     </form>
     <button type="button" class="auth-toggle" id="auth-toggle" onclick="toggleAuth()">Já tem conta? Entrar</button>
   </div>
@@ -1537,10 +1535,11 @@ function handleAuth(e){
   (async function(){
     try {
       if(isLogin){
+        if(!email || !pass){ toast('Preencha e-mail e senha.'); if(btn) btn.disabled = false; return; }
         var r = await DB.signIn(email, pass);
-        if(r.error) throw new Error(r.error.message || 'Credenciais incorretas');
+        if(r.error){ toast('E-mail ou senha incorretos.'); if(btn) btn.disabled = false; return; }
         user = r.data.profile;
-        if(!user) throw new Error('Perfil não encontrado. Aguarde 2s e tente novamente.');
+        if(!user){ toast('Perfil não encontrado. Tente novamente.'); if(btn) btn.disabled = false; return; }
         migrateUser(); closeAuth(); startApp();
         toast('Bem-vindo de volta!');
       } else {
@@ -1549,22 +1548,24 @@ function handleAuth(e){
         var phone = ($('auth-phone').value||'').trim();
         var refCode = ($('auth-ref').value||'').trim().toUpperCase();
 
-        if(!name || name.length<3) throw new Error('Insira seu nome completo.');
-        if(!validCPF(cpf)) throw new Error('CPF inválido.');
-        if(!validPhone(phone)) throw new Error('Celular inválido.');
-        if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error('E-mail inválido.');
-        if(!pass || pass.length<6) throw new Error('Senha mínimo 6 caracteres.');
-        if(!refCode) throw new Error('Código de indicação obrigatório.');
+        if(!name || name.length<3){ toast('Insira seu nome completo.'); if(btn) btn.disabled = false; return; }
+        if(!validCPF(cpf)){ toast('CPF inválido.'); if(btn) btn.disabled = false; return; }
+        if(!validPhone(phone)){ toast('Celular inválido.'); if(btn) btn.disabled = false; return; }
+        if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ toast('E-mail inválido.'); if(btn) btn.disabled = false; return; }
+        if(!pass || pass.length<6){ toast('Senha mínimo 6 caracteres.'); if(btn) btn.disabled = false; return; }
+        if(!refCode){ toast('Código de indicação obrigatório.'); if(btn) btn.disabled = false; return; }
 
         var r2 = await DB.signUp(name, email, pass, cpf, phone, refCode);
-        if(r2.error) throw new Error(r2.error.message || 'Erro ao cadastrar');
+        if(r2.error){ toast(r2.error.message || 'Erro ao cadastrar.'); if(btn) btn.disabled = false; return; }
         user = r2.data.profile;
-        if(!user) throw new Error('Perfil não criado. Aguarde 2s e faça login.');
+        if(!user){ toast('Perfil não criado. Aguarde 2s e faça login.'); if(btn) btn.disabled = false; return; }
         migrateUser(); closeAuth(); startApp();
         toast('Bem-vindo, ' + name.split(' ')[0] + '!');
         setTimeout(function(){ try { showRegisterCelebration(); } catch(e){} }, 400);
       }
-    } catch(err){ toast(err.message || 'Erro.'); }
+    } catch(err){
+      toast('Erro: ' + (err.message || 'Verifique sua conexão.'));
+    }
     finally { if(btn) btn.disabled = false; }
   })();
 }
@@ -1669,7 +1670,9 @@ function shareWhats(){ window.open('https://wa.me/?text=' + encodeURIComponent('
 function shareTelegram(){ window.open('https://t.me/share/url?url=' + encodeURIComponent(getShareUrl()), '_blank'); }
 function copyRefLink(){ if(navigator.clipboard){ navigator.clipboard.writeText(getShareUrl()).then(function(){ toast('Link copiado!'); }).catch(function(){ toast('Link: '+getShareUrl()); }); } else toast('Link: '+getShareUrl()); }
 function copyMyRef(){ if(!user){ openAuth(); return; } copyRefLink(); }
-  function renderPlans(){
+
+  
+function renderPlans(){
   var fullHtml = PLANS.map(function(p){
     return '<div class="plan tier-'+p.tierNum+' '+(p.pop?'popular':'')+'">' +
       (p.pop?'<div class="plan-badge">Mais Popular</div>':'') +
@@ -1707,7 +1710,6 @@ async function openPix(planId){
   for(var i=0;i<PLANS.length;i++) if(PLANS[i].id === planId) p = PLANS[i];
   if(!p) return;
 
-  // Se tem saldo suficiente, compra direto com saldo (sem PIX)
   var bal = Number(user.balance) || 0;
   if(bal >= p.cost){
     if(!confirm('💸 Você tem ' + fmt(bal) + ' de saldo.\n\nUsar R$ ' + fmt(p.cost) + ' pra comprar "' + p.name + '"?\n\nSobrará: ' + fmt(bal - p.cost))) return;
@@ -2417,21 +2419,68 @@ function executeNode(uid, el){
   nextLine();
 }
 function closeTerm(){ var t = $('terminal'); if(t) t.classList.remove('active'); }
-function renderUserChart(){
+
+async function renderUserChart(){
   if(!user) return;
   var c = $('userChart'); if(!c || !window.Chart) return;
   try { if(userChart) userChart.destroy(); } catch(e){}
+  var dailyData = [0,0,0,0,0,0,0];
+  try {
+    var sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+    sevenDaysAgo.setHours(0,0,0,0);
+    var r = await supabase.from('transactions')
+      .select('value, created_at')
+      .eq('user_id', user.id)
+      .eq('type', 'in')
+      .gte('created_at', sevenDaysAgo.toISOString())
+      .order('created_at', {ascending: true});
+    if(r.data){
+      var today = new Date(); today.setHours(0,0,0,0);
+      r.data.forEach(function(t){
+        var tDate = new Date(t.created_at); tDate.setHours(0,0,0,0);
+        var diff = Math.floor((today - tDate) / 86400000);
+        var idx = 6 - diff;
+        if(idx >= 0 && idx <= 6) dailyData[idx] += Number(t.value) || 0;
+      });
+    }
+  } catch(e){ console.warn('Erro chart:', e); }
+  var cumulative = 0;
+  var balanceData = dailyData.map(function(v){ cumulative += v; return +cumulative.toFixed(2); });
   var ctx = c.getContext('2d');
   var g = ctx.createLinearGradient(0,0,0,200);
-  g.addColorStop(0,'rgba(22,163,74,.24)'); g.addColorStop(1,'rgba(22,163,74,0)');
-  userChart = new Chart(ctx, { type:'line', data:{ labels:['D-6','D-5','D-4','D-3','D-2','Ontem','Hoje'], datasets:[{ data:[0,0,0,0,0,0,0], borderColor:'#16A34A', backgroundColor:g, borderWidth:3, pointBackgroundColor:'#2C1810', pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:4, fill:true, tension:.35 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false } }, scales:{ x:{ grid:{ display:false } }, y:{ grid:{ color:'rgba(44,24,16,.05)' }, beginAtZero:true, ticks:{ callback:function(v){ return 'R$ '+v; } } } } } });
+  g.addColorStop(0,'rgba(22,163,74,.24)');
+  g.addColorStop(1,'rgba(22,163,74,0)');
+  userChart = new Chart(ctx, { type:'line', data:{ labels:['D-6','D-5','D-4','D-3','D-2','Ontem','Hoje'], datasets:[{ data: balanceData, borderColor:'#16A34A', backgroundColor:g, borderWidth:3, pointBackgroundColor:'#2C1810', pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:4, fill:true, tension:.35 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false } }, scales:{ x:{ grid:{ display:false } }, y:{ grid:{ color:'rgba(44,24,16,.05)' }, beginAtZero:true, ticks:{ callback:function(v){ return 'R$ '+v; } } } } } });
 }
-function renderUserYield(){
+
+async function renderUserYield(){
   if(!user) return;
   var c = $('userYield'); if(!c || !window.Chart) return;
   try { if(userYield) userYield.destroy(); } catch(e){}
-  var labels = ['D-6','D-5','D-4','D-3','D-2','Ontem','Hoje'];
-  userYield = new Chart(c.getContext('2d'), { type:'bar', data:{ labels:labels, datasets:[{ data:[0,0,0,0,0,0,0], backgroundColor:'#16A34A', borderRadius:6, maxBarThickness:26 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false } }, scales:{ x:{ grid:{ display:false } }, y:{ grid:{ color:'rgba(44,24,16,.05)' }, beginAtZero:true, ticks:{ callback:function(v){ return 'R$ '+v; } } } } } });
+  var dailyData = [0,0,0,0,0,0,0];
+  try {
+    var sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+    sevenDaysAgo.setHours(0,0,0,0);
+    var r = await supabase.from('transactions')
+      .select('value, created_at')
+      .eq('user_id', user.id)
+      .eq('type', 'in')
+      .ilike('description', '%Rendimento%')
+      .gte('created_at', sevenDaysAgo.toISOString())
+      .order('created_at', {ascending: true});
+    if(r.data){
+      var today = new Date(); today.setHours(0,0,0,0);
+      r.data.forEach(function(t){
+        var tDate = new Date(t.created_at); tDate.setHours(0,0,0,0);
+        var diff = Math.floor((today - tDate) / 86400000);
+        var idx = 6 - diff;
+        if(idx >= 0 && idx <= 6) dailyData[idx] += Number(t.value) || 0;
+      });
+    }
+  } catch(e){ console.warn('Erro yield:', e); }
+  userYield = new Chart(c.getContext('2d'), { type:'bar', data:{ labels:['D-6','D-5','D-4','D-3','D-2','Ontem','Hoje'], datasets:[{ data: dailyData, backgroundColor:'#16A34A', borderRadius:6, maxBarThickness:26 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false } }, scales:{ x:{ grid:{ display:false } }, y:{ grid:{ color:'rgba(44,24,16,.05)' }, beginAtZero:true, ticks:{ callback:function(v){ return 'R$ '+v; } } } } } });
 }
 
 function buildPurchaseTicker(){
@@ -2520,7 +2569,6 @@ function renderPromosOnHome(){
   }).join('');
 }
 
-/* ==================== CELEBRAÇÕES ==================== */
 function checkNewCredit(){
   if(!user || !user.id) return;
   var key = 'angus_last_bal_' + user.id;
@@ -2581,7 +2629,6 @@ function updateReinvestButton(){
 }
 window.updateReinvestButton = updateReinvestButton;
 
-/* ==================== ADMIN ==================== */
 function openAdmin(){ renderAdmin(); var m = $('modal-admin'); if(m) m.classList.add('active'); }
 function closeAdmin(){ var m = $('modal-admin'); if(m) m.classList.remove('active'); }
 function adminTab(t){
@@ -2621,7 +2668,6 @@ async function renderAdminDash(body){
   } catch(e){ body.innerHTML = '<div class="admin-empty">Erro: '+e.message+'</div>'; }
 }
 
-/* ==================== SAQUES ADMIN ==================== */
 var adminWdFilter = { status: 'pending', range: 'all' };
 
 function getRangeDates(range){
@@ -2882,7 +2928,6 @@ async function exportWithdrawalsCSV(){
   } catch(e){ toast('Erro: '+e.message); }
 }
 
-/* ==================== COTA LÍDER ==================== */
 async function renderAdminBonus(body){
   body.innerHTML =
     '<div class="admin-section-title">🎁 Atribuir cota de líder</div>' +
@@ -2950,7 +2995,6 @@ async function removeBonus(uid){
   renderAdminBonus($('admin-body'));
 }
 
-/* ==================== PRE-CADASTROS ==================== */
 async function renderAdminPre(body){
   body.innerHTML = '<div style="padding:24px;text-align:center;color:#78716C">Carregando pré-cadastros...</div>';
   try {
@@ -3001,7 +3045,6 @@ function copyPreText(phone){
   } else { toast(phone); }
 }
 
-/* ==================== INFLUENCERS ==================== */
 async function renderAdminInfluencers(body){
   body.innerHTML = '<div style="padding:24px;text-align:center;color:#78716C">Carregando...</div>';
   try {
@@ -3127,7 +3170,6 @@ function copyInfCode(code){
   else toast(code);
 }
 
-/* ==================== PROMOÇÕES ==================== */
 function renderAdminPromos(body){
   var admin = getLS(LS_ADMIN, { promos:[] });
   var promos = admin.promos || [];
@@ -3168,7 +3210,8 @@ function deletePromo(id){
 }
 
 function depositClick(){ closeDrawer(); if(!user){ openAuth(); return; } showScreen('plans'); }
-  async function init(){
+
+async function init(){
   try { startClock(); } catch(e){}
   try { updateAuthText(); } catch(e){}
   try { var params = new URLSearchParams(location.search); var ref = params.get('ref'); if(ref) pendingRefFromUrl = ref.toUpperCase().trim(); } catch(e){}
