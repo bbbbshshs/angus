@@ -1,4 +1,4 @@
-"<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
@@ -36,7 +36,6 @@ a{text-decoration:none;color:inherit}
 .icon-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .topbar-brand{display:flex;align-items:center;gap:9px;flex:1;justify-content:center;cursor:pointer}
 .brand-circle{width:38px;height:38px;border-radius:50%;background-image:url('logo.png');background-size:240%;background-position:center 40%;background-repeat:no-repeat;flex-shrink:0;box-shadow:0 4px 12px rgba(22,163,74,.25);border:1.5px solid rgba(245,158,11,.45);overflow:hidden}
-.brand-circle svg{display:none}
 .brand-txt{font-family:'Outfit',sans-serif;font-weight:900;font-size:15px;letter-spacing:-.3px;line-height:1;color:var(--txt)}
 .brand-txt span{color:var(--green)}
 .clock-strip{position:sticky;top:var(--topbar-h);z-index:79;background:linear-gradient(90deg,rgba(22,163,74,.08),rgba(245,158,11,.08));border-bottom:1px solid var(--border);padding:6px 14px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:10.5px;font-weight:800;color:var(--green-dark);backdrop-filter:blur(10px)}
@@ -546,19 +545,6 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
 .group-hero-icon{width:64px;height:64px;border-radius:18px;margin:0 auto 12px;background:var(--grad-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:32px}
 .group-hero h2{font-size:18px;font-weight:900;margin-bottom:6px}
 .group-hero p{font-size:12.5px;color:var(--muted);line-height:1.55;max-width:340px;margin:0 auto 16px}
-@media(max-width:380px){
-.pix-projection-grid{grid-template-columns:1fr}
-.cow-totals{grid-template-columns:1fr}
-.aporte-grid{grid-template-columns:1fr}
-.rede-summary{grid-template-columns:1fr}
-.quick-stats{grid-template-columns:1fr 1fr}
-.clock-strip .clock-date{display:none}
-.admin-stat-grid{grid-template-columns:1fr}
-.track-info-grid{grid-template-columns:1fr}
-.team-summary-grid{grid-template-columns:1fr}
-.share-row{grid-template-columns:1fr}
-.community-row.three{grid-template-columns:1fr}
-}
 .cow.bonus{border-color:#A78BFA;background:linear-gradient(180deg,#fff 0%,#F5F3FF 100%)}
 .cow.bonus .cow-head{background:linear-gradient(90deg,#EDE9FE,#DDD6FE)}
 .cow.bonus .cow-tier{background:#EDE9FE;color:#5B21B6}
@@ -597,6 +583,32 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
 .register-group-btn.tg{background:linear-gradient(135deg,#229ED9,#0A82B5)}
 .register-group-btn svg{width:22px;height:22px;fill:#fff}
 .register-continue{background:#fff;color:#166534;font-family:'Outfit',sans-serif;font-size:15px;font-weight:900;padding:14px 32px;border-radius:16px;border:none;cursor:pointer;box-shadow:0 20px 40px -10px rgba(0,0,0,.5);opacity:0;animation:payoutFadeIn .6s ease 1.2s forwards}
+
+/* ✅ ALTERAÇÃO 4: OTIMIZAÇÃO DESKTOP */
+@media(min-width:768px){
+  .app-shell{max-width:900px;box-shadow:0 0 60px rgba(44,24,16,.06)}
+  .content{padding:24px 32px calc(var(--bottom-h) + 24px + var(--safe-bottom))}
+  .bottom-nav{width:min(900px,100%)}
+  .quick-stats{gap:14px}
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .plans .plan{height:100%}
+  .team-summary-grid{grid-template-columns:repeat(4,1fr)}
+  .stat-grid{grid-template-columns:repeat(4,1fr)}
+  .topbar{padding:12px 20px}
+  .farm-slide{min-height:480px}
+  .trust-strip{gap:14px}
+  .step-row{padding:16px 20px}
+  .roulette-mini-wrap{width:220px;height:220px}
+  .admin-modal{max-width:720px}
+  .pix-modal{max-width:560px}
+  .track-info-grid{grid-template-columns:repeat(3,1fr)}
+  .hero-banner img{max-height:340px}
+}
+@media(min-width:1200px){
+  .app-shell{max-width:1080px}
+  .bottom-nav{width:min(1080px,100%)}
+  .plans{grid-template-columns:repeat(3,1fr)}
+}
 </style>
 </head>
 <body>
@@ -609,14 +621,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
       <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <div class="topbar-brand" onclick="onBrandClick()">
-      <div class="brand-circle">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 5c-1.5 0-2.5 1.2-2.5 2.7 0 1.9 1.5 2.9 3 3.3"/>
-          <path d="M18 5c1.5 0 2.5 1.2 2.5 2.7 0 1.9-1.5 2.9-3 3.3"/>
-          <path d="M6.5 10.5v4c0 3.6 2.5 6.5 5.5 6.5s5.5-2.9 5.5-6.5v-4"/>
-          <path d="M6.5 10.5c0-3.1 2.5-5.5 5.5-5.5s5.5 2.4 5.5 5.5"/>
-        </svg>
-      </div>
+      <div class="brand-circle"></div>
       <div class="brand-txt">ANGUS <span>AGRO</span></div>
     </div>
     <button type="button" class="icon-btn" onclick="openTrackModal()" aria-label="Rastrear">
@@ -823,15 +828,17 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
       <div class="plans" id="plans-list"></div>
     </section>
 
+    <!-- ✅ ALTERAÇÃO 1: "Pessoas ativas" → "Compradores" -->
+    <!-- ✅ ALTERAÇÃO 3: "Salário/semana" → "Salário mensal" -->
     <section class="screen" id="screen-team">
       <div class="section-head" style="margin-top:0"><h3 class="section-title">Patentes de Liderança</h3></div>
       <div class="team-summary">
         <div class="team-summary-title">Sua equipe agora</div>
         <div class="team-summary-grid">
-          <div class="team-summary-item"><div class="l">Pessoas ativas</div><div class="v" id="ts-people">0</div></div>
+          <div class="team-summary-item"><div class="l">Compradores</div><div class="v" id="ts-people">0</div></div>
           <div class="team-summary-item"><div class="l">Volume total</div><div class="v green" id="ts-volume">R$ 0</div></div>
           <div class="team-summary-item"><div class="l">Patente atual</div><div class="v gold" id="ts-level">—</div></div>
-          <div class="team-summary-item"><div class="l">Salário/semana</div><div class="v gold" id="ts-salary">R$ 0</div></div>
+          <div class="team-summary-item"><div class="l">Salário mensal</div><div class="v gold" id="ts-salary">R$ 0</div></div>
         </div>
       </div>
       <div id="team-plans-list"></div>
@@ -973,6 +980,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
   <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
 </button>
 
+<!-- ✅ ALTERAÇÃO 6: Botão "Esqueci minha senha" -->
 <div class="auth-screen" id="screen-auth">
   <div class="auth-wrap">
     <button type="button" class="auth-close" onclick="closeAuth()">&times;</button>
@@ -995,6 +1003,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
       <input type="password" class="input" id="auth-pass" placeholder="Mínimo 6 caracteres" required minlength="6">
       <button type="button" class="btn btn-primary btn-block btn-lg" id="auth-btn" style="margin-top:4px" onclick="handleAuth()">Criar Conta</button>
     </form>
+    <button type="button" id="auth-forgot" onclick="forgotPassword()" style="display:none;margin-top:12px;background:none;border:none;color:#166534;font-weight:800;font-size:12.5px;cursor:pointer;font-family:inherit;text-decoration:underline;text-underline-offset:3px">🔑 Esqueci minha senha</button>
     <button type="button" class="auth-toggle" id="auth-toggle" onclick="toggleAuth()">Já tem conta? Entrar</button>
   </div>
 </div>
@@ -1171,12 +1180,13 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
   <button type="button" class="payout-btn" onclick="document.getElementById('payout-celebration').classList.remove('show')">Continuar 🚀</button>
 </div>
 
+<!-- ✅ ALTERAÇÃO 2: WhatsApp link atualizado -->
 <div class="register-celebration" id="register-celebration">
   <div class="register-emoji">🎉</div>
   <div class="register-title">BEM-VINDO<br>À FAMÍLIA!</div>
   <div class="register-sub">🐂 Agora você é parte do Angus Agro</div>
   <div class="register-groups">
-    <a href="https://chat.whatsapp.com/HLsB58njVfzFmVZU6HkOcB?mode=gi_t" target="_blank" class="register-group-btn wa">
+    <a href="https://chat.whatsapp.com/GUcLh5hg0hJI5LKhNfrT0a?s=cl&p=i&ilr=4&iam=0" target="_blank" class="register-group-btn wa">
       <svg viewBox="0 0 24 24"><path d="M20.52 3.449C18.24 1.245 15.24 0.045 12.045 0.045c-6.638 0-12.04 5.401-12.04 12.04 0 2.122.554 4.192 1.606 6.018L0 24l6.184-1.621c1.758.96 3.732 1.466 5.855 1.466h.005c6.638 0 12.041-5.401 12.041-12.04 0-3.217-1.252-6.243-3.526-8.518l-.039-.038z"/></svg>
       WhatsApp
     </a>
@@ -1203,7 +1213,8 @@ var CONFIG = {
     createChargeUrl: 'https://rvjkydxjicryinypmlkc.supabase.co/functions/v1/quick-action',
     checkChargeUrl:  'https://rvjkydxjicryinypmlkc.supabase.co/functions/v1/bright-service'
   },
-  WHATSAPP_GROUP: 'https://chat.whatsapp.com/HLsB58njVfzFmVZU6HkOcB?mode=gi_t',
+  /* ✅ ALTERAÇÃO 2: WhatsApp link atualizado */
+  WHATSAPP_GROUP: 'https://chat.whatsapp.com/GUcLh5hg0hJI5LKhNfrT0a?s=cl&p=i&ilr=4&iam=0',
   TELEGRAM_GROUP: 'https://t.me/+GgY-IO-v5Xg3MmNh',
   TELEGRAM_SUPPORT: 'https://t.me/+GgY-IO-v5Xg3MmNh',
   APK_URL: '',
@@ -1254,28 +1265,30 @@ PLANS.forEach(function(p){
   p.ratePctMax = (p.maxRate*100).toFixed(2).replace('.',',');
 });
 
+/* ✅ ALTERAÇÃO 3: weekly → monthly (valores ×4) */
 var TEAM_PLANS = [
-  {id:'t1',name:'Bronze',minPeople:5,minVolume:500,weekly:50,icon:'🥉'},
-  {id:'t2',name:'Prata',minPeople:15,minVolume:2000,weekly:200,icon:'🥈'},
-  {id:'t3',name:'Ouro',minPeople:30,minVolume:5000,weekly:500,icon:'🥇'},
-  {id:'t4',name:'Platina',minPeople:45,minVolume:10000,weekly:750,icon:'💠'},
-  {id:'t5',name:'Rubi',minPeople:60,minVolume:15000,weekly:1200,icon:'🔴'},
-  {id:'t6',name:'Diamante',minPeople:80,minVolume:25000,weekly:2000,icon:'💎'},
-  {id:'t7',name:'Mestre',minPeople:100,minVolume:40000,weekly:3500,icon:'👑'},
-  {id:'t8',name:'Lenda',minPeople:150,minVolume:60000,weekly:6000,icon:'🌟'},
-  {id:'t9',name:'Embaixador',minPeople:250,minVolume:100000,weekly:15000,icon:'🏆'}
+  {id:'t1',name:'Bronze',minPeople:5,minVolume:500,monthly:200,icon:'🥉'},
+  {id:'t2',name:'Prata',minPeople:15,minVolume:2000,monthly:800,icon:'🥈'},
+  {id:'t3',name:'Ouro',minPeople:30,minVolume:5000,monthly:2000,icon:'🥇'},
+  {id:'t4',name:'Platina',minPeople:45,minVolume:10000,monthly:3000,icon:'💠'},
+  {id:'t5',name:'Rubi',minPeople:60,minVolume:15000,monthly:4800,icon:'🔴'},
+  {id:'t6',name:'Diamante',minPeople:80,minVolume:25000,monthly:8000,icon:'💎'},
+  {id:'t7',name:'Mestre',minPeople:100,minVolume:40000,monthly:14000,icon:'👑'},
+  {id:'t8',name:'Lenda',minPeople:150,minVolume:60000,monthly:24000,icon:'🌟'},
+  {id:'t9',name:'Embaixador',minPeople:250,minVolume:100000,monthly:60000,icon:'🏆'}
 ];
 
+/* ✅ ALTERAÇÃO 5: valores altos quase nunca */
 var ROULETTE_PRIZES = [
-  {label:'R$ 0,50',value:0.50,color:'#FCD34D',chance:20},
-  {label:'R$ 1',value:1,color:'#FBBF24',chance:18},
-  {label:'R$ 2',value:2,color:'#FDE047',chance:16},
-  {label:'R$ 3',value:3,color:'#F59E0B',chance:14},
-  {label:'R$ 5',value:5,color:'#4ADE80',chance:12},
-  {label:'R$ 20',value:20,color:'#22C55E',chance:7},
-  {label:'R$ 50',value:50,color:'#3B82F6',chance:4},
-  {label:'R$ 150',value:150,color:'#8B5CF6',chance:2},
-  {label:'Nada',value:0,color:'#6B7280',chance:7}
+  {label:'R$ 0,50',value:0.50,color:'#FCD34D',chance:30},
+  {label:'R$ 1',value:1,color:'#FBBF24',chance:25},
+  {label:'R$ 2',value:2,color:'#FDE047',chance:20},
+  {label:'R$ 3',value:3,color:'#F59E0B',chance:12},
+  {label:'R$ 5',value:5,color:'#4ADE80',chance:8},
+  {label:'R$ 20',value:20,color:'#22C55E',chance:3},
+  {label:'R$ 50',value:50,color:'#3B82F6',chance:1},
+  {label:'R$ 150',value:150,color:'#8B5CF6',chance:0.5},
+  {label:'Nada',value:0,color:'#6B7280',chance:0.5}
 ];
 
 var TRACKING_STAGES = [
@@ -1505,6 +1518,8 @@ async function refreshYields(){
 function openAuth(loginMode){ if(loginMode !== undefined) isLogin = !!loginMode; updateAuthText(); var s = $('screen-auth'); if(s) s.classList.add('active'); document.body.style.overflow = 'hidden'; }
 function closeAuth(){ var s = $('screen-auth'); if(s) s.classList.remove('active'); document.body.style.overflow = ''; }
 function toggleAuth(){ isLogin = !isLogin; updateAuthText(); }
+
+/* ✅ ALTERAÇÃO 6: mostra/esconde botão "esqueci senha" */
 function updateAuthText(){
   var t=$('auth-title'), s=$('auth-sub'), b=$('auth-btn'), tg=$('auth-toggle');
   if(!t) return;
@@ -1515,6 +1530,7 @@ function updateAuthText(){
   var d = isLogin ? 'none' : 'block';
   ['name-field','cpf-field','phone-field','ref-field'].forEach(function(id){ var el = $(id); if(el) el.style.display = d; });
   var vs = $('verify-strip'); if(vs) vs.style.display = isLogin ? 'none' : 'flex';
+  var fg = $('auth-forgot'); if(fg) fg.style.display = isLogin ? 'block' : 'none';
 }
 
 function maskCPF(v){ v=v.replace(/\D/g,'').slice(0,11); return v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2'); }
@@ -1524,6 +1540,44 @@ function validPhone(tel){ var t=(tel||'').replace(/\D/g,''); if(t.length<10||t.l
 function onCpfInput(el){ el.value = maskCPF(el.value); var h = $('cpf-hint'); if(!h) return; var v = el.value.replace(/\D/g,''); if(v.length===11){ if(validCPF(el.value)){ el.classList.add('valid'); el.classList.remove('invalid'); h.className='field-hint ok'; h.textContent='CPF válido'; } else { el.classList.add('invalid'); el.classList.remove('valid'); h.className='field-hint err'; h.textContent='CPF inválido'; } } else { el.classList.remove('valid','invalid'); h.className='field-hint'; h.textContent='Validaremos seu CPF'; } }
 function onPhoneInput(el){ el.value = maskPhone(el.value); var h = $('phone-hint'); if(!h) return; var v = el.value.replace(/\D/g,''); if(v.length>=10){ if(validPhone(el.value)){ el.classList.add('valid'); el.classList.remove('invalid'); h.className='field-hint ok'; h.textContent='Celular válido'; } else { el.classList.add('invalid'); el.classList.remove('valid'); h.className='field-hint err'; h.textContent='Celular inválido'; } } else { el.classList.remove('valid','invalid'); h.className='field-hint'; h.textContent='Formato: (DDD) 9XXXX-XXXX'; } }
 function onRefInput(el){ el.value = el.value.toUpperCase().replace(/[^A-Z0-9-]/g,''); var hint = $('ref-hint'); if(!hint) return; var v = el.value.trim(); if(!v){ el.classList.remove('valid','invalid'); hint.className='field-hint'; hint.innerHTML='Use <b>ANG-2025</b> se for o primeiro'; return; } el.classList.add('valid'); el.classList.remove('invalid'); hint.className='field-hint ok'; hint.textContent='✓ Código válido'; }
+
+/* ✅ ALTERAÇÃO 6: recuperar senha */
+async function forgotPassword(){
+  var email = ($('auth-email').value || '').trim().toLowerCase();
+  if(!email){
+    email = prompt('Digite seu e-mail cadastrado:');
+    if(!email) return;
+    email = email.trim().toLowerCase();
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ toast('E-mail inválido.'); return; }
+  try {
+    var r = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: location.origin + location.pathname + '?reset=1'
+    });
+    if(r.error){ toast('Erro: ' + r.error.message); return; }
+    toast('📧 Email enviado! Confira sua caixa de entrada.');
+  } catch(e){
+    toast('Erro ao enviar email: ' + (e.message || ''));
+  }
+}
+window.forgotPassword = forgotPassword;
+
+async function handlePasswordReset(){
+  var params = new URLSearchParams(location.search);
+  if(params.get('reset') !== '1') return false;
+  setTimeout(function(){
+    var np = prompt('Digite sua NOVA senha (mínimo 6 caracteres):');
+    if(!np || np.length < 6){ toast('Senha inválida. Operação cancelada.'); return; }
+    supabase.auth.updateUser({ password: np }).then(function(r){
+      if(r.error){ toast('Erro: ' + r.error.message); return; }
+      toast('✅ Senha alterada! Faça login.');
+      try { history.replaceState(null, '', location.pathname); } catch(e){}
+      if(supabase) supabase.auth.signOut();
+      location.reload();
+    });
+  }, 800);
+  return true;
+}
 
 function handleAuth(e){
   if(e && e.preventDefault) e.preventDefault();
@@ -1671,7 +1725,6 @@ function shareTelegram(){ window.open('https://t.me/share/url?url=' + encodeURIC
 function copyRefLink(){ if(navigator.clipboard){ navigator.clipboard.writeText(getShareUrl()).then(function(){ toast('Link copiado!'); }).catch(function(){ toast('Link: '+getShareUrl()); }); } else toast('Link: '+getShareUrl()); }
 function copyMyRef(){ if(!user){ openAuth(); return; } copyRefLink(); }
 
-  
 function renderPlans(){
   var fullHtml = PLANS.map(function(p){
     return '<div class="plan tier-'+p.tierNum+' '+(p.pop?'popular':'')+'">' +
@@ -2091,8 +2144,9 @@ function renderTrackResult(robot){
     '<div class="track-timeline">'+timeline+'</div>';
 }
 
+/* ✅ ALTERAÇÃO 3: usa monthly */
 async function getUserTeamStats(){
-  if(!user) return { people:0, volume:0, level:null, weekly:0 };
+  if(!user) return { people:0, volume:0, level:null, monthly:0 };
   var people = user.network_size || 0;
   var volume = 0;
   try {
@@ -2104,7 +2158,7 @@ async function getUserTeamStats(){
     var tp = TEAM_PLANS[i];
     if(people >= tp.minPeople && volume >= tp.minVolume){ level = tp; break; }
   }
-  return { people:people, volume:volume, level:level, weekly: level ? level.weekly : 0 };
+  return { people:people, volume:volume, level:level, monthly: level ? level.monthly : 0 };
 }
 async function updateTeam(){
   if(!user) return;
@@ -2113,14 +2167,14 @@ async function updateTeam(){
   set('ts-people', stats.people);
   set('ts-volume', fmt(stats.volume));
   set('ts-level', stats.level ? (stats.level.icon + ' ' + stats.level.name) : '—');
-  set('ts-salary', stats.level ? fmt(stats.weekly) : 'R$ 0');
+  set('ts-salary', stats.level ? fmt(stats.monthly) : 'R$ 0');
   var list = $('team-plans-list');
   if(!list) return;
   list.innerHTML = TEAM_PLANS.map(function(tp){
     var reached = stats.people >= tp.minPeople && stats.volume >= tp.minVolume;
     var active = stats.level && stats.level.id === tp.id;
     var cls = active ? 'current' : (reached ? 'active' : 'locked');
-    return '<div class="patent-card '+cls+'"><div class="patent-gem">'+tp.icon+'</div><div class="patent-info"><div class="patent-name">'+tp.name+'</div><div class="patent-req"><b>'+tp.minPeople+'</b> pessoas · <b>'+fmt(tp.minVolume)+'</b> volume</div></div><div class="patent-value"><div class="v">'+fmt(tp.weekly)+'</div><div class="l">/semana</div></div></div>';
+    return '<div class="patent-card '+cls+'"><div class="patent-gem">'+tp.icon+'</div><div class="patent-info"><div class="patent-name">'+tp.name+'</div><div class="patent-req"><b>'+tp.minPeople+'</b> pessoas · <b>'+fmt(tp.minVolume)+'</b> volume</div></div><div class="patent-value"><div class="v">'+fmt(tp.monthly)+'</div><div class="l">/mês</div></div></div>';
   }).join('');
 }
 
@@ -2348,6 +2402,7 @@ function renderRobots(){
   });
 }
 
+/* ✅ ALTERAÇÃO 8: agora mostra contagem por nível */
 async function updateRede(){
   if(!user) return;
   function set(id, t){ var el = $(id); if(el) el.textContent = t; }
@@ -2357,6 +2412,7 @@ async function updateRede(){
 
   var directCount = user.direct_referrals || 0;
   var totalCount = user.network_size || 0;
+  var levelCounts = {};
 
   try {
     var r = await supabase.rpc('get_full_network_stats', { p_user_id: user.id });
@@ -2366,13 +2422,35 @@ async function updateRede(){
     }
   } catch(e){ console.warn('get_full_network_stats:', e); }
 
+  try {
+    var rl = await supabase.rpc('get_network_levels', { p_user_id: user.id });
+    if(!rl.error && rl.data && rl.data.length){
+      rl.data.forEach(function(row){
+        levelCounts[row.level] = Number(row.people) || 0;
+      });
+    }
+  } catch(e){ console.warn('get_network_levels:', e); }
+
   set('rede-direct', directCount);
   set('rede-total', totalCount);
 
   var rowsEl = $('rede-rows'); if(!rowsEl) return;
   rowsEl.innerHTML = ML_LEVELS.map(function(L){
     var pctDisplay = (L.pct*100).toFixed(L.pct < 0.01 ? 1 : 0).replace('.',',');
-    return '<div class="rede-row '+(L.level===1?'l1':'')+'"><div class="rede-badge">N'+L.level+'</div><div class="rede-desc">'+L.desc+'<small>ganho R$ 0,00</small></div><div class="rede-pct">'+pctDisplay+'%</div></div>';
+    var qty = levelCounts[L.level] || 0;
+    var qtyLabel = qty > 0 
+      ? qty + (qty === 1 ? ' pessoa' : ' pessoas') 
+      : 'nenhuma pessoa';
+    var qtyColor = qty > 0 ? '#4ADE80' : 'rgba(255,255,255,.45)';
+    return '<div class="rede-row '+(L.level===1?'l1':'')+'">'
+      + '<div class="rede-badge">N'+L.level+'</div>'
+      + '<div class="rede-desc">'+L.desc
+        + '<small style="color:'+qtyColor+';font-weight:800">'
+          + qtyLabel 
+        + '</small>'
+      + '</div>'
+      + '<div class="rede-pct">'+pctDisplay+'%</div>'
+    + '</div>';
   }).join('');
 }
 
@@ -3259,6 +3337,7 @@ async function init(){
       if(inp){ inp.value = pendingRefFromUrl; onRefInput(inp); }
     }, 400);
   }
+  try { await handlePasswordReset(); } catch(e){ console.warn('reset:', e); }
   console.log('[ANGUS] Site iniciado. Supabase:', supabase ? 'CONECTADO' : 'off');
 }
 
@@ -3314,6 +3393,7 @@ window.updateReinvestButton = updateReinvestButton;
 window.checkNewCredit = checkNewCredit;
 window.showPayoutCelebration = showPayoutCelebration;
 window.showRegisterCelebration = showRegisterCelebration;
+window.forgotPassword = forgotPassword;
 
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
 else init();
