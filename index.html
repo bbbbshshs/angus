@@ -583,8 +583,6 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
 .register-group-btn.tg{background:linear-gradient(135deg,#229ED9,#0A82B5)}
 .register-group-btn svg{width:22px;height:22px;fill:#fff}
 .register-continue{background:#fff;color:#166534;font-family:'Outfit',sans-serif;font-size:15px;font-weight:900;padding:14px 32px;border-radius:16px;border:none;cursor:pointer;box-shadow:0 20px 40px -10px rgba(0,0,0,.5);opacity:0;animation:payoutFadeIn .6s ease 1.2s forwards}
-
-/* ✅ ALTERAÇÃO 4: OTIMIZAÇÃO DESKTOP */
 @media(min-width:768px){
   .app-shell{max-width:900px;box-shadow:0 0 60px rgba(44,24,16,.06)}
   .content{padding:24px 32px calc(var(--bottom-h) + 24px + var(--safe-bottom))}
@@ -828,8 +826,6 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
       <div class="plans" id="plans-list"></div>
     </section>
 
-    <!-- ✅ ALTERAÇÃO 1: "Pessoas ativas" → "Compradores" -->
-    <!-- ✅ ALTERAÇÃO 3: "Salário/semana" → "Salário mensal" -->
     <section class="screen" id="screen-team">
       <div class="section-head" style="margin-top:0"><h3 class="section-title">Patentes de Liderança</h3></div>
       <div class="team-summary">
@@ -980,7 +976,6 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
   <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
 </button>
 
-<!-- ✅ ALTERAÇÃO 6: Botão "Esqueci minha senha" -->
 <div class="auth-screen" id="screen-auth">
   <div class="auth-wrap">
     <button type="button" class="auth-close" onclick="closeAuth()">&times;</button>
@@ -1180,7 +1175,6 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
   <button type="button" class="payout-btn" onclick="document.getElementById('payout-celebration').classList.remove('show')">Continuar 🚀</button>
 </div>
 
-<!-- ✅ ALTERAÇÃO 2: WhatsApp link atualizado -->
 <div class="register-celebration" id="register-celebration">
   <div class="register-emoji">🎉</div>
   <div class="register-title">BEM-VINDO<br>À FAMÍLIA!</div>
@@ -1213,7 +1207,6 @@ var CONFIG = {
     createChargeUrl: 'https://rvjkydxjicryinypmlkc.supabase.co/functions/v1/quick-action',
     checkChargeUrl:  'https://rvjkydxjicryinypmlkc.supabase.co/functions/v1/bright-service'
   },
-  /* ✅ ALTERAÇÃO 2: WhatsApp link atualizado */
   WHATSAPP_GROUP: 'https://chat.whatsapp.com/GUcLh5hg0hJI5LKhNfrT0a?s=cl&p=i&ilr=4&iam=0',
   TELEGRAM_GROUP: 'https://t.me/+GgY-IO-v5Xg3MmNh',
   TELEGRAM_SUPPORT: 'https://t.me/+GgY-IO-v5Xg3MmNh',
@@ -1265,20 +1258,19 @@ PLANS.forEach(function(p){
   p.ratePctMax = (p.maxRate*100).toFixed(2).replace('.',',');
 });
 
-/* ✅ ALTERAÇÃO 3: weekly → monthly (valores ×4) */
+/* ✅ VALORES ORIGINAIS MANTIDOS — só o label virou "/mês" */
 var TEAM_PLANS = [
-  {id:'t1',name:'Bronze',minPeople:5,minVolume:500,monthly:200,icon:'🥉'},
-  {id:'t2',name:'Prata',minPeople:15,minVolume:2000,monthly:800,icon:'🥈'},
-  {id:'t3',name:'Ouro',minPeople:30,minVolume:5000,monthly:2000,icon:'🥇'},
-  {id:'t4',name:'Platina',minPeople:45,minVolume:10000,monthly:3000,icon:'💠'},
-  {id:'t5',name:'Rubi',minPeople:60,minVolume:15000,monthly:4800,icon:'🔴'},
-  {id:'t6',name:'Diamante',minPeople:80,minVolume:25000,monthly:8000,icon:'💎'},
-  {id:'t7',name:'Mestre',minPeople:100,minVolume:40000,monthly:14000,icon:'👑'},
-  {id:'t8',name:'Lenda',minPeople:150,minVolume:60000,monthly:24000,icon:'🌟'},
-  {id:'t9',name:'Embaixador',minPeople:250,minVolume:100000,monthly:60000,icon:'🏆'}
+  {id:'t1',name:'Bronze',minPeople:5,minVolume:500,monthly:50,icon:'🥉'},
+  {id:'t2',name:'Prata',minPeople:15,minVolume:2000,monthly:200,icon:'🥈'},
+  {id:'t3',name:'Ouro',minPeople:30,minVolume:5000,monthly:500,icon:'🥇'},
+  {id:'t4',name:'Platina',minPeople:45,minVolume:10000,monthly:750,icon:'💠'},
+  {id:'t5',name:'Rubi',minPeople:60,minVolume:15000,monthly:1200,icon:'🔴'},
+  {id:'t6',name:'Diamante',minPeople:80,minVolume:25000,monthly:2000,icon:'💎'},
+  {id:'t7',name:'Mestre',minPeople:100,minVolume:40000,monthly:3500,icon:'👑'},
+  {id:'t8',name:'Lenda',minPeople:150,minVolume:60000,monthly:6000,icon:'🌟'},
+  {id:'t9',name:'Embaixador',minPeople:250,minVolume:100000,monthly:15000,icon:'🏆'}
 ];
 
-/* ✅ ALTERAÇÃO 5: valores altos quase nunca */
 var ROULETTE_PRIZES = [
   {label:'R$ 0,50',value:0.50,color:'#FCD34D',chance:30},
   {label:'R$ 1',value:1,color:'#FBBF24',chance:25},
@@ -1519,7 +1511,6 @@ function openAuth(loginMode){ if(loginMode !== undefined) isLogin = !!loginMode;
 function closeAuth(){ var s = $('screen-auth'); if(s) s.classList.remove('active'); document.body.style.overflow = ''; }
 function toggleAuth(){ isLogin = !isLogin; updateAuthText(); }
 
-/* ✅ ALTERAÇÃO 6: mostra/esconde botão "esqueci senha" */
 function updateAuthText(){
   var t=$('auth-title'), s=$('auth-sub'), b=$('auth-btn'), tg=$('auth-toggle');
   if(!t) return;
@@ -1541,7 +1532,6 @@ function onCpfInput(el){ el.value = maskCPF(el.value); var h = $('cpf-hint'); if
 function onPhoneInput(el){ el.value = maskPhone(el.value); var h = $('phone-hint'); if(!h) return; var v = el.value.replace(/\D/g,''); if(v.length>=10){ if(validPhone(el.value)){ el.classList.add('valid'); el.classList.remove('invalid'); h.className='field-hint ok'; h.textContent='Celular válido'; } else { el.classList.add('invalid'); el.classList.remove('valid'); h.className='field-hint err'; h.textContent='Celular inválido'; } } else { el.classList.remove('valid','invalid'); h.className='field-hint'; h.textContent='Formato: (DDD) 9XXXX-XXXX'; } }
 function onRefInput(el){ el.value = el.value.toUpperCase().replace(/[^A-Z0-9-]/g,''); var hint = $('ref-hint'); if(!hint) return; var v = el.value.trim(); if(!v){ el.classList.remove('valid','invalid'); hint.className='field-hint'; hint.innerHTML='Use <b>ANG-2025</b> se for o primeiro'; return; } el.classList.add('valid'); el.classList.remove('invalid'); hint.className='field-hint ok'; hint.textContent='✓ Código válido'; }
 
-/* ✅ ALTERAÇÃO 6: recuperar senha */
 async function forgotPassword(){
   var email = ($('auth-email').value || '').trim().toLowerCase();
   if(!email){
@@ -2144,7 +2134,6 @@ function renderTrackResult(robot){
     '<div class="track-timeline">'+timeline+'</div>';
 }
 
-/* ✅ ALTERAÇÃO 3: usa monthly */
 async function getUserTeamStats(){
   if(!user) return { people:0, volume:0, level:null, monthly:0 };
   var people = user.network_size || 0;
@@ -2402,7 +2391,6 @@ function renderRobots(){
   });
 }
 
-/* ✅ ALTERAÇÃO 8: agora mostra contagem por nível */
 async function updateRede(){
   if(!user) return;
   function set(id, t){ var el = $(id); if(el) el.textContent = t; }
@@ -2438,16 +2426,12 @@ async function updateRede(){
   rowsEl.innerHTML = ML_LEVELS.map(function(L){
     var pctDisplay = (L.pct*100).toFixed(L.pct < 0.01 ? 1 : 0).replace('.',',');
     var qty = levelCounts[L.level] || 0;
-    var qtyLabel = qty > 0 
-      ? qty + (qty === 1 ? ' pessoa' : ' pessoas') 
-      : 'nenhuma pessoa';
+    var qtyLabel = qty > 0 ? qty + (qty === 1 ? ' pessoa' : ' pessoas') : 'nenhuma pessoa';
     var qtyColor = qty > 0 ? '#4ADE80' : 'rgba(255,255,255,.45)';
     return '<div class="rede-row '+(L.level===1?'l1':'')+'">'
       + '<div class="rede-badge">N'+L.level+'</div>'
       + '<div class="rede-desc">'+L.desc
-        + '<small style="color:'+qtyColor+';font-weight:800">'
-          + qtyLabel 
-        + '</small>'
+        + '<small style="color:'+qtyColor+';font-weight:800">'+ qtyLabel +'</small>'
       + '</div>'
       + '<div class="rede-pct">'+pctDisplay+'%</div>'
     + '</div>';
