@@ -196,7 +196,9 @@ a{text-decoration:none;color:inherit}
 .plan.popular{border-color:var(--green);background:linear-gradient(180deg,rgba(22,163,74,.04) 0%,#fff 100%)}
 .plan.popular::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad-gold);border-radius:16px 16px 0 0}
 .plan-badge{position:absolute;top:12px;right:12px;background:var(--grad-gold);color:#fff;font-size:9px;font-weight:900;padding:4px 9px;border-radius:8px;text-transform:uppercase}
-.plan-tier{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:800;color:var(--green);text-transform:uppercase;margin-bottom:8px}
+.plan-tier{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:800;color:var(--green);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-right:80px}
+.plan-discount{background:linear-gradient(135deg,#DC2626 0%,#991B1B 100%);color:#fff;font-size:9px;font-weight:900;padding:3px 7px;border-radius:6px;letter-spacing:.4px;box-shadow:0 3px 10px rgba(220,38,38,.35);animation:discountPulse 2.4s infinite}
+@keyframes discountPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 .plan-name-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .plan-emoji{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;background:var(--grad-primary);font-size:22px}
 .plan-name{font-family:'Outfit',sans-serif;font-size:16px;font-weight:900}
@@ -204,9 +206,10 @@ a{text-decoration:none;color:inherit}
 .plan-grid-info{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .plan-info-box{background:var(--soft-2);border:1px solid var(--border);border-radius:10px;padding:9px 10px}
 .plan-info-lbl{font-size:9px;color:var(--muted);font-weight:800;text-transform:uppercase;margin-bottom:3px}
-.plan-info-val{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:800;color:var(--txt)}
+.plan-info-val{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:800;color:var(--txt);display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
 .plan-info-val.green{color:var(--green-dark)}
 .plan-info-val.gold{color:var(--gold-deep)}
+.plan-old-price{font-size:10.5px;color:var(--muted-2);text-decoration:line-through;font-weight:700}
 .plan-btn{padding:13px 14px;border-radius:12px;font-family:'Outfit',sans-serif;font-size:13.5px;font-weight:900;background:var(--grad-primary);color:#fff;display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;box-shadow:0 6px 18px rgba(22,163,74,.3);border:none;width:100%;cursor:pointer}
 .plan.popular .plan-btn{background:var(--grad-gold)}
 .plan.tier-1 .plan-emoji{background:linear-gradient(135deg,#4ADE80,#16A34A)}
@@ -402,7 +405,11 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
 .pix-summary-emoji{width:40px;height:40px;border-radius:11px;flex-shrink:0;background:var(--grad-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px}
 .pix-summary-name{font-size:13px;font-weight:800}
 .pix-summary-tier{font-size:9.5px;font-weight:800;color:var(--green-dark);text-transform:uppercase;margin-top:2px;font-family:'JetBrains Mono',monospace}
-.pix-summary-price{font-family:'Outfit',sans-serif;font-size:20px;font-weight:900;white-space:nowrap}
+.pix-summary-price{font-family:'Outfit',sans-serif;font-size:20px;font-weight:900;white-space:nowrap;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.pix-old-price{font-size:12px;color:var(--muted-2);text-decoration:line-through;font-weight:700}
+.pix-discount-badge{display:inline-block;background:linear-gradient(135deg,#DC2626,#991B1B);color:#fff;font-size:9px;font-weight:900;padding:3px 7px;border-radius:6px;letter-spacing:.3px;box-shadow:0 3px 10px rgba(220,38,38,.35)}
+.discount-strip{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,rgba(220,38,38,.1),rgba(220,38,38,.03));border:1.5px solid rgba(220,38,38,.35);color:#991B1B;font-weight:900;font-size:12.5px;margin-bottom:12px;text-align:center}
+.discount-strip b{font-size:13px;color:#DC2626}
 .pix-projection{background:linear-gradient(135deg,rgba(22,163,74,.08),rgba(34,197,94,.03));border:1px solid var(--green-border);border-radius:12px;padding:12px;margin-bottom:12px}
 .pix-projection-title{font-size:10.5px;font-weight:800;color:var(--green-dark);text-transform:uppercase;margin-bottom:9px;text-align:center}
 .pix-projection-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
@@ -665,11 +672,11 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
   <main class="content">
     <section class="screen active" id="screen-home">
       <div class="hero-banner">
-        <div class="hero-banner-badge">Lote Aberto</div>
+        <div class="hero-banner-badge">Lote Aberto · -50%</div>
         <img id="hero-img" src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=1600&q=80" alt="Boi" onload="this.classList.add('loaded')" onerror="this.style.display='none'">
         <div class="hero-overlay">
-          <h2 class="hero-title">Seja dono de <span>cotas de boi</span> a partir de R$ 25</h2>
-          <p class="hero-desc">Retorno ~2× em 20 dias · Rastreio SIF em tempo real</p>
+          <h2 class="hero-title">Seja dono de <span>cotas de boi</span> a partir de R$ 12,50</h2>
+          <p class="hero-desc">Retorno ~2× em 20 dias · Rastreio SIF em tempo real · <b style="color:#FEF3C7">50% OFF</b></p>
         </div>
       </div>
       <div class="quick-stats">
@@ -725,7 +732,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
           </div>
           <div class="roulette-balls" id="roulette-ball-count">0 bolas</div>
         </div>
-        <div class="roulette-desc">A cada <b>R$ 50 em cotas</b> você ganha <b>1 bola</b> 🎰 Gire e ganhe <b>dinheiro real na carteira</b>!</div>
+        <div class="roulette-desc">A cada <b>R$ 25 em cotas</b> você ganha <b>1 bola</b> 🎰 Gire e ganhe <b>dinheiro real na carteira</b>!</div>
         <div class="roulette-mini-wrap">
           <svg id="roulette-mini-svg" viewBox="0 0 200 200" class="roulette-mini-svg"></svg>
           <button type="button" id="roulette-mini-btn" onclick="spinRoulette('home')" class="roulette-mini-center">Girar</button>
@@ -799,10 +806,10 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
       </div>
 
       <div class="section-head"><h3 class="section-title">Como funciona</h3></div>
-      <div class="step-row"><div class="step-num-box">01</div><div class="step-content"><h4>Compre suas cotas de boi</h4><p>De <b>R$ 25 a R$ 10.000</b>. Cada cota rende <b>~2× o valor</b> em 20 dias.</p></div></div>
+      <div class="step-row"><div class="step-num-box">01</div><div class="step-content"><h4>Compre suas cotas de boi</h4><p>De <b>R$ 12,50 a R$ 5.000</b>. Cada cota rende <b>~2× o valor</b> em 20 dias.</p></div></div>
       <div class="step-row"><div class="step-num-box">02</div><div class="step-content"><h4>Pague via PIX</h4><p>QR Code abre na hora. <b>Sua cota começa a render</b> e ganha ID de rastreio.</p></div></div>
       <div class="step-row"><div class="step-num-box">03</div><div class="step-content"><h4>Rastreie em tempo real</h4><p>Cada cota tem <b>ID único</b>. Status atualiza a cada 2 dias.</p></div></div>
-      <div class="step-row"><div class="step-num-box">04</div><div class="step-content"><h4>Gire a Roleta da Sorte</h4><p>Cada <b>R$ 50 em cotas = 1 bola</b>. Prêmios caem <b>direto na carteira</b>!</p></div></div>
+      <div class="step-row"><div class="step-num-box">04</div><div class="step-content"><h4>Gire a Roleta da Sorte</h4><p>Cada <b>R$ 25 em cotas = 1 bola</b>. Prêmios caem <b>direto na carteira</b>!</p></div></div>
 
       <div class="section-head"><h3 class="section-title">Cotas em destaque</h3><span class="section-link" onclick="showScreen('plans')">Ver todas ›</span></div>
       <div class="plans" id="home-plans"></div>
@@ -815,7 +822,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
 
       <div class="cta-final">
         <h2>Retorno de <span>2× o valor</span> em 20 dias</h2>
-        <p>Comece com R$ 25 e veja sua primeira cota creditar em 24h.</p>
+        <p>Comece com R$ 12,50 e veja sua primeira cota creditar em 24h.</p>
         <button type="button" class="btn btn-gold btn-lg" onclick="openAuth()">Quero comprar cotas</button>
       </div>
     </section>
@@ -823,6 +830,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
     <section class="screen" id="screen-plans">
       <div class="section-head" style="margin-top:0"><h3 class="section-title">Cotas disponíveis</h3></div>
       <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Retorno ~2× o valor em 20 dias</p>
+      <div class="discount-strip">🎉 <b>PROMOÇÃO:</b> todos os planos com <b>-50%</b> de desconto</div>
       <div class="plans" id="plans-list"></div>
     </section>
 
@@ -1028,19 +1036,20 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
       <button type="button" class="pix-close" onclick="closePix()">&times;</button>
     </div>
     <div class="pix-body" id="pix-body">
+      <div class="discount-strip" id="pix-discount-strip">🎉 <b>50% OFF</b> aplicado automaticamente</div>
       <div class="pix-summary">
         <div class="pix-summary-left">
           <div class="pix-summary-emoji">🐂</div>
           <div><div class="pix-summary-name" id="pix-name">Cota</div><div class="pix-summary-tier" id="pix-tier">NÍVEL 01</div></div>
         </div>
-        <div class="pix-summary-price" id="pix-price">R$ 25,00</div>
+        <div class="pix-summary-price" id="pix-price">R$ 12,50</div>
       </div>
       <div class="pix-projection">
         <div class="pix-projection-title">Projeção do ciclo (20 dias)</div>
         <div class="pix-projection-grid">
-          <div class="pix-projection-item"><div class="lbl">Por dia</div><div class="val" id="proj-day">+R$ 1,44</div></div>
-          <div class="pix-projection-item"><div class="lbl">Semana</div><div class="val" id="proj-week">+R$ 10,08</div></div>
-          <div class="pix-projection-item"><div class="lbl">Total</div><div class="val" id="proj-total">R$ 51,00</div></div>
+          <div class="pix-projection-item"><div class="lbl">Por dia</div><div class="val" id="proj-day">+R$ 0,72</div></div>
+          <div class="pix-projection-item"><div class="lbl">Semana</div><div class="val" id="proj-week">+R$ 5,04</div></div>
+          <div class="pix-projection-item"><div class="lbl">Total</div><div class="val" id="proj-total">R$ 25,50</div></div>
         </div>
       </div>
       <div class="pix-qr-wrap">
@@ -1157,7 +1166,7 @@ details.faq p{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.
       <div class="terminal-success-icon">✓</div>
       <h3>COTA SAUDÁVEL</h3>
       <p>Rendimento creditado automaticamente</p>
-      <div class="amount" id="term-amt">+R$ 1,44</div>
+      <div class="amount" id="term-amt">+R$ 0,72</div>
       <button type="button" class="btn btn-primary" onclick="closeTerm()" style="padding:14px 26px">Continuar</button>
     </div>
     <div class="terminal-foot" id="term-foot">
@@ -1217,12 +1226,13 @@ var CONFIG = {
 var CYCLE_DAYS = 20;
 var DAY_MS = 86400000;
 var HOUR_MS = 3600000;
-var BALL_THRESHOLD = 50;
+var BALL_THRESHOLD = 25; /* ✅ era 50 → agora 25 (metade), pois planos ficaram 50% mais baratos */
 var CHECKIN_VALUE = 0.50;
 var WITHDRAW_COOLDOWN_HOURS = 48;
 var CAROUSEL_SLIDES = 4;
 var LS_ADMIN = 'ANGUS_ADMIN_V1';
-var REINVEST_MIN = 25;
+var REINVEST_MIN = 12.50; /* ✅ era 25 → agora 12,50 (metade do plano mínimo) */
+var DISCOUNT_PCT = 50;    /* ✅ desconto aplicado em TODOS os planos */
 
 var ML_LEVELS = [
   {level:1,pct:0.15,desc:'Indicação direta'},
@@ -1237,6 +1247,8 @@ var ML_LEVELS = [
   {level:10,pct:0.005,desc:'10º nível'}
 ];
 
+/* ✅ PLANOS ORIGINAIS — os valores em `cost` são os valores CHEIOS.
+   O código abaixo aplica -50% em TODOS automaticamente. */
 var PLANS = [
   {id:'p1',cost:25,minRate:0.0500,maxRate:0.0530,name:'Bezerro Nelore',tier:'NÍVEL 01',origin:'Nelore PO clássico',pop:false,tierNum:1},
   {id:'p2',cost:50,minRate:0.0510,maxRate:0.0550,name:'Novilha Angus',tier:'NÍVEL 02',origin:'Angus Negro',pop:false,tierNum:2},
@@ -1249,13 +1261,17 @@ var PLANS = [
   {id:'p9',cost:7500,minRate:0.0620,maxRate:0.0670,name:'Boi Império',tier:'NÍVEL 09',origin:'Nelore PO · genética rara',pop:false,tierNum:9},
   {id:'p10',cost:10000,minRate:0.0630,maxRate:0.0680,name:'Boi Midas',tier:'NÍVEL 10',origin:'Nelore PO · toque de ouro',pop:false,tierNum:10}
 ];
+/* ✅ APLICA -50% EM TODOS OS PLANOS */
 PLANS.forEach(function(p){
+  p.originalCost = p.cost;
+  p.cost = +(p.cost * (1 - DISCOUNT_PCT/100)).toFixed(2); /* metade */
   var mid = (p.minRate+p.maxRate)/2;
   p.daily = +(p.cost*mid).toFixed(2);
   p.totalProfit = +(p.cost*(1+mid*CYCLE_DAYS)).toFixed(2);
   p.weekly = +(p.daily*7).toFixed(2);
   p.ratePctMin = (p.minRate*100).toFixed(2).replace('.',',');
   p.ratePctMax = (p.maxRate*100).toFixed(2).replace('.',',');
+  p.discountPct = DISCOUNT_PCT;
 });
 
 /* ✅ VALORES ORIGINAIS MANTIDOS — só o label virou "/mês" */
@@ -1715,19 +1731,27 @@ function shareTelegram(){ window.open('https://t.me/share/url?url=' + encodeURIC
 function copyRefLink(){ if(navigator.clipboard){ navigator.clipboard.writeText(getShareUrl()).then(function(){ toast('Link copiado!'); }).catch(function(){ toast('Link: '+getShareUrl()); }); } else toast('Link: '+getShareUrl()); }
 function copyMyRef(){ if(!user){ openAuth(); return; } copyRefLink(); }
 
+/* ✅ RENDER DOS PLANOS — agora com badge -50% e preço original riscado */
+function planDiscountBadge(p){
+  return '<span class="plan-discount">-'+p.discountPct+'%</span>';
+}
+function planPriceCell(p){
+  return fmt(p.cost) + '<span class="plan-old-price">'+fmt(p.originalCost)+'</span>';
+}
+
 function renderPlans(){
   var fullHtml = PLANS.map(function(p){
     return '<div class="plan tier-'+p.tierNum+' '+(p.pop?'popular':'')+'">' +
       (p.pop?'<div class="plan-badge">Mais Popular</div>':'') +
-      '<div class="plan-tier">'+p.tier+' · '+p.ratePctMin+'–'+p.ratePctMax+'%/dia</div>' +
+      '<div class="plan-tier">'+p.tier+' · '+p.ratePctMin+'–'+p.ratePctMax+'%/dia '+planDiscountBadge(p)+'</div>' +
       '<div class="plan-name-row"><div class="plan-emoji">🐂</div><div class="plan-name">'+p.name+'<small>'+p.origin+'</small></div></div>' +
       '<div class="plan-grid-info">' +
-        '<div class="plan-info-box"><div class="plan-info-lbl">Valor</div><div class="plan-info-val">'+fmt(p.cost)+'</div></div>' +
+        '<div class="plan-info-box"><div class="plan-info-lbl">Valor</div><div class="plan-info-val">'+planPriceCell(p)+'</div></div>' +
         '<div class="plan-info-box"><div class="plan-info-lbl">Rende/dia</div><div class="plan-info-val green">'+fmt(p.daily)+'</div></div>' +
         '<div class="plan-info-box"><div class="plan-info-lbl">Ciclo</div><div class="plan-info-val">'+CYCLE_DAYS+' dias</div></div>' +
         '<div class="plan-info-box"><div class="plan-info-lbl">Total</div><div class="plan-info-val gold">'+fmt(p.totalProfit)+'</div></div>' +
       '</div>' +
-      '<button type="button" class="plan-btn" onclick="openPix(\''+p.id+'\')">🐂 Comprar por '+fmt(p.cost)+'</button>' +
+      '<button type="button" class="plan-btn" onclick="openPix(\''+p.id+'\')">🐂 Comprar por '+fmt(p.cost)+' (-'+p.discountPct+'%)</button>' +
     '</div>';
   }).join('');
   var el1 = $('plans-list'); if(el1) el1.innerHTML = fullHtml;
@@ -1735,10 +1759,10 @@ function renderPlans(){
   if(el2){
     el2.innerHTML = PLANS.slice(0,3).map(function(p){
       return '<div class="plan tier-'+p.tierNum+' '+(p.pop?'popular':'')+'">' +
-        '<div class="plan-tier">'+p.tier+' · '+p.ratePctMin+'%/dia</div>' +
+        '<div class="plan-tier">'+p.tier+' · '+p.ratePctMin+'%/dia '+planDiscountBadge(p)+'</div>' +
         '<div class="plan-name-row"><div class="plan-emoji">🐂</div><div class="plan-name">'+p.name+'</div></div>' +
         '<div class="plan-grid-info">' +
-          '<div class="plan-info-box"><div class="plan-info-lbl">Valor</div><div class="plan-info-val">'+fmt(p.cost)+'</div></div>' +
+          '<div class="plan-info-box"><div class="plan-info-lbl">Valor</div><div class="plan-info-val">'+planPriceCell(p)+'</div></div>' +
           '<div class="plan-info-box"><div class="plan-info-lbl">Rende/dia</div><div class="plan-info-val green">'+fmt(p.daily)+'</div></div>' +
         '</div>' +
         '<button type="button" class="plan-btn" onclick="openPix(\''+p.id+'\')">🐂 Comprar '+fmt(p.cost)+'</button>' +
@@ -1755,7 +1779,7 @@ async function openPix(planId){
 
   var bal = Number(user.balance) || 0;
   if(bal >= p.cost){
-    if(!confirm('💸 Você tem ' + fmt(bal) + ' de saldo.\n\nUsar R$ ' + fmt(p.cost) + ' pra comprar "' + p.name + '"?\n\nSobrará: ' + fmt(bal - p.cost))) return;
+    if(!confirm('💸 Você tem ' + fmt(bal) + ' de saldo.\n\nUsar R$ ' + fmt(p.cost) + ' pra comprar "' + p.name + '" (-'+p.discountPct+'%)?\n\nSobrará: ' + fmt(bal - p.cost))) return;
     try {
       var r = await supabase.rpc('buy_cota_with_balance', { p_user_id: user.id, p_plan_id: p.id });
       if(r.error){ toast('Erro: ' + r.error.message); return; }
@@ -1779,7 +1803,9 @@ async function openPix(planId){
   var el;
   el = $('pix-name'); if(el) el.textContent = p.name;
   el = $('pix-tier'); if(el) el.textContent = p.tier + ' · ' + p.ratePctMin + '–' + p.ratePctMax + '%/dia';
-  el = $('pix-price'); if(el) el.textContent = fmt(p.cost);
+  /* ✅ Mostra o preço CHEIO riscado + preço com -50% + badge */
+  el = $('pix-price');
+  if(el) el.innerHTML = '<span class="pix-old-price">'+fmt(p.originalCost)+'</span> ' + fmt(p.cost) + ' <span class="pix-discount-badge">-'+p.discountPct+'%</span>';
   el = $('proj-day'); if(el) el.textContent = '+' + fmt(p.daily);
   el = $('proj-week'); if(el) el.textContent = '+' + fmt(p.weekly);
   el = $('proj-total'); if(el) el.textContent = fmt(p.totalProfit);
@@ -1800,10 +1826,16 @@ async function openPix(planId){
     var jwt = sess && sess.data && sess.data.session ? sess.data.session.access_token : null;
     if(!jwt) throw new Error('Sessão expirada. Faça login novamente.');
 
+    /* ✅ ENVIA O VALOR COM DESCONTO PARA O GATEWAY GERAR O PIX */
     var r = await fetch(CONFIG.GATEWAY.createChargeUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt },
-      body: JSON.stringify({ planId: p.id })
+      body: JSON.stringify({
+        planId: p.id,
+        amount: p.cost,                /* valor COM -50% aplicado */
+        originalAmount: p.originalCost, /* valor cheio, só pra referência */
+        discountPct: p.discountPct
+      })
     });
     var data = await r.json();
     if(!r.ok || !data.qrCode) throw new Error(data.error || 'Falha ao gerar cobrança');
@@ -2680,7 +2712,7 @@ async function reinvest(){
   if(!user){ openAuth(); return; }
   var bal = Number(user.balance) || 0;
   if(bal < REINVEST_MIN){
-    toast('💰 Você tem ' + fmt(bal) + '. Mínimo para reinvestir: R$ 25,00');
+    toast('💰 Você tem ' + fmt(bal) + '. Mínimo para reinvestir: ' + fmt(REINVEST_MIN));
     return;
   }
   showScreen('plans');
@@ -3009,16 +3041,16 @@ async function renderAdminBonus(body){
     '<p style="font-size:11px;color:#78716C;margin-bottom:12px;line-height:1.5">Escolha um plano e atribua ao indicador. Ele vê a cota <b>igual a uma compra normal</b>.</p>' +
     '<input type="text" class="admin-input" id="bonus-id" placeholder="ID, código ANG-XXXX ou public_id">' +
     '<select class="admin-input" id="bonus-plan" style="font-weight:700">' +
-      '<option value="p1">🐂 Bezerro Nelore — R$ 25</option>' +
-      '<option value="p2">🐂 Novilha Angus — R$ 50</option>' +
-      '<option value="p3" selected>🐂 Boi Remo — R$ 100</option>' +
-      '<option value="p4">🐂 Boi Nagai — R$ 250</option>' +
-      '<option value="p5">🐂 Boi Chopin — R$ 500</option>' +
-      '<option value="p6">🐂 Boi Golias — R$ 1.000</option>' +
-      '<option value="p7">🐂 Boi Taj Mahal — R$ 2.500</option>' +
-      '<option value="p8">🐂 Boi Everest — R$ 5.000</option>' +
-      '<option value="p9">🐂 Boi Império — R$ 7.500</option>' +
-      '<option value="p10">🐂 Boi Midas — R$ 10.000</option>' +
+      '<option value="p1">🐂 Bezerro Nelore — R$ 12,50</option>' +
+      '<option value="p2">🐂 Novilha Angus — R$ 25</option>' +
+      '<option value="p3" selected>🐂 Boi Remo — R$ 50</option>' +
+      '<option value="p4">🐂 Boi Nagai — R$ 125</option>' +
+      '<option value="p5">🐂 Boi Chopin — R$ 250</option>' +
+      '<option value="p6">🐂 Boi Golias — R$ 500</option>' +
+      '<option value="p7">🐂 Boi Taj Mahal — R$ 1.250</option>' +
+      '<option value="p8">🐂 Boi Everest — R$ 2.500</option>' +
+      '<option value="p9">🐂 Boi Império — R$ 3.750</option>' +
+      '<option value="p10">🐂 Boi Midas — R$ 5.000</option>' +
     '</select>' +
     '<button type="button" class="btn btn-purple btn-block" onclick="createBonus()" style="margin-bottom:20px">🎁 Atribuir cota de líder</button>' +
     '<div class="admin-section-title">📋 Histórico</div>' +
